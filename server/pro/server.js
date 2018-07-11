@@ -4,7 +4,6 @@ const zlib = require('zlib');
 const Koa = require('koa');
 const Router = require('koa-router');
 const convert = require('koa-convert');
-const body = require('koa-body');
 const compress = require('koa-compress');
 const staticCache = require('koa-static-cache');
 const mime = require('mime-types');
@@ -22,7 +21,7 @@ router.get(/^\/[^\.]*$/, async(ctx, next)=>{
 
   ctx.status = status;
   ctx.type = 'text/html';
-  ctx.body = preRender(body, ctx.path, {});
+  ctx.body = await preRender(body, ctx.path, {});
 
   await next();
 });

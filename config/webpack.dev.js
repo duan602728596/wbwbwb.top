@@ -40,11 +40,7 @@ module.exports = config({
     new HtmlWebpackPlugin({
       inject: true,
       hash: true,
-      template: path.join(__dirname, '../src/index.pug'),
-      sign: {
-        render: '{% render %}',
-        initialState: '{% initialState %}'
-      }
+      template: path.join(__dirname, '../src/index.pug')
     })
   ]
 });

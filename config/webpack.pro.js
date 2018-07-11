@@ -36,10 +36,6 @@ module.exports = config({
       inject: true,
       hash: true,
       template: path.join(__dirname, '../src/index.pug'),
-      sign: {
-        render: '{% render %}',
-        initialState: '{% initialState %}'
-      },
       minify: {
         minifyCSS: true,
         minifyJS: true

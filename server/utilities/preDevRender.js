@@ -1,4 +1,6 @@
 const replaceTemplate = require('./replaceTemplate');
+const api = require('../api/api');
+const title = require('../api/title');
 
 // 清除模块缓存
 function cleanRequireCache(module){
@@ -10,13 +12,14 @@ function cleanRequireCache(module){
 }
 
 // 渲染新的html
-function preRender(html, file, context){
-  const initialState = {};
+async function preRender(html, file, context){
+  const initialState = await api(file);
   cleanRequireCache('../../build-server/server');
   const server = require('../../build-server/server').default;
   const render = server(file, context, initialState);
   return replaceTemplate(html.toString(), {
     render,
+    title: title(file),
     initialState: JSON.stringify(initialState)
   });
 }

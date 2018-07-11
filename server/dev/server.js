@@ -2,7 +2,6 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const convert = require('koa-convert');
-const body = require('koa-body');
 const mime = require('mime-types');
 const middleware = require('./middleware');
 const preRender = require('../utilities/preDevRender');
@@ -21,7 +20,7 @@ app.use(async(ctx, next)=>{
 
   // 服务器端渲染
   if(ctx.type === 'text/html'){
-    ctx.body = preRender(ctx.body, file);
+    ctx.body = await preRender(ctx.body, file);
   }
 });
 

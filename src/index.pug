@@ -5,8 +5,8 @@ html
     meta(name='renderer' content='webkit')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel='shortcut icon' href=require('./favicon.ico'))
-    title Webpack App
+    title {% title %}
   body
-    div.react-app#react-app(data-app)=htmlWebpackPlugin.options.sign.render
-    script='window.__INITIAL_STATE__ = ' + htmlWebpackPlugin.options.sign.initialState + ';'
+    div.react-app#react-app(data-app) {% render %}
+    script= 'window.__INITIAL_STATE__ = {% initialState %};'
     script(type='text/javascript' src=require('../.dll/dll'))
