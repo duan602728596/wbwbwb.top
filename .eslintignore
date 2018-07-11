@@ -1,0 +1,8 @@
+server
+node_modules
+config
+config-server
+scripts
+.dll
+build
+build-server

@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='renderer' content='webkit')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='shortcut icon' href=require('./favicon.ico'))
+    title Webpack App
+  body
+    div.react-app#react-app(data-app)=htmlWebpackPlugin.options.sign.render
+    script='window.__INITIAL_STATE__ = ' + htmlWebpackPlugin.options.sign.initialState + ';'
+    script(type='text/javascript' src=require('../.dll/dll'))
