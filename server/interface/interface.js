@@ -1,4 +1,4 @@
-async function api(file){
+async function interface(file){
   const initialState = {};
   switch(file){
     case '/Login':
@@ -8,4 +8,4 @@ async function api(file){
   return initialState;
 }
 
-module.exports = api;
+module.exports = interface;

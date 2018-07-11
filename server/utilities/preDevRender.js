@@ -1,6 +1,6 @@
 const replaceTemplate = require('./replaceTemplate');
-const api = require('../api/api');
-const title = require('../api/title');
+const api = require('../interface/interface');
+const title = require('../interface/title');
 
 // 清除模块缓存
 function cleanRequireCache(module){
