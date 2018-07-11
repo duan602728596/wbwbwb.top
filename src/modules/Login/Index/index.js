@@ -38,7 +38,6 @@ class Index extends Component{
             <input className={ css(bootstrap['form-control'], usernameError ? bootstrap['is-invalid'] : null) }
               id="username"
               type="text"
-              placeholder="用户名"
               { ...getFieldProps('username', {
                 rules: [
                   {
@@ -66,7 +65,6 @@ class Index extends Component{
             <input className={ css(bootstrap['form-control'], passwordError ? bootstrap['is-invalid'] : null) }
               id="password"
               type="password"
-              placeholder="密码"
               { ...getFieldProps('password', {
                 rules: [
                   {
