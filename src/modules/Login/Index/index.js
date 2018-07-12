@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createForm } from 'rc-form';
-import QueueAnim from 'rc-queue-anim';
-import { css } from '../../../utilities';
+import { css, jsonp } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import createInputDecorator from './createInputDecorator';
+import message from './message';
 
 @createForm()
 class Index extends Component{
@@ -14,12 +14,23 @@ class Index extends Component{
     form: PropTypes.object
   };
 
+  // 登陆
+  async login(formValue: Object): Promise<void>{
+    try{
+      const ub64: string = btoa(formValue.username);
+      const step1: Object = await jsonp(`https://login.sina.com.cn/sso/prelogin.php?checkpin=1&entry=mweibo&su=${ ub64 }`);
+      console.log(step1);
+    }catch(err){
+      console.error(err);
+      message('danger', '登陆失败！');
+    }
+  }
   // 提交方法
   handleFormSubmit: Function = (event: Event): void=>{
     event.preventDefault();
     this.props.form.validateFields((err: ?Object, value: Object): void=>{
       if(err) return void 0;
-      console.log(value);
+      this.login(value);
     });
   };
   render(): React.Element{
