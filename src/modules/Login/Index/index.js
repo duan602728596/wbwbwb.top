@@ -6,7 +6,7 @@ import { css } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
-import createInput from './createInput';
+import createInputDecorator from './createInputDecorator';
 
 @createForm()
 class Index extends Component{
@@ -22,10 +22,7 @@ class Index extends Component{
     });
   };
   render(): React.Element{
-    const { getFieldProps, getFieldError }: {
-      getFieldProps: Function,
-      getFieldError: Function
-    } = this.props.form;
+    const { getFieldProps }: { getFieldProps: Function } = this.props.form;
 
     return (
       <div className={ publicStyle.main }>
@@ -34,7 +31,7 @@ class Index extends Component{
           <div className={ css(bootstrap['form-group'], style.group) }>
             <label htmlFor="username">用户名：</label>
             {
-              createInput(this.props, 'username', {
+              createInputDecorator(this.props, 'username', {
                 rules: [
                   {
                     required: true,
@@ -48,7 +45,7 @@ class Index extends Component{
           <div className={ css(bootstrap['form-group'], style.group) }>
             <label htmlFor="password">密码：</label>
             {
-              createInput(this.props, 'password', {
+              createInputDecorator(this.props, 'password', {
                 rules: [
                   {
                     required: true,

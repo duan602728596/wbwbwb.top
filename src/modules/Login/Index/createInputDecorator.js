@@ -16,7 +16,7 @@ class InputItem extends Component{
     formKey: PropTypes.string
   };
   state: Object = {
-    value: ''
+    value: ''  // 表单值
   };
 
   // change事件
@@ -34,12 +34,10 @@ class InputItem extends Component{
     });
   };
   render(): React.Element{
-    const { errors, children, form, fieldProps, formKey }: {
+    const { errors, children, fieldProps }: {
       errors: ?string[],
       children: React.Element,
-      form: Object,
-      fieldProps: Object,
-      formKey: string
+      fieldProps: Object
     } = this.props;
 
     const newElement: React.Element = cloneElement(children, {
@@ -64,7 +62,7 @@ class InputItem extends Component{
   }
 }
 
-function createInput(props: Object, key: string, options: Object = {}): Function{
+function createInputDecorator(props: Object, key: string, options: Object = {}): Function{
   const { getFieldProps, getFieldError }: {
     getFieldProps: Function,
     getFieldError: Function
@@ -82,4 +80,4 @@ function createInput(props: Object, key: string, options: Object = {}): Function
   };
 }
 
-export default createInput;
+export default createInputDecorator;
