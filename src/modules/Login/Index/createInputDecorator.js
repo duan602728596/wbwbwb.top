@@ -11,28 +11,9 @@ class InputItem extends Component{
   static propTypes: Object = {
     children: PropTypes.element,
     errors: PropTypes.arrayOf(PropTypes.string),
-    form: PropTypes.object,
-    fieldProps: PropTypes.object,
-    formKey: PropTypes.string
-  };
-  state: Object = {
-    value: ''  // 表单值
+    fieldProps: PropTypes.object
   };
 
-  // change事件
-  handleInputChange: Function = (event: Event): void=>{
-    const { form, formKey }: {
-      form: Object,
-      formKey: string
-    } = this.props;
-    const value: string = event.target.value;
-    this.setState({
-      value
-    });
-    form.setFieldsValue({
-      [formKey]: value
-    });
-  };
   render(): React.Element{
     const { errors, children, fieldProps }: {
       errors: ?string[],
@@ -41,10 +22,9 @@ class InputItem extends Component{
     } = this.props;
 
     const newElement: React.Element = cloneElement(children, {
-      ...fieldProps,
       className: children.props.className + (errors ? ` ${ bootstrap['is-invalid'] }` : ''),
-      value: this.state.value,
-      onChange: this.handleInputChange
+      ref: fieldProps.ref,
+      onChange: fieldProps.onChange
     });
 
     return (
@@ -73,7 +53,7 @@ function createInputDecorator(props: Object, key: string, options: Object = {}):
     const fieldProps: Object = getFieldProps(key, options);
 
     return (
-      <InputItem errors={ errors } form={ props.form } fieldProps={ fieldProps } formKey={ key }>
+      <InputItem errors={ errors } fieldProps={ fieldProps }>
         { element }
       </InputItem>
     );

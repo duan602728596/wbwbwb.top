@@ -19,6 +19,7 @@ class Index extends Component{
     event.preventDefault();
     this.props.form.validateFields((err: ?Object, value: Object): void=>{
       if(err) return void 0;
+      console.log(value);
     });
   };
   render(): React.Element{
