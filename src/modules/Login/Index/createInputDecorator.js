@@ -1,6 +1,4 @@
-/**
- * 表单验证
- */
+/* 表单验证 */
 import React, { Component, cloneElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { css } from '../../../utilities';

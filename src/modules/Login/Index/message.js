@@ -1,3 +1,4 @@
+/* message */
 import React from 'react';
 import Notification from 'rc-notification';
 import { css } from '../../../utilities';

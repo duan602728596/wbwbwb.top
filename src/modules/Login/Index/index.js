@@ -7,6 +7,7 @@ import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import createInputDecorator from './createInputDecorator';
 import message from './message';
+import Earth from './earth/Earth';
 
 @createForm()
 class Index extends Component{
@@ -14,10 +15,10 @@ class Index extends Component{
     form: PropTypes.object
   };
 
-  // 登陆
-  async login(formValue: Object): Promise<void>{
+  // 验证登陆是否需要验证码
+  async prelogin(formValue: Object): Promise<void>{
     try{
-      const ub64: string = btoa(formValue.username);
+      const ub64: string = btoa(formValue.username); // base64加密
       const step1: Object = await jsonp(`https://login.sina.com.cn/sso/prelogin.php?checkpin=1&entry=mweibo&su=${ ub64 }`);
       // 需要验证码
       if(('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1)){
@@ -37,7 +38,7 @@ class Index extends Component{
     event.preventDefault();
     this.props.form.validateFields((err: any, value: Object): void=>{
       if(err) return void 0;
-      this.login(value);
+      this.prelogin(value);
     });
   };
   render(): React.Element{
@@ -46,6 +47,7 @@ class Index extends Component{
     return (
       <div className={ publicStyle.main }>
         {/* 登陆表单 */}
+        <Earth />
         <form className={ style.form } onSubmit={ this.handleFormSubmit }>
           <div className={ css(bootstrap['form-group'], style.group) }>
             <label htmlFor="username">用户名：</label>
