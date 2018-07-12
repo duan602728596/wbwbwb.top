@@ -6,3 +6,4 @@ bin
 .dll
 build
 build-server
+src/weibo-pattlock.js

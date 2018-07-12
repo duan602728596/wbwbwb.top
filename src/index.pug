@@ -9,4 +9,5 @@ html
   body
     div.react-app#react-app(data-app) {% render %}
     script= 'window.__INITIAL_STATE__ = {% initialState %};'
+    script(type='text/javascript' src=require('./weibo-pattlock'))
     script(type='text/javascript' src=require('../.dll/dll'))

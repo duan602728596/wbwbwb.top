@@ -19,7 +19,14 @@ class Index extends Component{
     try{
       const ub64: string = btoa(formValue.username);
       const step1: Object = await jsonp(`https://login.sina.com.cn/sso/prelogin.php?checkpin=1&entry=mweibo&su=${ ub64 }`);
-      console.log(step1);
+      // 需要验证码
+      if(('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1)){
+        // 获取验证码
+        const uri: string = 'https://captcha.weibo.com/api/pattern/get?'
+          + `ver=1.0.0&source=ssologin&usrname=${ formValue.username }&line=160&side=100&radius=30&_rnd=${ Math.random() }`;
+        const step2: Object = await jsonp(uri);
+        console.log(step2);
+      }
     }catch(err){
       console.error(err);
       message('danger', '登陆失败！');
@@ -28,7 +35,7 @@ class Index extends Component{
   // 提交方法
   handleFormSubmit: Function = (event: Event): void=>{
     event.preventDefault();
-    this.props.form.validateFields((err: ?Object, value: Object): void=>{
+    this.props.form.validateFields((err: any, value: Object): void=>{
       if(err) return void 0;
       this.login(value);
     });

@@ -5,7 +5,7 @@ import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 
 function message(type: string, text: string): void{
-  const div: Element = document.createElement('div');
+  let div: Element = document.createElement('div');
   document.body.appendChild(div);
 
   Notification.newInstance({
@@ -22,6 +22,7 @@ function message(type: string, text: string): void{
       content: <div className={ css(bootstrap.alert, bootstrap[`alert-${ type }`], style.message) } role="alert">{ text }</div>,
       onClose: (): void=>{
         document.body.removeChild(div);
+        div = null;
       }
     });
   });

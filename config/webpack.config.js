@@ -12,10 +12,10 @@ function config(options){
         { // react & js
           test: /^.*\.js$/,
           use: [babelConfig],
-          exclude: /(dll\.js|node_modules)/
+          exclude: /(dll\.js|weibo-pattlock|node_modules)/
         },
         {
-          test: /dll\.js/,
+          test: /dll\.js|weibo-pattlock/,
           use: [
             {
               loader: 'file-loader',
