@@ -2,7 +2,7 @@ server
 node_modules
 config
 config-server
-scripts
+bin
 .dll
 build
 build-server
