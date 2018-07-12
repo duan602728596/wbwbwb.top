@@ -6,6 +6,7 @@ import { css } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
+import createInput from './createInput';
 
 @createForm()
 class Index extends Component{
@@ -26,19 +27,14 @@ class Index extends Component{
       getFieldError: Function
     } = this.props.form;
 
-    const usernameError: string[] = getFieldError('username');
-    const passwordError: string[] = getFieldError('password');
-
     return (
       <div className={ publicStyle.main }>
         {/* 登陆表单 */}
         <form className={ style.form } onSubmit={ this.handleFormSubmit }>
           <div className={ css(bootstrap['form-group'], style.group) }>
             <label htmlFor="username">用户名：</label>
-            <input className={ css(bootstrap['form-control'], usernameError ? bootstrap['is-invalid'] : null) }
-              id="username"
-              type="text"
-              { ...getFieldProps('username', {
+            {
+              createInput(this.props, 'username', {
                 rules: [
                   {
                     required: true,
@@ -46,44 +42,20 @@ class Index extends Component{
                     whitespace: true
                   }
                 ]
-              }) }
-            />
-            {
-              do{
-                if(usernameError){
-                  (
-                    <div className={ css(bootstrap['invalid-feedback'], style.invalid) }>
-                      { usernameError.join(', ') }
-                    </div>
-                  );
-                }
-              }
+              })(<input className={ bootstrap['form-control'] } id="username" type="text" />)
             }
           </div>
           <div className={ css(bootstrap['form-group'], style.group) }>
             <label htmlFor="password">密码：</label>
-            <input className={ css(bootstrap['form-control'], passwordError ? bootstrap['is-invalid'] : null) }
-              id="password"
-              type="password"
-              { ...getFieldProps('password', {
+            {
+              createInput(this.props, 'password', {
                 rules: [
                   {
                     required: true,
                     message: '请输入密码！'
                   }
                 ]
-              }) }
-            />
-            {
-              do{
-                if(passwordError){
-                  (
-                    <div className={ css(bootstrap['invalid-feedback'], style.invalid) }>
-                      { passwordError.join(', ') }
-                    </div>
-                  );
-                }
-              }
+              })(<input className={ bootstrap['form-control'] } id="password" type="password" />)
             }
           </div>
           <div className={ css(bootstrap['form-check'], style.checkGroup) }>

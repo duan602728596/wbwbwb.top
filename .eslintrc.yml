@@ -103,7 +103,7 @@ rules:
   space-before-blocks:                                # 强制在块之前使用一致的空格
     - error
     - never
-  space-before-function-paren:                        # 强制在 function的左括号之前使用一致的空格
+  space-before-function-paren:                        # 强制在 function 的左括号之前使用一致的空格
     - error
     - never
   space-infix-ops: error                              # 要求操作符周围有空格
