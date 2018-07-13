@@ -1,6 +1,5 @@
 /* 开发环境 服务器 */
 const Koa = require('koa');
-const Router = require('koa-router');
 const convert = require('koa-convert');
 const mime = require('mime-types');
 const middleware = require('./middleware');
