@@ -43,7 +43,8 @@ class Index extends Component{
       if(step4Data.retcode === 20000000){
         const storageData: string = JSON.stringify({
           username: formValue.username,
-          cookie: step4Data._cookie
+          cookie: step4Data._cookie,
+          time: new Date().getTime()
         });
         if(formValue['remember-password']){
           localStorage.setItem(USER_INFORMATION, storageData);
