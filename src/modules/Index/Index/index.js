@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { css, getUserInformation } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import isGoToLogin from '../../../components/isGoToLogin/isGoToLogin';
 import { username } from '../store/reducer';
+import CloseModal from './CloseModal';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -39,6 +40,11 @@ class Index extends Component{
     action: PropTypes.objectOf(PropTypes.func),
     history: PropTypes.object
   };
+  state: {
+    isModalDisplay: boolean
+  } = {
+    isModalDisplay: false // 弹出层的显示和隐藏
+  };
   
   componentDidMount(): void{
     isGoToLogin.call(this);
@@ -50,21 +56,50 @@ class Index extends Component{
       });
     }
   }
+  // 点击显示modal
+  handleModalDisplayClick(value: boolean, event: Event): void{
+    this.setState({
+      isModalDisplay: value
+    });
+  }
+  // 点击确认跳转
+  handleGoToLoginClick: Function = (event: Event): void=>{
+    this.props.history.push('/Login');
+  };
   render(): React.Element{
     return (
       <div className={ publicStyle.main }>
         {/* 显示用户名 */}
         <ul className={ css(bootstrap.breadcrumb, style.user) }>
           <li className={ bootstrap['breadcrumb-item'] }>
+            <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
             <b>用户：</b>
             { this.props.username }
           </li>
         </ul>
         {/* 菜单 */}
-        <nav className={ bootstrap.row }>
-          <div className={ bootstrap['col-3'] }>1</div>
-          <div className={ bootstrap['col-3'] }>1</div>
+        <nav className={ css(bootstrap.row, style.nav) }>
+          <div className={ css(bootstrap['col-4'], style.navCol) }>
+            <Link className={ style.navItem } to="/">
+              <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
+              <span className={ style.navItemText }>超话签到</span>
+            </Link>
+          </div>
+          <div className={ css(bootstrap['col-4'], style.navCol) }>
+            <a className={ style.navItem } onClick={ this.handleModalDisplayClick.bind(this, true) }>
+              <img className={ style.navItemImage } src={ require('./image/icon2.jpg') } />
+              <span className={ style.navItemText }>退出</span>
+            </a>
+          </div>
         </nav>
+        {/* 菜单 */}
+        {
+          do{
+            if(this.state.isModalDisplay === true){
+              <CloseModal onOk={ this.handleGoToLoginClick } onCancel={ this.handleModalDisplayClick.bind(this, false) } />;
+            }
+          }
+        }
       </div>
     );
   }
