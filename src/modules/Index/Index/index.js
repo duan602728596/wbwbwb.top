@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
+import QueueAnim from 'rc-queue-anim';
 import { css, getUserInformation } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
@@ -70,7 +71,7 @@ class Index extends Component{
     return (
       <div className={ publicStyle.main }>
         {/* 显示用户名 */}
-        <ul className={ css(bootstrap.breadcrumb, style.user) }>
+        <ul className={ css(bootstrap.breadcrumb, bootstrap['bg-primary'], style.user) }>
           <li className={ bootstrap['breadcrumb-item'] }>
             <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
             <b>用户：</b>
@@ -92,14 +93,19 @@ class Index extends Component{
             </a>
           </div>
         </nav>
-        {/* 菜单 */}
-        {
-          do{
-            if(this.state.isModalDisplay === true){
-              <CloseModal onOk={ this.handleGoToLoginClick } onCancel={ this.handleModalDisplayClick.bind(this, false) } />;
+        {/* 弹出层 */}
+        <QueueAnim type="alpha">
+          {
+            do{
+              if(this.state.isModalDisplay === true){
+                <CloseModal key="closeModal"
+                  onOk={ this.handleGoToLoginClick }
+                  onCancel={ this.handleModalDisplayClick.bind(this, false) }
+                />;
+              }
             }
           }
-        }
+        </QueueAnim>
       </div>
     );
   }
