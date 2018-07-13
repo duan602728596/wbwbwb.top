@@ -7,7 +7,10 @@ class Title extends Component{
   };
 
   componentDidMount(): void{
-    document.title = this.props.children;
+    const children: ?string = this?.props?.children || null;
+    if(children !== null){
+      document.title = this?.props?.children;
+    }
   }
   render(): null{
     return null;
