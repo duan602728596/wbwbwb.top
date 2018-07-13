@@ -1,5 +1,7 @@
 async function interface(file){
-  const initialState = {};
+  const initialState = {
+    time: new Date().getTime()
+  };
   switch(file){
     case '/Login':
 

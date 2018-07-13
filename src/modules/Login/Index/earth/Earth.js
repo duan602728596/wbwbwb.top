@@ -1,8 +1,10 @@
 /* webgl地球 */
 import React, { Component, createRef } from 'react';
 import * as THREE from 'three';
-import './OrbitControls';
+import orbitControls from './OrbitControls';
 import style from '../style.sass';
+
+const OrbitControls: Function = orbitControls(THREE);
 
 class Earth extends Component{
   element: Object = createRef();
@@ -11,7 +13,7 @@ class Earth extends Component{
   camera: ?THREE.PerspectiveCamera = null;  // 照相机
   renderer: ?THREE.WebGLRenderer = null;    // 渲染器
   earth: ?THREE.Mesh = null;                // 地球模型
-  controls: ?THREE.OrbitControls = null;          // 控制器
+  controls: ?THREE.OrbitControls = null;    // 控制器
 
   async componentDidMount(): void{
     try{
@@ -26,11 +28,19 @@ class Earth extends Component{
         z: 1
       });
       this.initRenderer();
-      this.controls = new THREE.OrbitControls(this.camera, this.element.current);
+      this.controls = new OrbitControls(this.camera, this.element.current);
+      this.controls.enabled = false;
       this.timer = requestAnimationFrame(this.animation);
     }catch(err){
       console.error(err);
     }
+  }
+  componentWillUnmount(): void{
+    this.controls.dispose();
+    this.renderer = null;
+    this.earth = null;
+    this.camera = null;
+    this.scene = null;
   }
   // 初始化环境光
   initSettingLight(): void{

@@ -14,7 +14,7 @@ function config(){
     output: {
       path: path.join(__dirname, '../build-server'),
       filename: '[name].js',
-      chunkFilename: '[name]_chunk_server.js',
+      chunkFilename: '[name].js',
       publicPath: '/',
       library: '[name]',
       libraryTarget: 'umd'

@@ -14,8 +14,8 @@ module.exports = config({
   },
   output: {
     path: path.join(__dirname, '../build'),
-    filename: 'script/[name]_[chunkhash].js',
-    chunkFilename: 'script/[name]_[chunkhash]_chunk.js',
+    filename: 'script/[name].[chunkhash].js',
+    chunkFilename: 'script/[name].[chunkhash].js',
     publicPath: '/'
   },
   module: {

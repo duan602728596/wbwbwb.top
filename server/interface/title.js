@@ -1,7 +1,7 @@
 function title(file){
   switch(file){
     case '/Login':
-      return '微博登陆';
+      return '登陆';
     default:
       return '';
   }

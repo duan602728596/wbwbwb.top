@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "koa": "^2.5.1",
+    "koa": "^2.5.2",
     "koa-compress": "^3.0.0",
     "koa-convert": "^1.2.0",
     "koa-router": "^7.4.0",
@@ -36,7 +36,7 @@
     "@babel/preset-env": "^7.0.0-beta.53",
     "@babel/preset-flow": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0-beta.53",
-    "babel-eslint": "^9.0.0-beta.2",
+    "babel-eslint": "^9.0.0-beta.3",
     "babel-loader": "^8.0.0-beta.4",
     "babel-preset-es2015": "^7.0.0-beta.3",
     "bootstrap": "^4.1.1",

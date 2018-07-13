@@ -17,7 +17,7 @@ module.exports = config({
   output: {
     path: path.join(__dirname, '../build'),
     filename: 'script/[name].js',
-    chunkFilename: 'script/[name]_chunk.js',
+    chunkFilename: 'script/[name].js',
     publicPath: '/'
   },
   devtool: 'cheap-module-source-map',
