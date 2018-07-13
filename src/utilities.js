@@ -55,3 +55,23 @@ export function jsonp(uri: string): Promise{
     document.body.appendChild(script);
   });
 }
+
+/* 获取用户信息 */
+export const USER_INFORMATION: string = 'userInformation';
+export function getUserInformation(): ?Object{
+  const lUserInformation: ?string = localStorage.getItem(USER_INFORMATION);
+  if(lUserInformation){
+    return JSON.parse(lUserInformation);
+  }
+  const sUserInformation: ?string = sessionStorage.getItem(USER_INFORMATION);
+  return sUserInformation ? JSON.parse(sUserInformation) : null;
+}
+
+/* 将对象转换成key=value格式 */
+export function stringify(obj: Object): string{
+  const arr: string[] = [];
+  for(const key: string in obj){
+    arr.push(`${ key }=${ obj[key] }`);
+  }
+  return arr.join('&');
+}

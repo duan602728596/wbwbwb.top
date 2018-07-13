@@ -1,24 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { createForm } from 'rc-form';
-import { css, jsonp } from '../../../utilities';
+import axios from 'axios';
+import { css, jsonp, USER_INFORMATION } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import createInputDecorator from './createInputDecorator';
 import message from './message';
 import Earth from './earth/Earth';
+import config from '../../../components/config/config';
 
+@withRouter
 @createForm()
 class Index extends Component{
   static propTypes: Object = {
-    form: PropTypes.object
+    form: PropTypes.object,
+    history: PropTypes.object
   };
   patternCallbackBind: ?Function = null;
 
+  componentDidMount(): void{
+    localStorage.removeItem(USER_INFORMATION);
+    sessionStorage.removeItem(USER_INFORMATION);
+  }
   // 登陆
   async login(formValue: Object, id: ?string): Promise<void>{
-    // 登陆
+    try{
+      const data: Object = {
+        username: formValue.username,
+        password: formValue.password
+      };
+      if(id) data.vid = id;
+      const step4: Object = await axios({
+        url: config.api['/sso/login'],
+        method: 'POST',
+        data
+      });
+      const step4Data: Object = step4.data;
+      
+      if(step4Data.retcode === 20000000){
+        const storageData: string = JSON.stringify({
+          username: formValue.username,
+          cookie: step4Data._cookie
+        });
+        if(formValue['remember-password']){
+          localStorage.setItem(USER_INFORMATION, storageData);
+        }else{
+          sessionStorage.setItem(USER_INFORMATION, storageData);
+        }
+        this.props.history.push('/Index');
+        message('success', '登陆成功！');
+      }else{
+        message('danger', `（${ step4Data.retcode }）${ step4Data.msg }`);
+      }
+    }catch(err){
+      console.error(err);
+      message('danger', '登陆失败！');
+    }
   }
   // 验证完毕后的毁掉函数
   async patternCallback(formValue: Object, id: string, event: Event): Promise<void>{
@@ -30,6 +70,7 @@ class Index extends Component{
       const uri: string = 'https://captcha.weibo.com/api/pattern/verify?ver=1.0.0&source=ssologin'
         + `&id=${ id }&usrname=${ username }&path_enc=${ pathEnc }&data_enc=${ dataEnc }`;
       const step3: Object = await jsonp(uri);
+      
       if(step3.code === '100000'){
         this.login(formValue, id);
       }else{
@@ -75,7 +116,6 @@ class Index extends Component{
   };
   render(): React.Element{
     const { getFieldProps }: { getFieldProps: Function } = this.props.form;
-
     return (
       <div className={ publicStyle.main }>
         {/* 登陆表单 */}
@@ -114,7 +154,7 @@ class Index extends Component{
               type="checkbox"
               { ...getFieldProps('remember-password') }
             />
-            <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">记住密码</label>
+            <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">七天内免登陆</label>
           </div>
           <button className={ css(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
         </form>

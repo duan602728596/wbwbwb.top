@@ -12,7 +12,7 @@ function message(type: string, text: string): void{
   Notification.newInstance({
     style: {
       position: 'absolute',
-      top: '20px',
+      top: '10px',
       left: 0,
       right: 0,
       textAlign: 'center'

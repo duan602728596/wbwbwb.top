@@ -36,6 +36,8 @@ class Earth extends Component{
     }
   }
   componentWillUnmount(): void{
+    cancelAnimationFrame(this.timer);
+    this.timer = null;
     this.controls.dispose();
     this.renderer = null;
     this.earth = null;
