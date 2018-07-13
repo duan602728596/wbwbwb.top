@@ -14,7 +14,34 @@ class Index extends Component{
   static propTypes: Object = {
     form: PropTypes.object
   };
+  patternCallbackBind: ?Function = null;
 
+  // 登陆
+  async login(formValue: Object, id: ?string): Promise<void>{
+    // 登陆
+  }
+  // 验证完毕后的毁掉函数
+  async patternCallback(formValue: Object, id: string, event: Event): Promise<void>{
+    try{
+      const data: Object = event.data;
+      const username: string = encodeURIComponent(formValue.username);
+      const pathEnc: string = encodeURIComponent(data.path_enc);
+      const dataEnc: string = encodeURIComponent(data.data_enc);
+      const uri: string = 'https://captcha.weibo.com/api/pattern/verify?ver=1.0.0&source=ssologin'
+        + `&id=${ id }&usrname=${ username }&path_enc=${ pathEnc }&data_enc=${ dataEnc }`;
+      const step3: Object = await jsonp(uri);
+      if(step3.code === '100000'){
+        this.login(formValue, id);
+      }else{
+        message('danger', `（${ step3.code }）${ step3.msg }`);
+      }
+    }catch(err){
+      console.error(err);
+      message('danger', '验证失败！');
+    }
+    document.removeEventListener('weibo-pattlock', this.patternCallbackBind);
+    this.patternCallbackBind = null;
+  }
   // 验证登陆是否需要验证码
   async prelogin(formValue: Object): Promise<void>{
     try{
@@ -26,11 +53,16 @@ class Index extends Component{
         const uri: string = 'https://captcha.weibo.com/api/pattern/get?'
           + `ver=1.0.0&source=ssologin&usrname=${ formValue.username }&line=160&side=100&radius=30&_rnd=${ Math.random() }`;
         const step2: Object = await jsonp(uri);
-        console.log(step2);
+        this.patternCallbackBind = this.patternCallback.bind(this, formValue, step2.id);
+        document.addEventListener('weibo-pattlock', this.patternCallbackBind, false);
+        hint(step2.path_enc, step2.id);
+      }else{
+        // 直接登陆
+        this.login(formValue);
       }
     }catch(err){
       console.error(err);
-      message('danger', '登陆失败！');
+      message('danger', '获取验证失败！');
     }
   }
   // 提交方法

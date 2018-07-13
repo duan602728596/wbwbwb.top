@@ -255,7 +255,7 @@
     if(imageUrl){
       const u = imageUrl.split('|');
       const bg = 'url(' + u[0] + ')';
-      const lock = Base64.decode(u[1]).split('_');
+      const lock = atob(u[1]).split('_'); // Base64.decode
       recombineShadow(bg, lock);
     }
   }
