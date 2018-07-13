@@ -1,0 +1,22 @@
+{
+  "name": "api.wbwbwb.top",
+  "scripts": {
+    "start": "./node_modules/.bin/supervisor -w ./lib ./lib/index.js",
+    "server": "node ./lib/index.js",
+    "eslint": "./node_modules/.bin/eslint lib",
+    "get-version": "node bin/get-version.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cookie": "^0.3.1",
+    "koa": "^2.5.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^9.0.0-beta.3",
+    "eslint": "^5.1.0",
+    "supervisor": "^0.12.0"
+  }
+}
