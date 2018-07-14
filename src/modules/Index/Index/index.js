@@ -46,7 +46,7 @@ class Index extends Component{
   } = {
     isModalDisplay: false // 弹出层的显示和隐藏
   };
-  
+
   componentDidMount(): void{
     isGoToLogin.call(this);
     // 获取用户名
