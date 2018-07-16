@@ -1,7 +1,7 @@
 /* 表单验证 */
 import React, { Component, cloneElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { css } from '../../../utilities';
+import classNames from 'classnames';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 
@@ -20,7 +20,9 @@ class InputItem extends Component{
     } = this.props;
 
     const newElement: React.Element = cloneElement(children, {
-      className: children.props.className + (errors ? ` ${ bootstrap['is-invalid'] }` : ''),
+      className: classNames(children.props.className, {
+        [bootstrap['is-invalid']]: errors
+      }),
       ref: fieldProps.ref,
       onChange: fieldProps.onChange
     });
@@ -31,7 +33,7 @@ class InputItem extends Component{
         {
           do{
             if(errors){
-              <div className={ css(bootstrap['invalid-feedback'], style.invalid) }>{ errors.join(', ') }</div>;
+              <div className={ classNames(bootstrap['invalid-feedback'], style.invalid) }>{ errors.join(', ') }</div>;
             }
           }
         }

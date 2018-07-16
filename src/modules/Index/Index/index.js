@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import QueueAnim from 'rc-queue-anim';
-import { css, getUserInformation } from '../../../utilities';
+import { getUserInformation } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
@@ -71,7 +71,7 @@ class Index extends Component{
     return (
       <div className={ publicStyle.main }>
         {/* 显示用户名 */}
-        <ul className={ css(bootstrap.breadcrumb, bootstrap['bg-primary'], style.user) }>
+        <ul className={ classNames(bootstrap.breadcrumb, bootstrap['bg-primary'], style.user) }>
           <li className={ bootstrap['breadcrumb-item'] }>
             <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
             <b>用户：</b>
@@ -79,14 +79,14 @@ class Index extends Component{
           </li>
         </ul>
         {/* 菜单 */}
-        <nav className={ css(bootstrap.row, style.nav) }>
-          <div className={ css(bootstrap['col-4'], style.navCol) }>
+        <nav className={ classNames(bootstrap.row, style.nav) }>
+          <div className={ classNames(bootstrap['col-4'], style.navCol) }>
             <Link className={ style.navItem } to="/">
               <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
               <span className={ style.navItemText }>超话签到</span>
             </Link>
           </div>
-          <div className={ css(bootstrap['col-4'], style.navCol) }>
+          <div className={ classNames(bootstrap['col-4'], style.navCol) }>
             <a className={ style.navItem } onClick={ this.handleModalDisplayClick.bind(this, true) }>
               <img className={ style.navItemImage } src={ require('./image/icon2.jpg') } />
               <span className={ style.navItemText }>退出</span>

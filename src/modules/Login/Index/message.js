@@ -1,7 +1,7 @@
 /* message */
 import React from 'react';
+import classNames from 'classnames';
 import Notification from 'rc-notification';
-import { css } from '../../../utilities';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 
@@ -20,7 +20,7 @@ function message(type: string, text: string): void{
     getContainer: (): Element => div
   }, (notification: Object): void=> {
     notification.notice({
-      content: <div className={ css(bootstrap.alert, bootstrap[`alert-${ type }`], style.message) } role="alert">{ text }</div>,
+      content: <div className={ classNames(bootstrap.alert, bootstrap[`alert-${ type }`], style.message) } role="alert">{ text }</div>,
       onClose: (): void=>{
         document.body.removeChild(div);
         div = null;

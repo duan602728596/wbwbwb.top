@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { createForm } from 'rc-form';
 import axios from 'axios';
-import { css, jsonp, USER_INFORMATION } from '../../../utilities';
+import { jsonp, USER_INFORMATION } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
@@ -122,7 +122,7 @@ class Index extends Component{
         {/* 登陆表单 */}
         <Earth />
         <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-          <div className={ css(bootstrap['form-group'], style.group) }>
+          <div className={ classNames(bootstrap['form-group'], style.group) }>
             <label htmlFor="username">用户名：</label>
             {
               createInputDecorator(this.props, 'username', {
@@ -136,7 +136,7 @@ class Index extends Component{
               })(<input className={ bootstrap['form-control'] } id="username" type="text" />)
             }
           </div>
-          <div className={ css(bootstrap['form-group'], style.group) }>
+          <div className={ classNames(bootstrap['form-group'], style.group) }>
             <label htmlFor="password">密码：</label>
             {
               createInputDecorator(this.props, 'password', {
@@ -149,7 +149,7 @@ class Index extends Component{
               })(<input className={ bootstrap['form-control'] } id="password" type="password" />)
             }
           </div>
-          <div className={ css(bootstrap['form-check'], style.checkGroup) }>
+          <div className={ classNames(bootstrap['form-check'], style.checkGroup) }>
             <input className={ bootstrap['form-check-input'] }
               id="remember-password"
               type="checkbox"
@@ -157,7 +157,7 @@ class Index extends Component{
             />
             <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">七天内免登陆</label>
           </div>
-          <button className={ css(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
+          <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
         </form>
       </div>
     );
