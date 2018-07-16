@@ -1,5 +1,5 @@
 const replaceTemplate = require('./replaceTemplate');
-const api = require('../interface/interface');
+const interfaces = require('../interface/interfaces');
 const title = require('../interface/title');
 
 // 清除模块缓存
@@ -13,7 +13,7 @@ function cleanRequireCache(module){
 
 // 渲染新的html
 async function preRender(html, file, context){
-  const initialState = await api(file);
+  const initialState = await interfaces(file);
   cleanRequireCache('../../build-server/server');
   const server = require('../../build-server/server').default;
   const render = server(file, context, initialState);

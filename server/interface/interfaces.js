@@ -1,13 +1,14 @@
-async function interface(file){
+async function interfaces(file){
   const initialState = {
     time: new Date().getTime()
   };
   
   switch(file){
     case '/Login':
-      break
+      break;
   }
+  
   return initialState;
 }
 
-module.exports = interface;
+module.exports = interfaces;

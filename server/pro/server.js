@@ -15,29 +15,6 @@ const router = new Router();
 const port = 5051;                                       // 配置端口
 const serverFile = path.join(__dirname, '/../../build'); // 文件夹地址
 
-/* index路由 */
-router.get(/^\/[^\.]*$/, async(ctx, next)=>{
-  const { status, body } = await readFile(serverFile + '/index.html');
-
-  ctx.status = status;
-  ctx.type = 'text/html';
-  ctx.body = await preRender(body, ctx.path, {});
-
-  await next();
-});
-
-/* 静态文件 */
-router.get(/^.*\.[^\.]+$/, async(ctx, next)=>{
-  const pathFile = ctx.path;
-  const { status, body } = await readFile(serverFile + pathFile);
-
-  ctx.status = status;
-  ctx.type = status === 200 ? mime.lookup(pathFile) : 'text/plain';
-  ctx.body = body;
-
-  await next();
-});
-
 /* gzip压缩 */
 app.use(compress({
   filter: function(content_type){
@@ -58,5 +35,28 @@ app.use(convert(
 app.use(router.routes())
   .use(router.allowedMethods());
 
+/* index路由 */
+router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
+  const { status, body } = await readFile(serverFile + '/index.html');
+
+  ctx.status = status;
+  ctx.type = 'text/html';
+  ctx.body = preRender(body, ctx.path, {});
+
+  await next();
+});
+
+/* 静态文件 */
+router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
+  const pathFile = ctx.path;
+  const { status, body } = await readFile(serverFile + pathFile);
+
+  ctx.status = status;
+  ctx.type = status === 200 ? mime.lookup(pathFile) : 'text/plain';
+  ctx.body = body;
+
+  await next();
+});
+
 app.listen(port);
-console.log('\x1B[32m%s\x1B[39m', `\nListening at http://localhost:${ port }\n`);
+console.log('\x1B[32m%s\x1B[39m', `\nListening at port:${ port }.\n`);
