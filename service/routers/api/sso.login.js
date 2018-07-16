@@ -8,7 +8,7 @@
 const queryString = require('querystring');
 const axios = require('axios');
 const cookie = require('cookie');
-const { ctxSetCookie } = require('../utils');
+const { ctxSetCookie } = require('../../utils');
 
 async function login(ctx, next){
   try{

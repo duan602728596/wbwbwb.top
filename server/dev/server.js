@@ -6,7 +6,7 @@ const body = require('koa-body');
 const mime = require('mime-types');
 const middleware = require('./middleware');
 const preRender = require('../utilities/preDevRender');
-const routers = require('../routers/routers');
+const routers = require('../../service/routers/routers');
 
 const app = new Koa();
 const router = new Router();

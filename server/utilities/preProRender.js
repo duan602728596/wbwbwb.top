@@ -1,6 +1,6 @@
 const replaceTemplate = require('./replaceTemplate');
 const server = require('../../build-server/server').default;
-const interfaces = require('../interface/interfaces');
+const interfaces = require('../../service/interface/interfaces');
 
 // 渲染新的html
 async function preRender(html, file, context){

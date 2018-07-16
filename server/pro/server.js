@@ -10,7 +10,7 @@ const body = require('koa-body');
 const mime = require('mime-types');
 const readFile = require('./readFile');
 const preRender = require('../utilities/preProRender');
-const routers = require('../routers/routers');
+const routers = require('../../service/routers/routers');
 
 const app = new Koa();
 const router = new Router();

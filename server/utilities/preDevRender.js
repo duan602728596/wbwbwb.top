@@ -1,5 +1,5 @@
 const replaceTemplate = require('./replaceTemplate');
-const interfaces = require('../interface/interfaces');
+const interfaces = require('../../service/interface/interfaces');
 
 // 清除模块缓存
 function cleanRequireCache(module){
