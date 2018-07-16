@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
+import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
 import { getUserInformation } from '../../../utilities';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';

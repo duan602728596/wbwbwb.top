@@ -27,7 +27,7 @@ router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
   await next();
   // 服务器端渲染
   if(ctx.type === 'text/html'){
-    ctx.body = preRender(ctx.body, file);
+    ctx.body = await preRender(ctx.body, file);
   }
 });
 
@@ -37,5 +37,5 @@ const server = app.listen(port, (err)=>{
     console.error(err);
     return false;
   }
-  console.log('\x1B[32m%s\x1B[39m', `\nListening at port:${ port }.\n`);
+  console.log('\x1B[32m%s\x1B[39m', `\nListening at port: ${ port }.\n`);
 });

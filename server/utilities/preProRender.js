@@ -1,7 +1,6 @@
 const replaceTemplate = require('./replaceTemplate');
 const server = require('../../build-server/server').default;
 const interfaces = require('../interface/interfaces');
-const title = require('../interface/title');
 
 // 渲染新的html
 async function preRender(html, file, context){
@@ -9,7 +8,7 @@ async function preRender(html, file, context){
   const render = server(file, context, initialState);
   return replaceTemplate(html.toString(), {
     render,
-    title: title(file),
+    title: initialState.title,
     initialState: JSON.stringify(initialState)
   });
 }

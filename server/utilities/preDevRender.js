@@ -1,6 +1,5 @@
 const replaceTemplate = require('./replaceTemplate');
 const interfaces = require('../interface/interfaces');
-const title = require('../interface/title');
 
 // 清除模块缓存
 function cleanRequireCache(module){
@@ -17,9 +16,10 @@ async function preRender(html, file, context){
   cleanRequireCache('../../build-server/server');
   const server = require('../../build-server/server').default;
   const render = server(file, context, initialState);
+  
   return replaceTemplate(html.toString(), {
     render,
-    title: title(file),
+    title: initialState.title,
     initialState: JSON.stringify(initialState)
   });
 }
