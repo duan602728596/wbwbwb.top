@@ -15,6 +15,12 @@ class Earth extends Component{
   earth: ?THREE.Mesh = null;                // 地球模型
   controls: ?THREE.OrbitControls = null;    // 控制器
 
+  state: {
+    noWebGl: boolean
+  } = {
+    noWebGl: false // 是否可以用webgl
+  };
+
   async componentDidMount(): void{
     try{
       this.initScene();
@@ -33,6 +39,9 @@ class Earth extends Component{
       this.timer = requestAnimationFrame(this.animation);
     }catch(err){
       console.error(err);
+      this.setState({
+        noWebGl: true
+      });
     }
   }
   componentWillUnmount(): void{
@@ -100,7 +109,15 @@ class Earth extends Component{
   };
   render(): React.Element{
     return (
-      <div ref={ this.element } className={ style.earth } />
+      <div ref={ this.element } className={ style.earth }>
+        {
+          do{
+            if(this.state.noWebGl === true){
+              <img className={ style.noWebGl } src={ require('./earth-no-webgl.png') } />;
+            }
+          }
+        }
+      </div>
     );
   }
 }

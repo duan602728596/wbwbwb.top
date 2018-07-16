@@ -2,13 +2,17 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const convert = require('koa-convert');
+const body = require('koa-body');
 const mime = require('mime-types');
 const middleware = require('./middleware');
 const preRender = require('../utilities/preDevRender');
+const routers = require('../routers/routers');
 
 const app = new Koa();
 const router = new Router();
 const port = 5050; // 配置端口
+
+app.use(body());
 
 /* router */
 app.use(router.routes())
@@ -30,6 +34,8 @@ router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
     ctx.body = await preRender(ctx.body, file);
   }
 });
+
+routers(router);
 
 /* 端口监听 */
 const server = app.listen(port, (err)=>{

@@ -6,7 +6,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
-import { getUserInformation } from '../../../utilities';
+import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';

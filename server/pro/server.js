@@ -6,9 +6,11 @@ const Router = require('koa-router');
 const convert = require('koa-convert');
 const compress = require('koa-compress');
 const staticCache = require('koa-static-cache');
+const body = require('koa-body');
 const mime = require('mime-types');
 const readFile = require('./readFile');
 const preRender = require('../utilities/preProRender');
+const routers = require('../routers/routers');
 
 const app = new Koa();
 const router = new Router();
@@ -30,6 +32,8 @@ app.use(convert(
     maxAge: 60 * 60 * 24 * 365
   })
 ));
+
+app.use(body());
 
 /* router */
 app.use(router.routes())
@@ -57,6 +61,8 @@ router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
 
   await next();
 });
+
+routers(router);
 
 app.listen(port);
 console.log('\x1B[32m%s\x1B[39m', `\nListening at port: ${ port }.\n`);

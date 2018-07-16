@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 import { createForm } from 'rc-form';
 import axios from 'axios';
-import { jsonp, USER_INFORMATION } from '../../../utilities';
+import { jsonp, USER_INFORMATION } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
