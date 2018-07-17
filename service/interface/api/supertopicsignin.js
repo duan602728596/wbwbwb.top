@@ -13,7 +13,7 @@ module.exports = async function(ctx){
     });
 
     signId = data.data.cardlistInfo.since_id;
-    cards = data.data.cards;
+    cards = data.data.cards[0].card_group;
   }
 
   return {
