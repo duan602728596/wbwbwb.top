@@ -11,11 +11,11 @@ function cleanRequireCache(module){
 }
 
 // 渲染新的html
-async function preRender(html, file, context){
-  const initialState = await interfaces(file);
+async function preRender(html, file, ctx){
+  const initialState = await interfaces(file, ctx);
   cleanRequireCache('../../build-server/server');
   const server = require('../../build-server/server').default;
-  const render = server(file, context, initialState);
+  const render = server(file, {}, initialState);
   
   return replaceTemplate(html.toString(), {
     render,

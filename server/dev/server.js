@@ -31,7 +31,7 @@ router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
   await next();
   // 服务器端渲染
   if(ctx.type === 'text/html'){
-    ctx.body = await preRender(ctx.body, file);
+    ctx.body = await preRender(ctx.body, file, ctx);
   }
 });
 

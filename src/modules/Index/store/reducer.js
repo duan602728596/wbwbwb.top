@@ -2,18 +2,25 @@ import { createAction, handleActions } from 'redux-actions';
 import { fromJS } from 'immutable';
 
 const initData: {
-  username: string
+  username: string,
+  cookie: string
 } = {
-  username: ''
+  username: '',
+  cookie: ''
 };
 
 /* Action */
-export const username: Function = createAction('用户名');
+export const username: Function = createAction('用户名和cookie');
 
 /* reducer */
 const reducer: Function = handleActions({
   [username]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    return $$state.set('username', action.payload.username);
+    const { username, cookie }: {
+      username: string,
+      cookie: string
+    } = action.payload;
+    return $$state.set('username', username)
+      .set('cookie', cookie);
   }
 }, fromJS(initData));
 

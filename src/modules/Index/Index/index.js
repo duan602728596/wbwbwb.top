@@ -6,11 +6,10 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
-import { getUserInformation } from '../../../utils';
+import { getUserInformation, stringify } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
-import isGoToLogin from '../../../components/isGoToLogin/isGoToLogin';
 import { username } from '../store/reducer';
 import CloseModal from './CloseModal';
 
@@ -23,6 +22,10 @@ const state: Function = createStructuredSelector({
   username: createSelector( // 用户名
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
     ($$data: ?Immutable.Map): string => $$data ? $$data.get('username') : ''
+  ),
+  cookie: createSelector(   // cookie
+    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
+    ($$data: ?Immutable.Map): string => $$data ? $$data.get('cookie') : ''
   )
 });
 
@@ -49,12 +52,15 @@ class Index extends Component{
   };
 
   componentDidMount(): void{
-    isGoToLogin.call(this);
     // 获取用户名
     const infor: ?Object = getUserInformation();
     if(infor !== null){
       this.props.action.username({
-        username: infor.username
+        username: infor.username,
+        cookie: stringify({
+          username: infor.username,
+          ...infor.cookie
+        })
       });
     }
   }
@@ -69,6 +75,10 @@ class Index extends Component{
     this.props.history.push('/Login');
   };
   render(): React.Element{
+    const { username, cookie }: {
+      username: string,
+      cookie: string
+    } = this.props;
     return (
       <div className={ publicStyle.main }>
         {/* 显示用户名 */}
@@ -76,13 +86,13 @@ class Index extends Component{
           <li className={ bootstrap['breadcrumb-item'] }>
             <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
             <b>用户：</b>
-            { this.props.username }
+            { username }
           </li>
         </ul>
         {/* 菜单 */}
         <nav className={ classNames(bootstrap.row, style.nav) }>
           <div className={ classNames(bootstrap['col-4'], style.navCol) }>
-            <Link className={ style.navItem } to="/">
+            <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?${ cookie }` }` }>
               <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
               <span className={ style.navItemText }>超话签到</span>
             </Link>

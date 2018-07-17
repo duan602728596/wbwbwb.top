@@ -26,12 +26,7 @@ async function login(ctx, next){
     });
     
     const setCookie = cookie.parse(res.headers['set-cookie'].join('; '));
-    const resCookie = {
-      SUB: setCookie.SUB,
-      SUHB: setCookie.SUHB,
-      SSOLoginState: setCookie.SSOLoginState,
-      login: setCookie.login
-    };
+    const resCookie = setCookie;
     ctxSetCookie(ctx, resCookie);
     
     ctx.status = res.status;

@@ -45,7 +45,7 @@ router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
 
   ctx.status = status;
   ctx.type = 'text/html';
-  ctx.body = await preRender(body, ctx.path, {});
+  ctx.body = await preRender(body, ctx.path, ctx);
 
   await next();
 });
