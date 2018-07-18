@@ -78,18 +78,13 @@ class SuperTopicSignIn extends Component{
   }
   // 加载数据
   handleLoadSuperTopicList: Function = async(event: Event): Promise<void>=>{
+    this.setState({
+      loading: true
+    });
     const { cards, sinceId }: {
       cards: [],
       sinceId: ?string
     } = this.props;
-    
-    if(sinceId === 'END'){
-      message('warning', '已经没有数据了！');
-      return void 0;
-    }
-    this.setState({
-      loading: true
-    });
     try{
       const res: Object = await this.getSuperTopicList(encodeURI(sinceId));
       const { data }: { data: Object } = res;
