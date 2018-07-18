@@ -146,13 +146,19 @@ class SuperTopicSignIn extends Component{
         {/* list */}
         <QueueAnim className={ classNames(bootstrap['list-group'], style.superTopicList) } duration={ 200 } interval={ 50 }>
           { this.superTopicListView() }
-          <button className={ classNames(bootstrap.btn, bootstrap['btn-block'], bootstrap['btn-outline-info'], style.loadData) }
-            type="button"
-            disabled={ loading }
-            onClick={ this.handleLoadSuperTopicList }
-          >
-            { loading ? '加载中...' : '加载数据' }
-          </button>
+          {
+            do{
+              if(this.props.sinceId !== 'END'){
+                <button className={ classNames(bootstrap.btn, bootstrap['btn-block'], bootstrap['btn-outline-info'], style.loadData) }
+                  type="button"
+                  disabled={ loading }
+                  onClick={ this.handleLoadSuperTopicList }
+                >
+                  { loading ? '加载中...' : '加载数据' }
+                </button>;
+              }
+            }
+          }
         </QueueAnim>
       </div>
     );
