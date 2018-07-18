@@ -3,14 +3,7 @@
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super&since_id=
  */
 const axios = require('axios');
-
-function queryToArray(query){
-  const cookie = [];
-  for(const key in query){
-    cookie.push(`${ key }=${ query[key] }`);
-  }
-  return cookie;
-}
+const { queryToArray } = require('../../utils');
 
 async function getChaohuaList(ctx, next){
   try{
