@@ -50,7 +50,7 @@
       + '.pattern:after { content: \'\\200B\'; display: block; height: 0; clear: both; }\n'
       + '.pattern-children { float: left; width: 32px; height: 32px; }\n'
       + '.pattern-canvas { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; height: 100%; }'
-      + '.pattern-close { position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; border: none; border-radius: 200px; background-color: #fff; -webkit-appearance: none; font-size: 14px; cursor: pointer; }'
+      + '.pattern-close { position: absolute; top: 20px; right: 20px; padding: 10px 15px; border: none; border-radius: 200px; background-color: #fff; -webkit-appearance: none; font-size: 14px; cursor: pointer; }'
       + '.pattern-svg { margin: 5px 0 0; opacity: .6; }';
     var styleElement = _document.createElement('style');
     styleElement.innerHTML = style;
