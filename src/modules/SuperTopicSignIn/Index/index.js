@@ -44,6 +44,8 @@ class SuperTopicSignIn extends Component{
   } = {
     loading: false // 是否加载
   };
+  clickLen: number = 0;  // 点击次数
+  timer: ?number = null; // 定时器
 
   componentDidMount(): void{
     if(this.props.sinceId === null){
@@ -73,8 +75,41 @@ class SuperTopicSignIn extends Component{
     });
   }
   // sheme
-  sheme(scheme: string): string{
-    return scheme.match(/containerid=[a-zA-Z0-9]+/)[0];
+  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0];
+  // 重新加载所有的超话列表
+  async getAllSuperTopicList(): Promise<void>{
+    this.setState({
+      loading: true
+    });
+    try{
+      const cards: [] = [];
+      let isBreak: boolean = false;
+      let sinceId: ?string = null;
+      while(isBreak === false){
+        const res: Object = await this.getSuperTopicList(sinceId);
+        const { data }: { data: Object } = res;
+        const { cardlistInfo }: { cardlistInfo: Object } = data.data;
+        const cards2: [] = data.data.cards[0].card_group;
+        cards.push(...cards2);
+        if('since_id' in cardlistInfo){
+          sinceId = cardlistInfo.since_id;
+        }else{
+          sinceId = 'END';
+          isBreak = true;
+        }
+      }
+      this.props.action.superTopic({
+        sinceId,
+        cards
+      });
+      message('success', '数据加载成功！');
+    }catch(err){
+      console.error(err);
+      message('danger', '数据加载失败！');
+    }
+    this.setState({
+      loading: false
+    });
   }
   // 加载数据
   handleLoadSuperTopicList: Function = async(event: Event): Promise<void>=>{
@@ -102,6 +137,22 @@ class SuperTopicSignIn extends Component{
     this.setState({
       loading: false
     });
+  };
+  // 连续点击三次的事件
+  handleThreeClick: Function = (event: Event): void=>{
+    if(this.timer !== null){
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+    this.clickLen += 1;
+    if(this.clickLen === 3){
+      this.clickLen = 0;
+      this.getAllSuperTopicList();
+    }else{
+      this.timer = setTimeout((): void=>{
+        this.clickLen = 0;
+      }, 2000);
+    }
   };
   // 渲染超话列表
   superTopicListView(): React.ChildrenArray<React.Element>{
@@ -135,7 +186,12 @@ class SuperTopicSignIn extends Component{
             <li className={ bootstrap['breadcrumb-item'] }>
               <Link to="/Index">微博自动签到系统</Link>
             </li>
-            <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) } aria-current="page">超级话题签到</li>
+            <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) }
+              aria-current="page"
+              onClick={ this.handleThreeClick }
+            >
+              超级话题签到
+            </li>
           </ol>
         </nav>
         {/* list */}
