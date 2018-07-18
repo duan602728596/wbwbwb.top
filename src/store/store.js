@@ -10,12 +10,14 @@ const reducer: Function = createReducer({});
 /* 中间件 */
 const middlewares: Function = applyMiddleware(thunk);
 
+let store: ?Object = null;
+
 function storeFactory(initialState: ?Object): Object{
   /* initialState */
   const $$initialState: Immutable.Map = Map(fromJS(initialState));
 
   /* store */
-  const store: Object = createStore(reducer, $$initialState, compose(middlewares));
+  store = createStore(reducer, $$initialState, compose(middlewares));
   store.asyncReducers = {};
 
   return store;

@@ -1,10 +1,10 @@
 const axios = require('axios');
-const { apiUri } = require('../../utils');
+const { apiUri } = require('../../config');
 
 module.exports = async function(ctx){
   const { querystring } = ctx.request;
   let cards = [];
-  let signId = null;
+  let sinceId = null;
 
   if(querystring.length > 0){
     const { data } = await axios({
@@ -12,7 +12,8 @@ module.exports = async function(ctx){
       method: 'GET'
     });
 
-    signId = data.data.cardlistInfo.since_id;
+    const { cardlistInfo } = data.data;
+    sinceId = 'since_id' in cardlistInfo ? cardlistInfo.since_id : 'END';
     cards = data.data.cards[0].card_group;
   }
 
@@ -20,7 +21,7 @@ module.exports = async function(ctx){
     title: '超级话题签到',
     superTopicSignIn: {
       cards,
-      signId
+      sinceId
     }
   };
 };

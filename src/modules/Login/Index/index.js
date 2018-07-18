@@ -9,9 +9,8 @@ import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import createInputDecorator from './createInputDecorator';
-import message from './message';
+import message from '../../../components/message/message';
 import Earth from './earth/Earth';
-import config from '../../../components/config/config';
 
 @withRouter
 @createForm()
@@ -35,7 +34,7 @@ class Index extends Component{
       };
       if(id) data.vid = id;
       const step4: Object = await axios({
-        url: config.api['/sso/login'],
+        url: '/sso/login',
         method: 'POST',
         data
       });

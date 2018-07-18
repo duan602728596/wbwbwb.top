@@ -5,6 +5,5 @@ function ctxSetCookie(ctx, cookie){
 }
 
 module.exports = {
-  ctxSetCookie,
-  apiUri: 'http://localhost:5050'
+  ctxSetCookie
 };

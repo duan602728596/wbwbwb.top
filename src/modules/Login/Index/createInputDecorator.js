@@ -53,9 +53,7 @@ function createInputDecorator(props: Object, key: string, options: Object = {}):
     const fieldProps: Object = getFieldProps(key, options);
 
     return (
-      <InputItem errors={ errors } fieldProps={ fieldProps }>
-        { element }
-      </InputItem>
+      <InputItem errors={ errors } fieldProps={ fieldProps }>{ element }</InputItem>
     );
   };
 }

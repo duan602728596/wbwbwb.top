@@ -3,10 +3,10 @@ import { fromJS, List } from 'immutable';
 
 const initData: {
   cards: Immutable.Map,
-  signId: ?string
+  sinceId: ?string
 } = {
   cards: List([]),
-  signId: null
+  sinceId: null
 };
 
 /* Action */
@@ -15,12 +15,12 @@ export const superTopic: Function = createAction('超级话题列表');
 /* reducer */
 const reducer: Function = handleActions({
   [superTopic]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    const { cards, signId }: {
+    const { cards, sinceId }: {
       cards: [],
-      signId: ?string
+      sinceId: ?string
     } = action.payload;
     return $$state.set('cards', List(cards))
-      .set('signId', signId);
+      .set('sinceId', sinceId);
   }
 }, fromJS(initData));
 

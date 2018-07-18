@@ -2,7 +2,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Notification from 'rc-notification';
-import bootstrap from '../../../components/publicStyle/bootstrap.sass';
+import bootstrap from '../publicStyle/bootstrap.sass';
 import style from './style.sass';
 
 function message(type: string, text: string): void{

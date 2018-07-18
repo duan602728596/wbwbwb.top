@@ -17,8 +17,8 @@ async function getChaohuaList(ctx, next){
     const { query } = ctx.request;
     const cookieString = queryToArray(query);
     let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
-    if('sign_id' in query){
-      uri += `since_id=${ query.sign_id }`;
+    if('since_id' in query){
+      uri += `&since_id=${ query.since_id }`;
     }
 
     const res = await axios({

@@ -10,7 +10,7 @@ const initData: {
 };
 
 /* Action */
-export const username: Function = createAction('用户名和cookie');
+export const username: Function = createAction('获取用户名和cookie');
 
 /* reducer */
 const reducer: Function = handleActions({
