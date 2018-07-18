@@ -54,6 +54,7 @@
       + '.pattern-svg { margin: 5px 0 0; opacity: .6; }';
     var styleElement = _document.createElement('style');
     styleElement.innerHTML = style;
+    styleElement.id = 'weibo-pattlock-style';
     styleElement.setAttribute('data-pattlock', new Date().getTime());
     _document.head.appendChild(styleElement);
     styleElement = null;
@@ -213,6 +214,7 @@
     canvas = null;
     ctx = null;
     _document.body.removeChild(_document.getElementById('pattern-dialog'));
+    _document.head.removeChild(_document.getElementById('weibo-pattlock-style'));
   }
 
   function initFunction(){
@@ -247,6 +249,7 @@
    * @param { string } id      : id
    */
   function hint(imageUrl, id){
+    initStyle();
     initDom();
     initArgv();
     initCanvas();
@@ -261,6 +264,5 @@
   }
 
   /* 初始化函数 */
-  initStyle();
   _window.hint = hint;
 })(document, window);
