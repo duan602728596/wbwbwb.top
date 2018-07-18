@@ -13,7 +13,8 @@
     "yarni": "yarn install --production=true",
     "server": "node ./server/pro/server",
     "eslint": "./node_modules/.bin/eslint src",
-    "get-version": "node bin/get-version.js"
+    "get-version": "node ./bin/get-version.js",
+    "find": "node ./bin/find.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
