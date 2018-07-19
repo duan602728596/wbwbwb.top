@@ -132,6 +132,33 @@ class SuperTopicSignIn extends Component{
       }, 2000);
     }
   };
+  // 签到所有
+  handleQiandaoAllClick: Function = async(event: Event): Promise<void>=>{
+    this.setState({
+      loading: true
+    });
+    try{
+      const { cards, qiandaoIdList }: {
+        cards: [],
+        qiandaoIdList: string[]
+      } = this.props;
+      for(let i: number = 0, j: number = cards.length; i < j; i++){
+        const item: Object = cards[i];
+        if(item.card_type === 8){
+          const containerid: string = this.sheme(item.scheme);
+          if(!qiandaoIdList.includes(containerid)){
+            await this.handleQiandaoClick(containerid, item);
+          }
+        }
+      }
+      message('success', '一键签到成功！');
+    }catch(err){
+      console.error(err);
+    }
+    this.setState({
+      loading: false
+    });
+  };
   // 签到
   async handleQiandaoClick(containerid: string, item: Object, event: Event): void{
     try{
@@ -195,6 +222,7 @@ class SuperTopicSignIn extends Component{
   // 渲染超话列表
   superTopicListView(): React.ChildrenArray<React.Element>{
     const { qiandaoIdList }: { qiandaoIdList: string[] } = this.props;
+    const { loading }: { loading: boolean } = this.state;
     return this.props.cards.map((item: Object, index: number): React.Element=>{
       if(item.card_type === 8){
         const containerid: string = this.sheme(item.scheme);
@@ -230,6 +258,7 @@ class SuperTopicSignIn extends Component{
               isQiandao ? null : (
                 <button className={ classNames(bootstrap.btn, bootstrap['btn-primary'], bootstrap['btn-sm'], style.qiandao) }
                   type="button"
+                  disabled={ loading }
                   onClick={ this.handleQiandaoClick.bind(this, containerid, item) }
                 >
                   签到
@@ -260,6 +289,19 @@ class SuperTopicSignIn extends Component{
         </nav>
         {/* list */}
         <QueueAnim className={ classNames(bootstrap['list-group'], style.superTopicList) } duration={ 200 } interval={ 50 }>
+          {
+            do{
+              if(this.props.cards.length > 0){
+                <button className={ classNames(bootstrap.btn, bootstrap['btn-block'], bootstrap['btn-warning'], style.qiandaoAll) }
+                  type="button"
+                  disabled={ loading }
+                  onClick={ this.handleQiandaoAllClick }
+                >
+                  一键签到
+                </button>;
+              }
+            }
+          }
           { this.superTopicListView() }
           {
             do{
