@@ -187,7 +187,7 @@ class SuperTopicSignIn extends Component{
       }
     }catch(err){
       console.error(err);
-      message('danger', '签到失败！');
+      message('danger', `${ item.title_sub }（${ containerid }）签到失败！`);
     }
   }
   // 加载数据
@@ -234,7 +234,7 @@ class SuperTopicSignIn extends Component{
             bootstrap['align-items-start'],
             style.listItem)
           }>
-            <img className={ style.pic } src={ item.pic } />
+            <img className={ classNames(bootstrap['position-absolute'], style.pic) } src={ item.pic } />
             <div className={ classNames(bootstrap['d-flex'], bootstrap['justify-content-between'], style.content) }>
               <h5 className={ classNames(bootstrap['mb-1'], bootstrap['text-primary'], style.title) }>
                 { item.title_sub }
@@ -256,10 +256,10 @@ class SuperTopicSignIn extends Component{
             <p className={ classNames(bootstrap['mb-1'], style.text) }>{ item.desc2 }</p>
             {
               isQiandao ? null : (
-                <button className={ classNames(bootstrap.btn, bootstrap['btn-primary'], bootstrap['btn-sm'], style.qiandao) }
+                <button className={ classNames(bootstrap.btn, bootstrap['btn-primary'], bootstrap['btn-sm'], style.qiandao)}
                   type="button"
                   disabled={ loading }
-                  onClick={ this.handleQiandaoClick.bind(this, containerid, item) }
+                  onClick={ this.handleQiandaoClick.bind(this, containerid, item)}
                 >
                   签到
                 </button>
