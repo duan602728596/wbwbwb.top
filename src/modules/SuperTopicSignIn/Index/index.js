@@ -80,13 +80,12 @@ class SuperTopicSignIn extends Component{
       console.error(err);
     });
   }
-  // sheme
-  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0];
   // 重新加载所有的超话列表
   async getAllSuperTopicList(): Promise<void>{
     this.setState({
       loading: true
     });
+    message('info', '正在加载所有数据。');
     try{
       const cards: [] = [];
       let isBreak: boolean = false;
@@ -117,6 +116,22 @@ class SuperTopicSignIn extends Component{
       loading: false
     });
   }
+  // 连续点击三次的事件
+  handleThreeClick: Function = (event: Event): void=>{
+    if(this.timer !== null){
+      clearTimeout(this.timer);
+      this.timer = null;
+    }
+    this.clickLen += 1;
+    if(this.clickLen === 3){
+      this.clickLen = 0;
+      this.getAllSuperTopicList();
+    }else{
+      this.timer = setTimeout((): void=>{
+        this.clickLen = 0;
+      }, 2000);
+    }
+  };
   // 签到
   async handleQiandaoClick(containerid: string, item: Object, event: Event): void{
     try{
@@ -175,22 +190,8 @@ class SuperTopicSignIn extends Component{
       loading: false
     });
   };
-  // 连续点击三次的事件
-  handleThreeClick: Function = (event: Event): void=>{
-    if(this.timer !== null){
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    this.clickLen += 1;
-    if(this.clickLen === 3){
-      this.clickLen = 0;
-      this.getAllSuperTopicList();
-    }else{
-      this.timer = setTimeout((): void=>{
-        this.clickLen = 0;
-      }, 2000);
-    }
-  };
+  // sheme
+  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0];
   // 渲染超话列表
   superTopicListView(): React.ChildrenArray<React.Element>{
     const { qiandaoIdList }: { qiandaoIdList: string[] } = this.props;
