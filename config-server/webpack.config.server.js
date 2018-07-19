@@ -9,7 +9,7 @@ function config(){
   const conf = {
     mode: process.env.NODE_ENV,
     entry: {
-      server: path.join(__dirname, '../src/AppServer.js')
+      server: [path.join(__dirname, '../src/AppServer.js')]
     },
     output: {
       path: path.join(__dirname, '../build-server'),

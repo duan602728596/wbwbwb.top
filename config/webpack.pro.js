@@ -9,9 +9,6 @@ const sassConfig = require('./sass.config');
 
 /* 合并配置 */
 module.exports = config({
-  entry: {
-    app: path.join(__dirname, '../src/app.js')
-  },
   output: {
     path: path.join(__dirname, '../build'),
     filename: 'script/[name].[chunkhash].js',
