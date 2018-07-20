@@ -43,7 +43,9 @@ class Index extends Component{
     time: PropTypes.number,
     username: PropTypes.string,
     action: PropTypes.objectOf(PropTypes.func),
-    history: PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
   };
   state: {
     isModalDisplay: boolean

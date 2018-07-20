@@ -9,7 +9,9 @@ import Index from './Index/index';
 @withRouter
 class ModuleLayout extends Component{
   static propTypes: Object = {
-    history: PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
   };
 
   componentDidMount(): void{

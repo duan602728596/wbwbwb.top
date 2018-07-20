@@ -17,7 +17,9 @@ import Earth from './earth/Earth';
 class Index extends Component{
   static propTypes: Object = {
     form: PropTypes.object,
-    history: PropTypes.object
+    history: PropTypes.object,
+    location: PropTypes.object,
+    match: PropTypes.object
   };
   patternCallbackBind: ?Function = null;
 
