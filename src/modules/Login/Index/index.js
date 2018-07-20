@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import classNames from 'classnames';
 import { createForm } from 'rc-form';
 import axios from 'axios';
@@ -63,7 +64,7 @@ class Index extends Component{
       message('danger', '登陆失败！');
     }
   }
-  // 验证完毕后的毁掉函数
+  // 验证完毕后的回调函数
   async patternCallback(formValue: Object, id: string, event: Event): Promise<void>{
     try{
       const data: Object = event.data;
@@ -117,10 +118,13 @@ class Index extends Component{
       this.prelogin(value);
     });
   };
-  render(): React.Element{
+  render(): React.ChildrenArray<React.Element>{
     const { getFieldProps }: { getFieldProps: Function } = this.props.form;
-    return (
-      <div className={ classNames(publicStyle.main, bootstrap['d-flex'], style.loginMain) }>
+    return [
+      <Helmet key="helmet">
+        <title>登陆 - 微博签到系统</title>
+      </Helmet>,
+      <div key="element" className={ classNames(publicStyle.main, bootstrap['d-flex'], style.loginMain) }>
         <div className={ style.content }>
           {/* 登陆表单 */}
           <Earth />
@@ -152,13 +156,18 @@ class Index extends Component{
                 })(<input className={ bootstrap['form-control'] } id="password" type="password" />)
               }
             </div>
-            <div className={ classNames(bootstrap['form-check'], style.checkGroup) }>
-              <input className={ bootstrap['form-check-input'] }
-                id="remember-password"
-                type="checkbox"
-                { ...getFieldProps('remember-password') }
-              />
-              <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">七天内免登陆</label>
+            <div className={ classNames(bootstrap['form-check'], style.checkGroup, 'clearfix') }>
+              <div className={ bootstrap['float-left'] }>
+                <input className={ bootstrap['form-check-input'] }
+                  id="remember-password"
+                  type="checkbox"
+                  { ...getFieldProps('remember-password') }
+                />
+                <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">七天内免登陆</label>
+              </div>
+              <div className={ bootstrap['float-right'] }>
+                <Link to="/Login/Description">网站说明</Link>
+              </div>
             </div>
             <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
           </form>
@@ -177,7 +186,7 @@ class Index extends Component{
           </span>
         </footer>
       </div>
-    );
+    ];
   }
 }
 

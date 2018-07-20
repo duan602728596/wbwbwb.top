@@ -14,7 +14,7 @@ function pathAnalyze(file){
 async function interfaces(file, ctx){
   const initialState = {
     time: new Date().getTime(),
-    title: '微博自动签到系统'
+    title: '微博签到系统'
   };
   const filePath = path.resolve(__dirname, 'api', `${ pathAnalyze(file) }.js`);
   const api = fs.existsSync(filePath) ? await require(filePath)(ctx) : {};

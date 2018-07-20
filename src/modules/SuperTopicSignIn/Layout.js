@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
-import { Helmet } from 'react-helmet';
+import Helmet from 'react-helmet';
 import isGoToLogin from '../../components/isGoToLogin/isGoToLogin';
 import Index from './Index/index';
 

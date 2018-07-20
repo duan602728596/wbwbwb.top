@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import Helmet from 'react-helmet';
 import isGoToLogin from '../../components/isGoToLogin/isGoToLogin';
 import Index from './Index/index';
 
@@ -20,7 +20,7 @@ class ModuleLayout extends Component{
   render(): React.childrenArray<React.Element>{
     return [
       <Helmet key="helmet">
-        <title>微博自动签到系统</title>
+        <title>微博签到系统</title>
       </Helmet>,
       <Switch key="route">
         <Route path="/" component={ Index } exact={ true } />
