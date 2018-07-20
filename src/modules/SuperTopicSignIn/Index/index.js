@@ -183,11 +183,11 @@ class SuperTopicSignIn extends Component{
         }
       }else{
         // 其他情况
-        message('danger', `${ item.title_sub }（${ containerid }: ${ data.code }）签到失败！`);
+        message('danger', `${ item.title_sub }（ErrorCode: ${ data.code }）：签到失败！`);
       }
     }catch(err){
       console.error(err);
-      message('danger', `${ item.title_sub }（${ containerid }）签到失败！`);
+      message('danger', `${ item.title_sub }：签到失败！`);
     }
   }
   // 加载数据
