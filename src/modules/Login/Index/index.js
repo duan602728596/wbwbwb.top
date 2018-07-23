@@ -93,7 +93,7 @@ class Index extends Component{
       const ub64: string = btoa(formValue.username); // base64加密
       const step1: Object = await jsonp(`https://login.sina.com.cn/sso/prelogin.php?checkpin=1&entry=mweibo&su=${ ub64 }`);
       // 需要验证码
-      if(('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1)){
+      if(('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1) || formValue.vcode){
         // 获取验证码
         const uri: string = 'https://captcha.weibo.com/api/pattern/get?'
           + `ver=1.0.0&source=ssologin&usrname=${ formValue.username }&line=160&side=100&radius=30&_rnd=${ Math.random() }`;
@@ -168,6 +168,14 @@ class Index extends Component{
               <div className={ bootstrap['float-right'] }>
                 <Link to="/Login/Description">网站说明</Link>
               </div>
+            </div>
+            <div className={ classNames(bootstrap['form-check'], style.checkGroup) }>
+              <input className={ bootstrap['form-check-input'] }
+                id="vcode"
+                type="checkbox"
+                { ...getFieldProps('vcode') }
+              />
+              <label className={ bootstrap['form-check-label'] } htmlFor="vcode">使用验证码登陆</label>
             </div>
             <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
           </form>
