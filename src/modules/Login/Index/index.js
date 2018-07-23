@@ -172,6 +172,7 @@ class Index extends Component{
             <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
           </form>
         </div>
+        {/*
         <footer className={ classNames(bootstrap['bg-light'], bootstrap['text-center'], style.footer) }>
           <span className={ classNames(bootstrap['mr-3'], bootstrap['d-inline-block']) }>
             <a href="http://www.miitbeian.gov.cn" target="_blank">辽ICP备18005585号</a>
@@ -185,6 +186,7 @@ class Index extends Component{
             </a>
           </span>
         </footer>
+        */}
       </div>
     ];
   }

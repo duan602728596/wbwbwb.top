@@ -1,10 +1,10 @@
 /* 开发环境 */
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('./webpack.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('./sass.config');
+const postCssConfig = require('./postcss.config');
 
 /* 合并配置 */
 module.exports = config({
@@ -18,8 +18,8 @@ module.exports = config({
   module: {
     rules: [
       { // sass
-        test: /^.*\.s(a|c)ss$/,
-        use: ['style-loader', cssConfig, sassConfig]
+        test: /^.*\.sass$/,
+        use: ['style-loader', cssConfig, postCssConfig, sassConfig]
       },
       { // css
         test: /^.*\.css$/,

@@ -84,13 +84,13 @@ class Index extends Component{
     return (
       <div className={ publicStyle.main }>
         {/* 显示用户名 */}
-        <ul className={ classNames(bootstrap.breadcrumb, bootstrap['bg-primary'], style.user) }>
-          <li className={ bootstrap['breadcrumb-item'] }>
+        <div className={ classNames(bootstrap.navbar, bootstrap['bg-primary'], style.user) }>
+          <a className={ bootstrap['navbar-brand'] }>
             <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
             <b>用户：</b>
             { username }
-          </li>
-        </ul>
+          </a>
+        </div>
         {/* 菜单 */}
         <nav className={ classNames(bootstrap.row, style.nav) }>
           <div className={ classNames(bootstrap['col-4'], style.navCol) }>

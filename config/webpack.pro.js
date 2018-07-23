@@ -6,6 +6,7 @@ const OptimizeCssAssets = require('optimize-css-assets-webpack-plugin');
 const config = require('./webpack.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('./sass.config');
+const postCssConfig = require('./postcss.config');
 
 /* 合并配置 */
 module.exports = config({
@@ -18,8 +19,8 @@ module.exports = config({
   module: {
     rules: [
       { // sass
-        test: /^.*\.s(a|c)ss$/,
-        use: [MiniCssExtractPlugin.loader, cssConfig, sassConfig]
+        test: /^.*\.sass$/,
+        use: [MiniCssExtractPlugin.loader, cssConfig, postCssConfig, sassConfig]
       },
       { // css
         test: /^.*\.css$/,
@@ -40,7 +41,7 @@ module.exports = config({
     }),
     new MiniCssExtractPlugin({
       filename: 'style/[name].[chunkhash].css',
-      chunkFilename: 'style/[name].chunk.[chunkhash].css'
+      chunkFilename: 'style/[name].[chunkhash].css'
     }),
     new OptimizeCssAssets()
   ]

@@ -4,6 +4,7 @@ const process = require('process');
 const babelConfig = require('./babel.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('../config/sass.config');
+const postCssConfig = require('../config/postcss.config');
 
 function config(){
   const conf = {
@@ -34,7 +35,7 @@ function config(){
         },
         { // sass
           test: /^.*\.s(a|c)ss$/,
-          use: [cssConfig, sassConfig]
+          use: [cssConfig, postCssConfig, sassConfig]
         },
         { // css
           test: /^.*\.css$/,
