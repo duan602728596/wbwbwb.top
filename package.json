@@ -8,7 +8,6 @@
     "clean": "rimraf ./build",
     "clean-server": "rimraf ./build-server",
     "devdll": "cross-env NODE_ENV=development webpack --config ./config/webpack.dll.js --progress",
-    "prodll": "cross-env NODE_ENV=production webpack --config ./config/webpack.dll.js --progress",
     "npmi": "npm install --production",
     "yarni": "yarn install --production=true",
     "server": "cross-env NODE_ENV=production node ./server/proServer.js",
