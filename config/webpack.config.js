@@ -3,7 +3,6 @@ const process = require('process');
 const path = require('path');
 const webpack = require('webpack');
 const babelConfig = require('./babel.config');
-const manifestJson = require('../.dll/manifest.json');
 
 function config(options){
   const conf = {
@@ -19,7 +18,7 @@ function config(options){
           exclude: /(dll\.js|weibo-pattlock|node_modules)/
         },
         {
-          test: /dll\.js|weibo-pattlock/,
+          test: /(dll\.js|weibo-pattlock)/,
           use: [
             {
               loader: 'file-loader',
@@ -81,11 +80,6 @@ function config(options){
       ]
     },
     plugins: [
-      // dll
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: manifestJson
-      }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
     ]
   };
@@ -95,6 +89,7 @@ function config(options){
   conf.plugins = conf.plugins.concat(options.plugins);                      // 合并插件
   conf.output = options.output;                                             // 合并输出目录
   if('devtool' in options) conf.devtool = options.devtool;                  // 合并source-map配置
+  if('optimization' in options) conf.optimization = options.optimization;   // 合并optimization
 
   return conf;
 }

@@ -13,7 +13,7 @@ module.exports = config({
   output: {
     path: path.join(__dirname, '../build'),
     filename: 'script/[name].[chunkhash].js',
-    chunkFilename: 'script/[name].chunk.[chunkhash].js',
+    chunkFilename: 'script/[name].[chunkhash].js',
     publicPath: '/'
   },
   module: {
@@ -44,5 +44,11 @@ module.exports = config({
       chunkFilename: 'style/[name].[chunkhash].css'
     }),
     new OptimizeCssAssets()
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      automaticNameDelimiter: '.'
+    }
+  }
 });
