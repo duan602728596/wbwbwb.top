@@ -6,11 +6,15 @@ html
     meta(name='viewport' content='width=device-width, initial-scale=1')
     meta(name='keywords' content='48, 微博, react, javascript')
     meta(name='description' content='这只是一个个人的学习网站，没有商用用途。')
+    meta(name='apple-mobile-web-app-capable' content='yes')
+    meta(name='apple-touch-fullscreen' content='yes')
+    link(rel='apple-touch-icon-precomposed' href=require('./precomposed.jpg'))
+    link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
     title {% title %}
   body
     div.react-app#react-app(data-app) {% render %}
     script= 'window.__INITIAL_STATE__ = {% initialState %};'
-    if process.env.NODE_ENV === 'development'
-      script(type='text/javascript' src=require('../.dll/dll'))
     script(type='text/javascript' src=require('./weibo-pattlock'))
+    if htmlWebpackPlugin.options.NODE_ENV === 'development'
+      script(type='text/javascript' src=require('../.dll/dll'))
