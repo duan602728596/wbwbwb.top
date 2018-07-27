@@ -13,8 +13,8 @@ const postCssConfig = require('./postcss.config');
 module.exports = config({
   output: {
     path: path.join(__dirname, '../build'),
-    filename: 'script/[name].[chunkhash].js',
-    chunkFilename: 'script/[name].[chunkhash].js',
+    filename: 'script/[name].[chunkhash:5].js',
+    chunkFilename: 'script/[name].[chunkhash:5].js',
     publicPath: '/'
   },
   module: {
@@ -33,7 +33,6 @@ module.exports = config({
     // html模板
     new HtmlWebpackPlugin({
       inject: true,
-      hash: true,
       template: path.join(__dirname, '../src/index.pug'),
       minify: {
         minifyCSS: true,
@@ -42,8 +41,8 @@ module.exports = config({
       NODE_ENV: process.env.NODE_ENV
     }),
     new MiniCssExtractPlugin({
-      filename: 'style/[name].[chunkhash].css',
-      chunkFilename: 'style/[name].[chunkhash].css'
+      filename: 'style/[name].[chunkhash:5].css',
+      chunkFilename: 'style/[name].[chunkhash:5].css'
     }),
     new OptimizeCssAssets()
   ],

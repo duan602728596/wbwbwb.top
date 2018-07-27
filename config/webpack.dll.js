@@ -23,7 +23,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, '../.dll'),
     filename: '[name].js',
-    library: '[name]_[hash]',
+    library: '[name]_[hash:5]',
     libraryTarget: 'var'
   },
   module: {
@@ -61,7 +61,7 @@ module.exports = {
     // dll
     new webpack.DllPlugin({
       path: '.dll/manifest.json',
-      name: '[name]_[hash]',
+      name: '[name]_[hash:5]',
       context: __dirname
     })
   ]

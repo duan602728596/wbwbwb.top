@@ -2,7 +2,7 @@
   "name": "wbwbwb.top",
   "scripts": {
     "start": "cross-env NODE_ENV=development supervisor -w ./server,./config,./service ./server/devServer.js",
-    "build": "npm run build-server && npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.js --progress && node ./bin/clean.js",
+    "build": "npm run build-server && npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.js --progress",
     "start-server": "npm run clean-server && cross-env NODE_ENV=development webpack --config ./config-server/webpack.config.server.js --watch",
     "build-server": "npm run clean-server && cross-env NODE_ENV=production webpack --config ./config-server/webpack.config.server.js --progress",
     "clean": "rimraf ./build",
