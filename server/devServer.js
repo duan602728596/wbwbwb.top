@@ -15,20 +15,24 @@ const router = new Router();
 
 (async function(){
   app.use(body());
-  
+
   /* router */
   app.use(router.routes())
     .use(router.allowedMethods());
-  
+
   /* webpack中间件 */
   const middleware = await koaWebpack({
     compiler: webpack(devConfig),
     hotClient: {
+      host: {
+        client: '*',
+        server: '0.0.0.0'
+      },
       port: 65050
     }
   });
   app.use(middleware);
-  
+
   /* 重定向 */
   router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
     const file = ctx.path;
