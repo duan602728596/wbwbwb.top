@@ -1,5 +1,6 @@
 /* 开发环境 服务器 */
 const http = require('http');
+const process = require('process');
 const Koa = require('koa');
 const Router = require('koa-router');
 const body = require('koa-body');
@@ -50,6 +51,6 @@ const router = new Router();
 
   routers(router);
 
-  /* 服务 */
-  http.createServer(app.callback()).listen(5050);
+  /* http服务 */
+  http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5050);
 })();
