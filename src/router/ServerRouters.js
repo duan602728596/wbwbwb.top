@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router';
 import Index from '../modules/Index/Layout';
 import Login from '../modules/Login/Layout';
 import SuperTopicSignIn from '../modules/SuperTopicSignIn/Layout';
+import Page404 from '../assembly/404/index';
 
 class ServerRouters extends Component{
   render(): React.Element{
@@ -13,6 +14,7 @@ class ServerRouters extends Component{
         <Route path="/Index" component={ Index } />
         <Route path="/Login" component={ Login } />
         <Route path="/SuperTopicSignIn" component={ SuperTopicSignIn } />
+        <Route component={ Page404 } />
       </Switch>
     );
   }

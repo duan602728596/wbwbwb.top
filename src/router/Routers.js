@@ -4,6 +4,7 @@ import asyncModule from './asyncModule';
 import Index from '../modules/Index/Layout';
 import Login from 'bundle-loader?lazy&name=login!../modules/Login/Layout';
 import SuperTopicSignIn from 'bundle-loader?lazy&name=super_topic_sign_in!../modules/SuperTopicSignIn/Layout';
+import Page404 from '../assembly/404/index';
 
 const LoginBundle: Function = asyncModule(Login);
 const SuperTopicSignInBundle: Function = asyncModule(SuperTopicSignIn);
@@ -16,6 +17,7 @@ class Routers extends Component{
         <Route path="/Index" component={ Index } />
         <Route path="/Login" component={ LoginBundle } />
         <Route path="/SuperTopicSignIn" component={ SuperTopicSignInBundle } />
+        <Route component={ Page404 } />
       </Switch>
     );
   }

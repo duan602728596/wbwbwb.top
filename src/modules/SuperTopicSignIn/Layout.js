@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Helmet from 'react-helmet';
 import isGoToLogin from '../../components/isGoToLogin/isGoToLogin';
+import Page404 from '../../assembly/404/index';
 import Index from './Index/index';
 
 @hot(module)
@@ -26,6 +27,7 @@ class ModuleLayout extends Component{
       </Helmet>,
       <Switch key="route">
         <Route path="/SuperTopicSignIn" component={ Index } exact={ true } />
+        <Route component={ Page404 } />
       </Switch>
     ];
   }
