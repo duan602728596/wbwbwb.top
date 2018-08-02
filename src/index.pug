@@ -14,6 +14,16 @@ html
     link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
     title {% title %}
+    if htmlWebpackPlugin.options.NODE_ENV === 'production'
+      //- 百度统计
+      script.
+        var _hmt = _hmt || [];
+        (function () {
+          var hm = document.createElement('script');
+          hm.src = 'https://hm.baidu.com/hm.js?94ab4bdc6863d214c90a238db4d3f2ea';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
   body
     div.react-app#react-app(data-app) {% render %}
     script= 'window.__INITIAL_STATE__ = {% initialState %};'
