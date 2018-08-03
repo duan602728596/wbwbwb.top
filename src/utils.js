@@ -46,12 +46,3 @@ export function getUserInformation(): ?Object{
   const sUserInformation: ?string = sessionStorage.getItem(USER_INFORMATION);
   return sUserInformation ? JSON.parse(sUserInformation) : null;
 }
-
-/* 将对象转换成key=value格式 */
-export function stringify(obj: Object): string{
-  const arr: string[] = [];
-  for(const key: string in obj){
-    arr.push(`${ key }=${ obj[key] }`);
-  }
-  return arr.join('&');
-}

@@ -3,12 +3,10 @@
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super&since_id=
  */
 const axios = require('axios');
-const { queryToArray } = require('../../utils');
 
 async function getChaohuaList(ctx, next){
   try{
     const { query } = ctx.request;
-    const cookieString = queryToArray(query);
     let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
     if('since_id' in query){
       uri += `&since_id=${ query.since_id }`;
@@ -18,7 +16,7 @@ async function getChaohuaList(ctx, next){
       url: uri,
       method: 'GET',
       headers: {
-        Cookie: cookieString.join('; ')
+        Cookie: query.cookie
       }
     });
 

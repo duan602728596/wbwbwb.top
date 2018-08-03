@@ -3,19 +3,17 @@
  * 【GET】https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=
  */
 const axios = require('axios');
-const { queryToArray } = require('../../utils');
 
 async function qiandao(ctx, next){
   try{
-    const { query } = ctx.request;
-    const cookieString = queryToArray(query);
-    let uri = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ query.containerid }`;
+    const { body } = ctx.request;
+    let uri = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
 
     const res = await axios({
       url: uri,
       method: 'GET',
       headers: {
-        Cookie: cookieString.join('; ')
+        Cookie: body.cookie
       },
       timeout: 10000
     });
@@ -29,7 +27,7 @@ async function qiandao(ctx, next){
 }
 
 function pAjGeneralButton(router){
-  router.get('/p/aj/general/button', qiandao);
+  router.post('/p/aj/general/button', qiandao);
 }
 
 module.exports = pAjGeneralButton;

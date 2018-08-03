@@ -6,7 +6,7 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
-import { getUserInformation, stringify } from '../../../utils';
+import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
@@ -59,10 +59,7 @@ class Index extends Component{
     if(infor !== null){
       this.props.action.username({
         username: infor.username,
-        cookie: stringify({
-          username: infor.username,
-          ...infor.cookie
-        })
+        cookie: infor.cookie
       });
     }
   }
@@ -94,7 +91,7 @@ class Index extends Component{
         {/* 菜单 */}
         <nav className={ classNames(bootstrap.row, style.nav) }>
           <div className={ classNames(bootstrap['col-4'], style.navCol) }>
-            <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?${ cookie }` }` }>
+            <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
               <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
               <span className={ style.navItemText }>超话签到</span>
             </Link>

@@ -42,11 +42,11 @@ class Index extends Component{
         data
       });
       const step4Data: Object = step4.data;
-      
+
       if(step4Data.retcode === 20000000){
         const storageData: string = JSON.stringify({
           username: formValue.username,
-          cookie: step4Data._cookie,
+          cookie: step4Data.cookie,
           time: new Date().getTime()
         });
         if(formValue['remember-password']){
@@ -74,7 +74,7 @@ class Index extends Component{
       const uri: string = 'https://captcha.weibo.com/api/pattern/verify?ver=1.0.0&source=ssologin'
         + `&id=${ id }&usrname=${ username }&path_enc=${ pathEnc }&data_enc=${ dataEnc }`;
       const step3: Object = await jsonp(uri);
-      
+
       if(step3.code === '100000'){
         this.login(formValue, id);
       }else{

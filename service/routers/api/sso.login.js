@@ -7,8 +7,6 @@
  */
 const queryString = require('querystring');
 const axios = require('axios');
-const cookie = require('cookie');
-const { ctxSetCookie } = require('../../utils');
 
 async function login(ctx, next){
   try{
@@ -24,17 +22,14 @@ async function login(ctx, next){
       },
       data
     });
-    
-    const setCookie = cookie.parse(res.headers['set-cookie'].join('; '));
-    const resCookie = setCookie;
-    ctxSetCookie(ctx, resCookie);
-    
+
+    const cookie = res.headers['set-cookie'].join('; ');
+
     ctx.status = res.status;
     ctx.body = {
       ...res.data,
-      _cookie: resCookie
+      cookie
     };
-    
   }catch(err){
     ctx.status = 500;
     ctx.body = err;

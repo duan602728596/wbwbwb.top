@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
-import { getUserInformation, stringify } from '../../../utils';
+import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import message from '../../../components/message/message';
@@ -66,13 +66,10 @@ class SuperTopicSignIn extends Component{
   // 获取数据
   getSuperTopicList(sinceId: ?string): Promise{
     const infor: ?Object = getUserInformation();
-    const cookie: string = stringify({
-      username: infor.username,
-      ...infor.cookie
-    });
-    let uri: string = `/api/container/getIndex?${ cookie }`;
+    const cookie: string = infor.cookie;
+    let uri: string = `/api/container/getIndex?cookie=${ cookie }`;
     if(sinceId) uri += `&since_id=${ sinceId }`;
-      
+
     return axios({
       url: uri,
       method: 'GET'
@@ -163,14 +160,15 @@ class SuperTopicSignIn extends Component{
   async handleQiandaoClick(containerid: string, item: Object, event: Event): void{
     try{
       const infor: ?Object = getUserInformation();
-      const cookie: string = stringify({
-        username: infor.username,
-        ...infor.cookie
-      });
-      const uri: string = `/p/aj/general/button?${ cookie }&containerid=${ containerid }`;
+      const cookie: string = infor.cookie;
+      const uri: string = '/p/aj/general/button';
       const { data }: { data: Object } = await axios({
         url: uri,
-        method: 'GET'
+        method: 'POST',
+        data: {
+          cookie,
+          containerid
+        }
       });
       if(data.code === '100000'){
         // 签到成功
@@ -218,7 +216,7 @@ class SuperTopicSignIn extends Component{
     });
   };
   // sheme
-  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0];
+  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
   // 渲染超话列表
   superTopicListView(): React.ChildrenArray<React.Element>{
     const { qiandaoIdList }: { qiandaoIdList: string[] } = this.props;
