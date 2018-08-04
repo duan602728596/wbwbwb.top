@@ -271,8 +271,8 @@ class SuperTopicSignIn extends Component{
   render(): React.Element{
     const { loading }: { loading: boolean } = this.state;
     return (
-      <div className={ publicStyle.main }>
-        <nav aria-label="breadcrumb">
+      <div className={ classNames(publicStyle.main, publicStyle.fixedMain) }>
+        <nav className={ publicStyle.fixedNav } aria-label="breadcrumb">
           <ol className={ bootstrap.breadcrumb }>
             <li className={ bootstrap['breadcrumb-item'] }>
               <Link to="/Index">微博自动签到系统</Link>
