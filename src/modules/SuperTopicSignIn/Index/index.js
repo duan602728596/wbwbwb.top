@@ -272,19 +272,21 @@ class SuperTopicSignIn extends Component{
     const { loading }: { loading: boolean } = this.state;
     return (
       <div className={ classNames(publicStyle.main, publicStyle.fixedMain) }>
-        <nav className={ publicStyle.fixedNav } aria-label="breadcrumb">
-          <ol className={ bootstrap.breadcrumb }>
-            <li className={ bootstrap['breadcrumb-item'] }>
-              <Link to="/Index">微博自动签到系统</Link>
-            </li>
-            <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) }
-              aria-current="page"
-              onClick={ this.handleThreeClick }
-            >
-              超级话题签到
-            </li>
-          </ol>
-        </nav>
+        <div className={ publicStyle.fixedNav }>
+          <nav className={ publicStyle.nav } aria-label="breadcrumb">
+            <ol className={ bootstrap.breadcrumb }>
+              <li className={ bootstrap['breadcrumb-item'] }>
+                <Link to="/Index">微博自动签到系统</Link>
+              </li>
+              <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) }
+                aria-current="page"
+                onClick={ this.handleThreeClick }
+              >
+                超级话题签到
+              </li>
+            </ol>
+          </nav>
+        </div>
         {/* list */}
         <QueueAnim className={ classNames(bootstrap['list-group'], style.superTopicList) } duration={ 200 } interval={ 50 }>
           {
