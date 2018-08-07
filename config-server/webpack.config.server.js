@@ -7,8 +7,11 @@ const sassConfig = require('../config/sass.config');
 const postCssConfig = require('../config/postcss.config');
 
 function config(){
+  const { NODE_ENV } = process.env;
+  const fileName = NODE_ENV === 'development' ? '[name].[ext]' : '[hash:5].[ext]';
   const conf = {
-    mode: process.env.NODE_ENV,
+    mode: NODE_ENV,
+    devtool: NODE_ENV === 'development' ? 'cheap-module-source-map' : 'none',
     entry: {
       server: [path.join(__dirname, '../src/AppServer.js')]
     },
@@ -21,10 +24,9 @@ function config(){
       libraryTarget: 'umd'
     },
     target: 'node',
-    devtool: process.env.NODE_ENV === 'development' ? 'cheap-module-source-map' : 'none',
     node: {
-      __filename: false,
-      __dirname: false
+      __filename: true,
+      __dirname: true
     },
     module: {
       rules: [
@@ -34,7 +36,7 @@ function config(){
           exclude: /(dll\.js|node_modules)/
         },
         { // sass
-          test: /^.*\.s(a|c)ss$/,
+          test: /^.*\.sass$/,
           use: [cssConfig, postCssConfig, sassConfig]
         },
         { // css
@@ -48,7 +50,7 @@ function config(){
               loader: 'url-loader',
               options: {
                 limit: 3000,
-                name: '[name].[hash:5].[ext]',
+                name: fileName,
                 outputPath: 'image/'
               }
             }
@@ -60,7 +62,7 @@ function config(){
             {
               loader: 'file-loader',
               options: {
-                name: '[name].[hash:5].[ext]',
+                name: fileName,
                 outputPath: 'file/'
               }
             }

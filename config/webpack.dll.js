@@ -17,7 +17,9 @@ module.exports = {
       'redux-actions',
       'immutable',
       'redux-immutable',
-      'reselect'
+      'reselect',
+      'react-helmet',
+      'react-loadable'
     ]
   },
   output: {
@@ -63,6 +65,7 @@ module.exports = {
       path: '.dll/manifest.json',
       name: '[name]_[hash:5]',
       context: __dirname
-    })
+    }),
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 };

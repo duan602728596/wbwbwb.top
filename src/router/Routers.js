@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import asyncModule from './asyncModule';
 import Index from '../modules/Index/Layout';
-import Login from 'bundle-loader?lazy&name=login!../modules/Login/Layout';
-import SuperTopicSignIn from 'bundle-loader?lazy&name=super_topic_sign_in!../modules/SuperTopicSignIn/Layout';
 import Page404 from '../assembly/404/index';
 
-const LoginBundle: Function = asyncModule(Login);
-const SuperTopicSignInBundle: Function = asyncModule(SuperTopicSignIn);
+const LoginBundle: Function = asyncModule((): Promise => import('../modules/Login/Layout'));
+const SuperTopicSignInBundle: Function = asyncModule((): Promise => import('../modules/SuperTopicSignIn/Layout'));
 
 class Routers extends Component{
   render(): React.Element{

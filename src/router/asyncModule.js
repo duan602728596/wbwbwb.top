@@ -1,17 +1,27 @@
 /* 异步加载模块 */
 import React, { Component } from 'react';
-import Bundle from './Bundle';
+import Loadable from 'react-loadable';
+import { injectReducers } from '../store/store';
 
 /**
  * 异步加载、注入模块和reducer
- * @param { Function } module: 需要异步注入的模块
+ * @param { Function } loader: 需要异步注入的模块
  */
-function asyncModule(module: Function): Function{
-  return (): React.Element=>(
-    <Bundle load={ module }>
-      { (Module: Object): Object => Module ? <Module /> : null }
-    </Bundle>
-  );
+function asyncModule(loader: Function): React.Element{
+  return Loadable({
+    loader,
+    loading: (): null => null,
+    render(Module: Object, props: Object): React.Element{
+      const AsyncModule: Function = Module.default;
+      /* 异步注入reducer */
+      if('reducer' in Module){
+        injectReducers(Module.reducer);
+      }
+      return (
+        <AsyncModule { ...props } />
+      );
+    }
+  });
 }
 
 export default asyncModule;

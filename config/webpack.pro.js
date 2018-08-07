@@ -11,8 +11,8 @@ const postCssConfig = require('./postcss.config');
 module.exports = config({
   output: {
     path: path.join(__dirname, '../build'),
-    filename: 'script/[name].[chunkhash:5].js',
-    chunkFilename: 'script/[name].[chunkhash:5].js',
+    filename: 'script/[chunkhash:5].js',
+    chunkFilename: 'script/[chunkhash:5].js',
     publicPath: '/'
   },
   module: {
@@ -29,8 +29,8 @@ module.exports = config({
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style/[name].[chunkhash:5].css',
-      chunkFilename: 'style/[name].[chunkhash:5].css'
+      filename: 'style/[chunkhash:5].css',
+      chunkFilename: 'style/[chunkhash:5].css'
     }),
     new OptimizeCssAssets()
   ],
