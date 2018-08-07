@@ -7,10 +7,11 @@ const babelConfig = require('./babel.config');
 
 function config(options){
   const { NODE_ENV } = process.env;
-  const fileName = NODE_ENV === 'development' ? '[name].[ext]' : '[hash:5].[ext]';
+  const isDevelopment = NODE_ENV === 'development';
+  const fileName = isDevelopment ? '[name].[ext]' : '[hash:5].[ext]';
   const conf = {
     mode: NODE_ENV,
-    devtool: NODE_ENV === 'development' ? 'cheap-module-source-map' : 'none',
+    devtool: isDevelopment ? 'cheap-module-source-map' : 'none',
     entry: {
       app: [path.join(__dirname, '../src/app.js')]
     },
@@ -19,10 +20,10 @@ function config(options){
         { // react & js
           test: /^.*\.js$/,
           use: [babelConfig],
-          exclude: /(dll\.js|node_modules)/
+          exclude: /(dll\.js|weibo-pattlock|node_modules)/
         },
         {
-          test: /dll\.js/,
+          test: /dll\.js|weibo-pattlock/,
           use: [
             {
               loader: 'file-loader',
@@ -75,7 +76,7 @@ function config(options){
             {
               loader: 'pug-loader',
               options: {
-                pretty: NODE_ENV === 'development',
+                pretty: isDevelopment,
                 name: '[name].html'
               }
             }

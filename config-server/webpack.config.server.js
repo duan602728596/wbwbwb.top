@@ -8,10 +8,11 @@ const postCssConfig = require('../config/postcss.config');
 
 function config(){
   const { NODE_ENV } = process.env;
-  const fileName = NODE_ENV === 'development' ? '[name].[ext]' : '[hash:5].[ext]';
+  const isDevelopment = NODE_ENV === 'development';
+  const fileName = isDevelopment ? '[name].[ext]' : '[hash:5].[ext]';
   const conf = {
     mode: NODE_ENV,
-    devtool: NODE_ENV === 'development' ? 'cheap-module-source-map' : 'none',
+    devtool: isDevelopment ? 'cheap-module-source-map' : 'none',
     entry: {
       server: [path.join(__dirname, '../src/AppServer.js')]
     },
