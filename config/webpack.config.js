@@ -28,7 +28,7 @@ function config(options){
             {
               loader: 'file-loader',
               options: {
-                name: '[name].[hash:5].[ext]',
+                name: fileName,
                 outputPath: 'script/'
               }
             }
