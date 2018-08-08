@@ -164,13 +164,21 @@ class SuperTopicSignIn extends Component{
       });
       if(data.code === '100000'){
         // 签到成功
-        item.code = data.code;
-        item.msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
+        if('error_code' in data.data){
+          item.code = data.data.error_code;
+          item.msg = data.data.error_msg;
+        }else{
+          item.code = data.code;
+          item.msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
+        }
       }else{
         // 其他情况
         item.code = data.code;
         item.msg = data.msg;
       }
+      this.props.action.qiandao({
+        cards: this.props.cards
+      });
     }catch(err){
       console.error(err);
       message('danger', `${ item.title_sub }：签到失败！`);
