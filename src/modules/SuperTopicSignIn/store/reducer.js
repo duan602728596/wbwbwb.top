@@ -24,7 +24,14 @@ const reducer: Function = handleActions({
       .set('sinceId', sinceId);
   },
   [qiandao]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    const { cards }: { cards: [] } = action.payload;
+    const { index, code, msg }: {
+      index: number,
+      code: number | string,
+      msg: string
+    } = action.payload;
+    const cards: [] = $$state.get('cards').toJS();
+    cards[index].code = code;
+    cards[index].msg = msg;
     return $$state.set('cards', List(cards));
   }
 }, fromJS(initData));

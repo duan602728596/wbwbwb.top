@@ -136,7 +136,7 @@ class SuperTopicSignIn extends Component{
         if(item.card_type === 8){
           const containerid: string = this.sheme(item.scheme);
           if(item.code !== '100000'){
-            await this.handleQiandaoClick(containerid, item);
+            await this.handleQiandaoClick(containerid, item, i);
           }
         }
       }
@@ -149,7 +149,7 @@ class SuperTopicSignIn extends Component{
     });
   };
   // 签到
-  async handleQiandaoClick(containerid: string, item: Object, event: Event): void{
+  async handleQiandaoClick(containerid: string, item: Object, index: number, event: ?Event): void{
     try{
       const infor: ?Object = getUserInformation();
       const cookie: string = infor.cookie;
@@ -162,22 +162,26 @@ class SuperTopicSignIn extends Component{
           containerid
         }
       });
+      let code: ?(number | string) = null;
+      let msg: ?string = null;
       if(data.code === '100000'){
         // 签到成功
         if('error_code' in data.data){
-          item.code = data.data.error_code;
-          item.msg = data.data.error_msg;
+          code = data.data.error_code;
+          msg = data.data.error_msg;
         }else{
-          item.code = data.code;
-          item.msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
+          code = data.code;
+          msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
         }
       }else{
         // 其他情况
-        item.code = data.code;
-        item.msg = data.msg;
+        code = data.code;
+        msg = data.msg;
       }
       this.props.action.qiandao({
-        cards: this.props.cards
+        index,
+        code,
+        msg
       });
     }catch(err){
       console.error(err);
@@ -252,7 +256,7 @@ class SuperTopicSignIn extends Component{
                 <button className={ classNames(bootstrap.btn, bootstrap['btn-primary'], bootstrap['btn-sm'], style.qiandao)}
                   type="button"
                   disabled={ loading }
-                  onClick={ this.handleQiandaoClick.bind(this, containerid, item)}
+                  onClick={ this.handleQiandaoClick.bind(this, containerid, item, index)}
                 >
                   签到
                 </button>
