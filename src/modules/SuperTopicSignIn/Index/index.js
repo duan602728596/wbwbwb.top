@@ -11,7 +11,7 @@ import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import message from '../../../components/message/message';
-import { superTopic, qiandaoIdList } from '../store/reducer';
+import { superTopic, qiandao } from '../store/reducer';
 import style from './style.sass';
 
 /* state */
@@ -23,10 +23,6 @@ const state: Function = createStructuredSelector({
   sinceId: createSelector(       // sign_id
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
     ($$data: ?Immutable.Map): ?string => $$data ? $$data.get('sinceId') : null
-  ),
-  qiandaoIdList: createSelector( // 已签到列表
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
-    ($$data: ?Immutable.Map): string[] => $$data && $$data.has('qiandaoIdList') ? $$data.get('qiandaoIdList').toJS() : []
   )
 });
 
@@ -34,7 +30,7 @@ const state: Function = createStructuredSelector({
 const dispatch: Function = (dispatch: Function): Object=>({
   action: bindActionCreators({
     superTopic,
-    qiandaoIdList
+    qiandao
   }, dispatch)
 });
 
@@ -42,8 +38,7 @@ const dispatch: Function = (dispatch: Function): Object=>({
 class SuperTopicSignIn extends Component{
   static propTypes: Object = {
     cards: PropTypes.array,
-    action: PropTypes.objectOf(PropTypes.func),
-    qiandaoIdList: PropTypes.arrayOf(PropTypes.string)
+    action: PropTypes.objectOf(PropTypes.func)
   };
   state: {
     loading: boolean
@@ -135,15 +130,12 @@ class SuperTopicSignIn extends Component{
       loading: true
     });
     try{
-      const { cards, qiandaoIdList }: {
-        cards: [],
-        qiandaoIdList: string[]
-      } = this.props;
+      const { cards }: { cards: [] } = this.props;
       for(let i: number = 0, j: number = cards.length; i < j; i++){
         const item: Object = cards[i];
         if(item.card_type === 8){
           const containerid: string = this.sheme(item.scheme);
-          if(!qiandaoIdList.includes(containerid)){
+          if(item.code !== '100000'){
             await this.handleQiandaoClick(containerid, item);
           }
         }
@@ -172,16 +164,11 @@ class SuperTopicSignIn extends Component{
       });
       if(data.code === '100000'){
         // 签到成功
-        const { qiandaoIdList }: { qiandaoIdList: string[] } = this.props;
-        if(!qiandaoIdList.includes(containerid)){
-          qiandaoIdList.push(containerid);
-          this.props.action.qiandaoIdList({
-            data: qiandaoIdList
-          });
-        }
+        item.code = data.code;
+        item.msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
       }else{
         // 其他情况
-        message('danger', `${ item.title_sub }（ErrorCode: ${ data.code }）：签到失败！`);
+        message('warning', `${ item.title_sub }（Code: ${ data.code }）：${ data.msg }`);
       }
     }catch(err){
       console.error(err);
@@ -219,12 +206,11 @@ class SuperTopicSignIn extends Component{
   sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
   // 渲染超话列表
   superTopicListView(): React.ChildrenArray<React.Element>{
-    const { qiandaoIdList }: { qiandaoIdList: string[] } = this.props;
     const { loading }: { loading: boolean } = this.state;
     return this.props.cards.map((item: Object, index: number): React.Element=>{
       if(item.card_type === 8){
         const containerid: string = this.sheme(item.scheme);
-        const isQiandao: boolean = qiandaoIdList.includes(containerid);
+        const isQiandao: boolean = item.code === '100000';
         return (
           <a key={ containerid } className={ classNames(
             bootstrap['list-group-item'],
@@ -236,21 +222,21 @@ class SuperTopicSignIn extends Component{
             <div className={ classNames(bootstrap['d-flex'], bootstrap['justify-content-between'], style.content) }>
               <h5 className={ classNames(bootstrap['mb-1'], bootstrap['text-primary'], style.title) }>
                 { item.title_sub }
-                {
-                  isQiandao ? (
-                    <span className={ classNames(
-                      bootstrap.badge,
-                      bootstrap['badge-pill'],
-                      bootstrap['badge-success'],
-                      style.badge)
-                    }>
-                      已签到
-                    </span>
-                  ) : null
-                }
               </h5>
               <small className={ bootstrap['text-muted'] }>{ item.desc1 }</small>
             </div>
+            {
+              isQiandao ? (
+                <span className={ classNames(
+                  bootstrap.badge,
+                  bootstrap['badge-pill'],
+                  bootstrap['badge-success'],
+                  style.badge)
+                }>
+                  { item.msg }
+                </span>
+              ) : null
+            }
             <p className={ classNames(bootstrap['mb-1'], style.text) }>{ item.desc2 }</p>
             {
               isQiandao ? null : (
