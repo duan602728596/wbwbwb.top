@@ -168,7 +168,8 @@ class SuperTopicSignIn extends Component{
         item.msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
       }else{
         // 其他情况
-        message('warning', `${ item.title_sub }（Code: ${ data.code }）：${ data.msg }`);
+        item.code = data.code;
+        item.msg = data.msg;
       }
     }catch(err){
       console.error(err);
@@ -210,7 +211,7 @@ class SuperTopicSignIn extends Component{
     return this.props.cards.map((item: Object, index: number): React.Element=>{
       if(item.card_type === 8){
         const containerid: string = this.sheme(item.scheme);
-        const isQiandao: boolean = item.code === '100000';
+        const isQiandao: boolean = item.code === '100000' || item.code === 382004;
         return (
           <a key={ containerid } className={ classNames(
             bootstrap['list-group-item'],
@@ -226,11 +227,11 @@ class SuperTopicSignIn extends Component{
               <small className={ bootstrap['text-muted'] }>{ item.desc1 }</small>
             </div>
             {
-              isQiandao ? (
+              item.code !== undefined ? (
                 <span className={ classNames(
                   bootstrap.badge,
                   bootstrap['badge-pill'],
-                  bootstrap['badge-success'],
+                  item.code === '100000' ? bootstrap['badge-success'] : bootstrap['badge-warning'],
                   style.badge)
                 }>
                   { item.msg }
