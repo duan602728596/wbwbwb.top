@@ -89,8 +89,8 @@ routers(router);
 http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5051);
 
 /* https服务 */
-const key = path.resolve(__dirname, '../server.key');
-const crt = path.resolve(__dirname, '../server.crt');
+const key = path.join(__dirname, '../server.key');
+const crt = path.join(__dirname, '../server.crt');
 if(fs.existsSync(key) && fs.existsSync(crt)){
   https.createServer({
     key: fs.readFileSync(key),
