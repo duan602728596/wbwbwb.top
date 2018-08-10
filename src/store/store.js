@@ -28,10 +28,7 @@ export default storeFactory;
 /* 注入store */
 export function injectReducers(asyncReducer: Object): void{
   // 获取reducer的key值，并将reducer保存起来
-  let name: ?string = null;
-  for(const key: string in asyncReducer){
-    name = key;
-  }
+  const name: string = Object.keys(asyncReducer);
   // 异步注入reducer
   store.asyncReducers[name] = asyncReducer[name];
   store.replaceReducer(createReducer(store.asyncReducers));
