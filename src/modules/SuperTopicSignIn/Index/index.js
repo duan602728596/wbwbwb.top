@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import classNames from 'classnames';
 import QueueAnim from 'rc-queue-anim';
 import { getUserInformation } from '../../../utils';
@@ -13,6 +12,7 @@ import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import message from '../../../components/message/message';
 import { superTopic, qiandao } from '../store/reducer';
 import style from './style.sass';
+import { signin, getSuperTopicList } from '../request';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -50,27 +50,13 @@ class SuperTopicSignIn extends Component{
 
   componentDidMount(): void{
     if(this.props.sinceId === null){
-      this.getSuperTopicList().then((res: Object): void=>{
+      getSuperTopicList().then((res: Object): void=>{
         const { data }: { data: Object } = res;
         const sinceId: string = data.data.cardlistInfo?.since_id || 'END';
         const cards: [] = data.data.cards[0].card_group;
         this.props.action.superTopic({ sinceId, cards });
       });
     }
-  }
-  // 获取数据
-  getSuperTopicList(sinceId: ?string): Promise{
-    const infor: ?Object = getUserInformation();
-    const cookie: string = infor.cookie;
-    let uri: string = `/api/container/getIndex?cookie=${ cookie }`;
-    if(sinceId) uri += `&since_id=${ sinceId }`;
-
-    return axios({
-      url: uri,
-      method: 'GET'
-    }).catch((err: any): void=>{
-      console.error(err);
-    });
   }
   // 重新加载所有的超话列表
   async getAllSuperTopicList(): Promise<void>{
@@ -83,7 +69,7 @@ class SuperTopicSignIn extends Component{
       let isBreak: boolean = false;
       let sinceId: ?string = null;
       while(isBreak === false){
-        const res: Object = await this.getSuperTopicList(sinceId);
+        const res: Object = await getSuperTopicList(sinceId);
         const { data }: { data: Object } = res;
         const { cardlistInfo }: { cardlistInfo: Object } = data.data;
         const cards2: [] = data.data.cards[0].card_group;
@@ -151,17 +137,7 @@ class SuperTopicSignIn extends Component{
   // 签到
   async handleQiandaoClick(containerid: string, item: Object, index: number, event: ?Event): void{
     try{
-      const infor: ?Object = getUserInformation();
-      const cookie: string = infor.cookie;
-      const uri: string = '/p/aj/general/button';
-      const { data }: { data: Object } = await axios({
-        url: uri,
-        method: 'POST',
-        data: {
-          cookie,
-          containerid
-        }
-      });
+      const { data }: { data: Object } = await signin(containerid);
       let code: ?(number | string) = null;
       let msg: ?string = null;
       if(data.code === '100000'){
@@ -198,7 +174,7 @@ class SuperTopicSignIn extends Component{
       sinceId: ?string
     } = this.props;
     try{
-      const res: Object = await this.getSuperTopicList(encodeURI(sinceId));
+      const res: Object = await getSuperTopicList(encodeURI(sinceId));
       const { data }: { data: Object } = res;
       const sinceId2: string = data.data.cardlistInfo?.since_id || 'END';
       const cards2: [] = data.data.cards[0].card_group;
