@@ -3,7 +3,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development HTTP_SERVER_PORT=5050 supervisor -w ./server,./config,./service ./server/devServer.js",
     "build": "npm run build-server && npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.js --progress && node ./bin/file-process.js",
-    "start-server": "npm run clean-server && cross-env NODE_ENV=development webpack --config ./config-server/webpack.config.server.js --watch",
+    "start-server": "npm run clean-server && cross-env NODE_ENV=development webpack --config ./config-server/webpack.config.server.js --watch --watch-aggregate-timeout 1000",
     "build-server": "npm run clean-server && cross-env NODE_ENV=production webpack --config ./config-server/webpack.config.server.js --progress",
     "clean": "rimraf ./build",
     "clean-server": "rimraf ./build-server",
