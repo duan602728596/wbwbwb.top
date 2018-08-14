@@ -9,3 +9,5 @@ yarn-error.log
 
 # webstorm
 .idea
+
+build
