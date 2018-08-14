@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import bootstrap from '../publicStyle/bootstrap.sass';
 import style from './style.sass';
 
 class Ad extends Component{
@@ -39,7 +40,7 @@ class Ad extends Component{
           <div className={ style.iframeBox }>
             <iframe src={ props.src } scrolling="no" width="100%" height="100%" frameborder="0" />
           </div>
-          <span className={ style.text }>广告</span>
+          <span className={ classNames(bootstrap['bg-secondary'], bootstrap['text-white'], style.text) }>广告</span>
         </div>
       );
     }else{
