@@ -25,7 +25,7 @@ class Ad extends Component{
   }
   componentDidMount(): void{
     if(windowIsLoad === true){
-      windowIsLoad = true;
+      this.loadAd();
     }
   }
   handleAdLoad: Function = (): void=>{
