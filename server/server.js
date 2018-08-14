@@ -20,24 +20,20 @@ function readFile(file){
   return new Promise((resolve, reject)=>{
     fs.readFile(file, (err, data)=>{
       if(err){
-        resolve({
-          status: 404,
-          body: '404 not found.'
-        });
+        reject(err);
       }else{
-        resolve({
-          status: 200,
-          body: data
-        });
+        resolve(data);
       }
     });
+  }).catch((err)=>{
+    console.error(err);
   });
 }
 
 if(process.env.NODE_ENV === 'production'){
   /* gzip压缩 */
   app.use(compress({
-    filter: function(contentType){
+    filter(contentType){
       return true;
     },
     threshold: 2048,
@@ -57,13 +53,24 @@ app.use(router.routes())
   .use(router.allowedMethods());
 
 router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
-  const pathFile = ctx.path;
-  const { status, body } = await readFile(serverFile + pathFile);
+  try{
+    const pathFile = ctx.path;
+    const file = serverFile + pathFile;
 
-  ctx.status = status;
-  ctx.type = status === 200 ? mime.lookup(pathFile) : 'text/plain';
-  ctx.body = body;
-
+    if(fs.existsSync(file)){
+      ctx.status = 200;
+      ctx.type = mime.lookup(file);
+      ctx.body = await readFile(file);
+    }else{
+      ctx.status = 404;
+      ctx.type = 'text/plain';
+      ctx.body = '404 not found.';
+    }
+  }catch(err){
+    ctx.status = 500;
+    ctx.type = 'text/plain';
+    ctx.body = err;
+  }
   await next();
 });
 
