@@ -13,7 +13,7 @@ const mime = require('mime-types');
 
 const app = new Koa();
 const router = new Router();
-const serverFile = path.join(__dirname, '/../build');
+const serverFile = path.join(__dirname, '/../static');
 
 /* 读取文件 */
 function readFile(file){
