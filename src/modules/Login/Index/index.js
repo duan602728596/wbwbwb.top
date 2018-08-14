@@ -121,7 +121,7 @@ class Index extends Component{
         <div className={ style.content }>
           {/* 登陆表单 */}
           <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src="https://www.baidu.com/" />
+            <Ad className={ style.loginAd } src="https://www.wbwbwb.top:5056/wangxiaojia.html" />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {

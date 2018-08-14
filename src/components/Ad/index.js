@@ -1,9 +1,11 @@
 /* 广告渲染 */
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bootstrap from '../publicStyle/bootstrap.sass';
 import style from './style.sass';
+
+let windowIsLoad: boolean = false;
 
 class Ad extends Component{
   static propTypes: Object = {
@@ -11,35 +13,48 @@ class Ad extends Component{
     className: PropTypes.string
   };
 
-  state: {
-    isReady: boolean
-  } = {
-    isReady: false // 是否加载完毕
-  };
+  iframeBox: Object = createRef();
+
 
   constructor(): void{
     super(...arguments);
 
-    if(typeof window === 'object'){
-      window.addEventListener('load', this.handleWindowLoad, false);
+    if(typeof window === 'object' && windowIsLoad === false){
+      window.addEventListener('load', this.handleAdLoad, false);
     }
   }
-  // window加载广告事件
-  handleWindowLoad: Function = (event: Event): void=>{
-    this.setState({
-      isReady: true
-    });
-    window.removeEventListener('load', this.handleWindowLoad);
+  componentDidMount(): void{
+    if(windowIsLoad === true){
+      windowIsLoad = true;
+    }
+  }
+  handleAdLoad: Function = (): void=>{
+    this.loadAd();
+    window.removeEventListener('load', this.handleAdLoad);
+    if(windowIsLoad === false){
+      windowIsLoad = true;
+    }
   };
+  loadAd(): void{
+    const props: Object = this.props;
+    if(props.src){
+      let element: ?Element = document.createElement('iframe');
+      element.src = this.props.src;
+      element.scrolling = 'no';
+      element.width = '100%';
+      element.height = '100%';
+      element.frameBorder = '0';
+      this.iframeBox.current.appendChild(element);
+      element = null;
+    }
+  }
   render(): ?React.Element{
     const props: Object = this.props;
 
-    if(this.state.isReady && props.src){
+    if(props.src){
       return (
         <div className={ classNames(style.ad, props.className) }>
-          <div className={ style.iframeBox }>
-            <iframe src={ props.src } scrolling="no" width="100%" height="100%" frameborder="0" />
-          </div>
+          <div ref={ this.iframeBox } className={ style.iframeBox } />
           <span className={ classNames(bootstrap['bg-secondary'], bootstrap['text-white'], style.text) }>广告</span>
         </div>
       );
