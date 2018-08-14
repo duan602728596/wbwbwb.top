@@ -1,6 +1,9 @@
 /* 开发环境 服务器 */
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const process = require('process');
+const path = require('path');
 const Koa = require('koa');
 const Router = require('koa-router');
 const body = require('koa-body');
@@ -53,4 +56,14 @@ const router = new Router();
 
   /* http服务 */
   http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5050);
+
+  /* https服务 */
+  const key = path.join(__dirname, '../dev.key');
+  const crt = path.join(__dirname, '../dev.crt');
+  if(fs.existsSync(key) && fs.existsSync(crt)){
+    https.createServer({
+      key: fs.readFileSync(key),
+      cert: fs.readFileSync(crt)
+    }, app.callback()).listen(process.env.HTTPS_SERVER_PORT || 5051);
+  }
 })();

@@ -1,7 +1,7 @@
 {
   "name": "wbwbwb.top",
   "scripts": {
-    "start": "cross-env NODE_ENV=development HTTP_SERVER_PORT=5050 supervisor -w ./server,./config,./service ./server/devServer.js",
+    "start": "cross-env NODE_ENV=development HTTP_SERVER_PORT=5050 HTTPS_SERVER_PORT=5051 supervisor -w ./server,./config,./service ./server/devServer.js",
     "build": "npm run build-server && npm run clean && cross-env NODE_ENV=production webpack --config ./config/webpack.pro.js --progress && node ./bin/file-process.js",
     "start-server": "npm run clean-server && cross-env NODE_ENV=development webpack --config ./config-server/webpack.config.server.js --watch --watch-aggregate-timeout 1000",
     "build-server": "npm run clean-server && cross-env NODE_ENV=production webpack --config ./config-server/webpack.config.server.js --progress",
@@ -10,7 +10,7 @@
     "devdll": "cross-env NODE_ENV=development webpack --config ./config/webpack.dll.js --progress",
     "npmi": "npm install --production",
     "yarni": "yarn install --production=true",
-    "server": "cross-env NODE_ENV=production HTTP_SERVER_PORT=5051 HTTPS_SERVER_PORT=443 node ./server/proServer.js",
+    "server": "cross-env NODE_ENV=production HTTP_SERVER_PORT=5052 HTTPS_SERVER_PORT=443 node ./server/proServer.js",
     "eslint": "eslint ./src",
     "get-version": "node ./bin/get-version.js",
     "find": "node ./bin/find.js"

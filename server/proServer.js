@@ -86,7 +86,7 @@ router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
 routers(router);
 
 /* http服务 */
-http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5051);
+http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5052);
 
 /* https服务 */
 const key = path.join(__dirname, '../server.key');
