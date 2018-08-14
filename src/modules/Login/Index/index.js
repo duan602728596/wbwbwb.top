@@ -121,7 +121,7 @@ class Index extends Component{
         <div className={ style.content }>
           {/* 登陆表单 */}
           <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src="https://www.wbwbwb.top:5056/wangxiaojia.html" />
+            <Ad className={ style.loginAd } src="http://popularize.skygrass.club/?w=568&h=171&t=201808142350" />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {
@@ -172,7 +172,11 @@ class Index extends Component{
             </div>
             <div className={ style.btnBox }>
               <Earth />
-              <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
+              <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) }
+                type="submit"
+              >
+                登陆
+              </button>
             </div>
           </form>
         </div>

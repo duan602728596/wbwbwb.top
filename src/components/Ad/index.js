@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import bootstrap from '../publicStyle/bootstrap.sass';
 import style from './style.sass';
-
-let windowIsLoad: boolean = false;
+import { isWindowLoaded } from './windowLoad';
 
 class Ad extends Component{
   static propTypes: Object = {
@@ -15,25 +14,21 @@ class Ad extends Component{
 
   iframeBox: Object = createRef();
 
-
   constructor(): void{
     super(...arguments);
 
-    if(typeof window === 'object' && windowIsLoad === false){
+    if(typeof window === 'object' && isWindowLoaded === false){
       window.addEventListener('load', this.handleAdLoad, false);
     }
   }
   componentDidMount(): void{
-    if(windowIsLoad === true){
+    if(isWindowLoaded === true){
       this.loadAd();
     }
   }
   handleAdLoad: Function = (): void=>{
     this.loadAd();
     window.removeEventListener('load', this.handleAdLoad);
-    if(windowIsLoad === false){
-      windowIsLoad = true;
-    }
   };
   loadAd(): void{
     const props: Object = this.props;
