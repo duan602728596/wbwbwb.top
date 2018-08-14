@@ -10,6 +10,7 @@ import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import createInputDecorator from './createInputDecorator';
 import message from '../../../components/message/message';
+import Ad from '../../../components/Ad/index';
 import Earth from './earth/Earth';
 import { prelogin, pattern, verify, login } from '../request';
 
@@ -119,8 +120,8 @@ class Index extends Component{
       <div key="element" className={ classNames(publicStyle.main, bootstrap['d-flex'], style.loginMain) }>
         <div className={ style.content }>
           {/* 登陆表单 */}
-          <Earth />
           <form className={ style.form } onSubmit={ this.handleFormSubmit }>
+            <Ad className={ style.loginAd } src="https://www.baidu.com/" />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {
@@ -169,7 +170,10 @@ class Index extends Component{
               />
               <label className={ bootstrap['form-check-label'] } htmlFor="vcode">使用验证码登陆</label>
             </div>
-            <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
+            <div className={ style.btnBox }>
+              <Earth />
+              <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) } type="submit">登陆</button>
+            </div>
           </form>
         </div>
         <footer className={ classNames(bootstrap['bg-light'], bootstrap['text-center'], style.footer) }>
