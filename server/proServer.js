@@ -58,9 +58,9 @@ app.use(router.routes())
 
 /* index路由 */
 router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
-  const { status, body } = await readFile(serverFile + '/index.html');
+  const body = await readFile(serverFile + '/index.html');
 
-  ctx.status = status;
+  ctx.status = 200;
   ctx.type = 'text/html';
   ctx.body = await preRender(body, ctx.path, ctx);
 
