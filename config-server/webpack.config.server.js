@@ -45,14 +45,19 @@ function config(){
           use: ['css-loader/locals']
         },
         { // 图片
-          test: /^.*\.(jpg|png|gif)$/,
+          test: /^.*\.(jpe?g|png|gif)$/,
           use: [
             {
               loader: 'url-loader',
               options: {
-                limit: 3000,
-                name: fileName,
-                outputPath: 'image/'
+                limit: 8192,
+                fallback: {
+                  loader: 'file-loader',
+                  options: {
+                    name: fileName,
+                    outputPath: 'image/'
+                  }
+                }
               }
             }
           ]

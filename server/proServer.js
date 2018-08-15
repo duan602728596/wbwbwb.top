@@ -17,7 +17,7 @@ const routers = require('../service/routers/routers');
 
 const app = new Koa();
 const router = new Router();
-const serverFile = path.join(__dirname, '/../build');
+const serverFile = path.join(__dirname, '../build');
 
 /* 读取文件 */
 function readFile(file){
@@ -34,42 +34,42 @@ function readFile(file){
   });
 }
 
-/* gzip压缩 */
-app.use(compress({
-  filter(contentType){
-    return true;
-  },
-  threshold: 2048,
-  flush: zlib.constants.Z_SYNC_FLUSH
-}));
+(async function(){
+  /* gzip压缩 */
+  app.use(compress({
+    filter(contentType){
+      return true;
+    },
+    threshold: 2048,
+    flush: zlib.constants.Z_SYNC_FLUSH
+  }));
 
-/* 缓存 */
-app.use(convert(
-  staticCache(serverFile, {
-    maxAge: 60 * 60 * 24 * 365
-  })
-));
+  /* 缓存 */
+  app.use(convert(
+    staticCache(serverFile, {
+      maxAge: 60 * 60 * 24 * 365
+    })
+  ));
 
-app.use(body());
+  app.use(body());
 
-/* router */
-app.use(router.routes())
-  .use(router.allowedMethods());
+  /* router */
+  app.use(router.routes())
+    .use(router.allowedMethods());
 
-/* index路由 */
-router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
-  const body = await readFile(serverFile + '/index.html');
+  /* index路由 */
+  router.get(/^\/[^._\-]*$/, async(ctx, next)=>{
+    const body = await readFile(serverFile + '/index.html');
 
-  ctx.status = 200;
-  ctx.type = 'text/html';
-  ctx.body = await preRender(body, ctx.path, ctx);
+    ctx.status = 200;
+    ctx.type = 'text/html';
+    ctx.body = await preRender(body, ctx.path, ctx);
 
-  await next();
-});
+    await next();
+  });
 
-/* 静态文件 */
-router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
-  try{
+  /* 静态文件 */
+  router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
     const pathFile = ctx.path;
     const file = serverFile + pathFile;
 
@@ -79,28 +79,23 @@ router.get(/^.*\.[a-zA-Z0-9]+$/, async(ctx, next)=>{
       ctx.body = await readFile(file);
     }else{
       ctx.status = 404;
-      ctx.type = 'text/plain';
-      ctx.body = '404 not found.';
     }
-  }catch(err){
-    ctx.status = 500;
-    ctx.type = 'text/plain';
-    ctx.body = err;
+
+    await next();
+  });
+
+  routers(router);
+
+  /* http服务 */
+  http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5052);
+
+  /* https服务 */
+  const key = path.join(__dirname, '../server.key');
+  const crt = path.join(__dirname, '../server.crt');
+  if(fs.existsSync(key) && fs.existsSync(crt)){
+    https.createServer({
+      key: await readFile(key),
+      cert: await readFile(crt)
+    }, app.callback()).listen(process.env.HTTPS_SERVER_PORT || 443);
   }
-  await next();
-});
-
-routers(router);
-
-/* http服务 */
-http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5052);
-
-/* https服务 */
-const key = path.join(__dirname, '../server.key');
-const crt = path.join(__dirname, '../server.crt');
-if(fs.existsSync(key) && fs.existsSync(crt)){
-  https.createServer({
-    key: fs.readFileSync(key),
-    cert: fs.readFileSync(crt)
-  }, app.callback()).listen(process.env.HTTPS_SERVER_PORT || 443);
-}
+})();
