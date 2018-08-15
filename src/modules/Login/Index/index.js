@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -23,11 +23,28 @@ class Index extends Component{
     location: PropTypes.object,
     match: PropTypes.object
   };
+  formRef: Object = createRef();
   patternCallbackBind: ?Function = null;
+
+  state: {
+    adSrc: ?string
+  } = {
+    adSrc: null
+  };
 
   componentDidMount(): void{
     localStorage.removeItem(USER_INFORMATION);
     sessionStorage.removeItem(USER_INFORMATION);
+    this.loadAd();
+  }
+  // 加载广告
+  loadAd(): void{
+    const element: Element = this.formRef.current;
+    const width: number = element.clientWidth;
+    const height: number = parseInt(width / (568 / 171));
+    this.setState({
+      adSrc: `https://popularize.skygrass.club/?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
+    });
   }
   // 登陆
   async login(formValue: Object, id: ?string): Promise<void>{
@@ -120,8 +137,8 @@ class Index extends Component{
       <div key="element" className={ classNames(publicStyle.main, bootstrap['d-flex'], style.loginMain) }>
         <div className={ style.content }>
           {/* 登陆表单 */}
-          <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src={ `https://popularize.skygrass.club/?w=568&h=171&t=${ new Date().getTime() }` } />
+          <form ref={ this.formRef } className={ style.form } onSubmit={ this.handleFormSubmit }>
+            <Ad className={ style.loginAd } src={ this.state.adSrc } />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {
