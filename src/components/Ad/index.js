@@ -22,7 +22,7 @@ class Ad extends Component{
     }
   }
   componentDidMount(): void{
-    if(isWindowLoaded === true){
+    if(isWindowLoaded === true || document.readyState === 'complete'){
       this.loadAd();
     }
   }
