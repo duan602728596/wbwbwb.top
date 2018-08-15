@@ -1,5 +1,5 @@
 {
-  "name": "api.wbwbwb.top",
+  "name": "ad.wbwbwb.top",
   "scripts": {
     "start": "cross-env NODE_ENV=development HTTP_SERVER_PORT=5055 HTTPS_SERVER_PORT=5056 supervisor -w ./server ./server/server.js",
     "server": "cross-env NODE_ENV=production HTTP_SERVER_PORT=5055 HTTPS_SERVER_PORT=5056 node ./server/server.js",
