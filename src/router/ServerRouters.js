@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router';
 import Index from '../modules/Index/Layout';
 import Login from '../modules/Login/Layout';
 import SuperTopicSignIn from '../modules/SuperTopicSignIn/Layout';
+import FriendShip from '../modules/FriendShip/Layout';
 import Page404 from '../assembly/404/index';
 
 class ServerRouters extends Component{
@@ -14,6 +15,7 @@ class ServerRouters extends Component{
         <Route path="/Index" component={ Index } />
         <Route path="/Login" component={ Login } />
         <Route path="/SuperTopicSignIn" component={ SuperTopicSignIn } />
+        <Route path="/FriendShip" component={ FriendShip } />
         <Route component={ Page404 } />
       </Switch>
     );

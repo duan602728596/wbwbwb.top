@@ -16,7 +16,7 @@ class CloseModal extends Component{
         <div className={ bootstrap['modal-dialog'] } role="document">
           <div className={ bootstrap['modal-content'] }>
             <div className={ bootstrap['modal-header'] }>
-              <h5 className={ bootstrap['modal-title'] }>提示</h5>
+              <h5 className={ classNames(bootstrap['modal-title'], style.modalTitle) }>提示</h5>
               <button className={ bootstrap.close }
                 type="button"
                 data-dismiss="modal"

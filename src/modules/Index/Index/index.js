@@ -90,13 +90,19 @@ class Index extends Component{
         </div>
         {/* 菜单 */}
         <nav className={ classNames(bootstrap.row, style.nav) }>
-          <div className={ classNames(bootstrap['col-4'], style.navCol) }>
+          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
             <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
               <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
               <span className={ style.navItemText }>超话签到</span>
             </Link>
           </div>
-          <div className={ classNames(bootstrap['col-4'], style.navCol) }>
+          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
+            <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
+              <img className={ style.navItemImage } src={ require('./image/icon3.jpg') } />
+              <span className={ style.navItemText }>用户关注</span>
+            </Link>
+          </div>
+          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
             <a className={ style.navItem } onClick={ this.handleModalDisplayClick.bind(this, true) }>
               <img className={ style.navItemImage } src={ require('./image/icon2.jpg') } />
               <span className={ style.navItemText }>退出</span>
