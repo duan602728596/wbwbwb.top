@@ -45,8 +45,6 @@ class SuperTopicSignIn extends Component{
   } = {
     loading: false // 是否加载
   };
-  clickLen: number = 0;  // 点击次数
-  timer: ?number = null; // 定时器
 
   componentDidMount(): void{
     if(this.props.sinceId === null){
@@ -59,7 +57,7 @@ class SuperTopicSignIn extends Component{
     }
   }
   // 重新加载所有的超话列表
-  async getAllSuperTopicList(): Promise<void>{
+  handleGetAllSuperTopicList: Function = async(event: Event): Promise<void>=>{
     this.setState({
       loading: true
     });
@@ -93,22 +91,6 @@ class SuperTopicSignIn extends Component{
     this.setState({
       loading: false
     });
-  }
-  // 连续点击三次的事件
-  handleThreeClick: Function = (event: Event): void=>{
-    if(this.timer !== null){
-      clearTimeout(this.timer);
-      this.timer = null;
-    }
-    this.clickLen += 1;
-    if(this.clickLen === 3){
-      this.clickLen = 0;
-      this.getAllSuperTopicList();
-    }else{
-      this.timer = setTimeout((): void=>{
-        this.clickLen = 0;
-      }, 2000);
-    }
   };
   // 签到所有
   handleQiandaoAllClick: Function = async(event: Event): Promise<void>=>{
@@ -201,30 +183,38 @@ class SuperTopicSignIn extends Component{
         const containerid: string = this.sheme(item.scheme);
         const isQiandao: boolean = item.code === '100000' || item.code === 382004;
         return (
-          <a key={ containerid } className={ classNames(
+          <div key={ containerid } className={ classNames(
             bootstrap['list-group-item'],
             bootstrap['flex-column'],
             bootstrap['align-items-start'],
             style.listItem)
           }>
-            <img className={ classNames(bootstrap['position-absolute'], style.pic) } src={ item.pic } />
+            <a className={ classNames(style.pic) }
+              href={ item.scheme}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src={ item.pic } alt={ item.title_sub } title={ item.title_sub } />
+            </a>
             <div className={ classNames(bootstrap['d-flex'], bootstrap['justify-content-between'], style.content) }>
               <h5 className={ classNames(bootstrap['mb-1'], bootstrap['text-primary'], style.title) }>
-                { item.title_sub }
+                <a href={ item.scheme} target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>
               </h5>
               <small className={ bootstrap['text-muted'] }>{ item.desc1 }</small>
             </div>
             {
-              item.code !== undefined ? (
-                <span className={ classNames(
-                  bootstrap.badge,
-                  bootstrap['badge-pill'],
-                  item.code === '100000' ? bootstrap['badge-success'] : bootstrap['badge-warning'],
-                  style.badge)
-                }>
-                  { item.msg }
-                </span>
-              ) : null
+              do{
+                if(item.code !== undefined){
+                  <span className={ classNames(
+                    bootstrap.badge,
+                    bootstrap['badge-pill'],
+                    item.code === '100000' ? bootstrap['badge-success'] : bootstrap['badge-warning'],
+                    style.badge)
+                  }>
+                    { item.msg }
+                  </span>;
+                }
+              }
             }
             <p className={ classNames(bootstrap['mb-1'], style.text) }>{ item.desc2 }</p>
             {
@@ -238,7 +228,7 @@ class SuperTopicSignIn extends Component{
                 </button>
               )
             }
-          </a>
+          </div>
         );
       }
     });
@@ -251,13 +241,19 @@ class SuperTopicSignIn extends Component{
           <nav className={ publicStyle.nav } aria-label="breadcrumb">
             <ol className={ bootstrap.breadcrumb }>
               <li className={ bootstrap['breadcrumb-item'] }>
-                <Link to="/Index">微博自动签到系统</Link>
+                <Link to="/Index">
+                  <i className={ publicStyle.iconHome } />
+                </Link>
               </li>
-              <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) }
-                aria-current="page"
-                onClick={ this.handleThreeClick }
-              >
-                超级话题签到
+              <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) } aria-current="page">超级话题签到</li>
+              <li className={ classNames(bootstrap['text-right'], style.extra) }>
+                <button className={ classNames(bootstrap.btn, bootstrap['btn-light'], bootstrap['btn-sm']) }
+                  type="button"
+                  disabled={ loading }
+                  onClick={ this.handleGetAllSuperTopicList }
+                >
+                  加载所有超话
+                </button>
               </li>
             </ol>
           </nav>
