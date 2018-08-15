@@ -121,7 +121,7 @@ class Index extends Component{
         <div className={ style.content }>
           {/* 登陆表单 */}
           <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src="https://popularize.skygrass.club/?w=568&h=171&t=201808142350" />
+            <Ad className={ style.loginAd } src={ `https://popularize.skygrass.club/?w=568&h=171&t=${ new Date().getTime() }` } />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {
@@ -181,11 +181,11 @@ class Index extends Component{
           </form>
         </div>
         <footer className={ classNames(bootstrap['bg-light'], bootstrap['text-center'], style.footer) }>
-          <span className={ classNames(bootstrap['mr-3'], bootstrap['d-inline-block']) }>
+          <span className={ bootstrap['d-inline-block'] }>
             <a href="http://www.miitbeian.gov.cn" target="_blank">辽ICP备18005585号</a>
           </span>
           {/*
-          <span className={ bootstrap['d-inline-block'] }>
+          <span className={ classNames(bootstrap['d-inline-block'], bootstrap['ml-3']) }>
             <img className={ bootstrap['mr-1'] } src={ require('./beian.png') } />
             <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21108102211092"
               target="_blank"
