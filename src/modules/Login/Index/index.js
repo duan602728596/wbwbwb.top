@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
 import { createForm } from 'rc-form';
-import { USER_INFORMATION, adUrl } from '../../../utils';
+import { USER_INFORMATION } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
@@ -121,11 +121,7 @@ class Index extends Component{
         <div className={ style.content }>
           {/* 登陆表单 */}
           <form className={ style.form } onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd }
-              src={ adUrl('http://popularize.skygrass.club/?w=568&h=171&t=201808142350',
-                'https://www.wbwbwb.top:5056/wangxiaojia.html')
-              }
-            />
+            <Ad className={ style.loginAd } src="https://popularize.skygrass.club/?w=568&h=171&t=201808142350" />
             <div className={ classNames(bootstrap['form-group'], style.group) }>
               <label htmlFor="username">微博用户名：</label>
               {

@@ -46,16 +46,3 @@ export function getUserInformation(): ?Object{
   const sUserInformation: ?string = sessionStorage.getItem(USER_INFORMATION);
   return sUserInformation ? JSON.parse(sUserInformation) : null;
 }
-
-/* 广告地址兼容 */
-export function adUrl(httpUrl: string, httpsUrl: string): string{
-  if(typeof window === 'object'){
-    if(window.location.protocol === 'https:'){
-      return httpsUrl;
-    }else{
-      return httpUrl;
-    }
-  }else{
-    return httpsUrl;
-  }
-}
