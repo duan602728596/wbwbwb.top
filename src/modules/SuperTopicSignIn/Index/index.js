@@ -228,38 +228,37 @@ class SuperTopicSignIn extends Component{
 
     return [
       <Layout key="main" className={ publicStyle.main }>
-        <InfiniteScroll className={ publicStyle.infiniteScroll }
-          hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
-          threshold={ 50 }
-          initialLoad={ false }
-          useWindow={ false }
-          loadMore={ this.handleLoadSuperTopicList  }
-        >
-          <Layout.Header className={ publicStyle.header }>
-            <Row type="flex">
-              <Col span={ 12 }>
-                <Breadcrumb className={ publicStyle.breadcrumb }>
-                  <Breadcrumb.Item className={ publicStyle.breadcrumbItem }>
-                    <Link to="/Index">
-                      <Icon type="home" />
-                    </Link>
-                  </Breadcrumb.Item>
-                  <Breadcrumb.Item>超级话题签到</Breadcrumb.Item>
-                </Breadcrumb>
-              </Col>
-              <Col className={ style.extra } span={ 12 }>
-                <Button type="dashed"
-                  size="small"
-                  ghost={ true }
-                  loading={ loading }
-                  onClick={ this.handleGetAllSuperTopicList }
-                >
-                  加载所有超话
-                </Button>
-              </Col>
-            </Row>
-          </Layout.Header>
-          <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
+        <Layout.Header className={ publicStyle.header }>
+          <Row type="flex">
+            <Col span={ 12 }>
+              <Breadcrumb className={ publicStyle.breadcrumb }>
+                <Breadcrumb.Item className={ publicStyle.breadcrumbItem }>
+                  <Link to="/Index">
+                    <Icon type="home" />
+                  </Link>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>超级话题签到</Breadcrumb.Item>
+              </Breadcrumb>
+            </Col>
+            <Col className={ style.extra } span={ 12 }>
+              <Button type="dashed"
+                size="small"
+                ghost={ true }
+                loading={ loading }
+                onClick={ this.handleGetAllSuperTopicList }
+              >
+                加载所有超话
+              </Button>
+            </Col>
+          </Row>
+        </Layout.Header>
+        <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
+          <InfiniteScroll hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
+            threshold={ 50 }
+            initialLoad={ false }
+            useWindow={ false }
+            loadMore={ this.handleLoadSuperTopicList  }
+          >
             {
               do{
                 if(this.props.cards.length > 0){
@@ -291,8 +290,8 @@ class SuperTopicSignIn extends Component{
                 }
               }
             }
-          </Layout.Content>
-        </InfiniteScroll>
+          </InfiniteScroll>
+        </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(
         <BackTop target={ (): Element => document.getElementById('super-topic-sign-in-content') } visibilityHeight={ 200 } />,
