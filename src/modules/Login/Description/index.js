@@ -16,10 +16,12 @@ class Description extends Component{
         <article className={ style.text }>
           <p className={ style.p }>1、本网站内容仅用于学习交流，非商用、非盈利。</p>
           <p className={ style.p }>2、本网站不会储存任何账号密码，接口仅作为中间服务。如有账号相关问题，本网站概不负责。</p>
+        </article>
+        <div className={ style.btnBox }>
           <Link to="/Login">
             <Button type="primary">返回</Button>
           </Link>
-        </article>
+        </div>
       </Layout>
     ];
   }
