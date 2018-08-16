@@ -82,27 +82,29 @@ class Index extends Component{
           <b className={ style.avatarText }>用户：</b>
           { username }
         </Layout.Header>
-        {/* 菜单 */}
-        <Row type="flex">
-          <Col { ...grid }>
-            <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
-              <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
-              <span className={ style.navItemText }>超话签到</span>
-            </Link>
-          </Col>
-          <Col { ...grid }>
-            <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
-              <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
-              <span className={ style.navItemText }>用户关注</span>
-            </Link>
-          </Col>
-          <Col { ...grid }>
-            <a className={ style.navItem } onClick={ this.handleExitClick }>
-              <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
-              <span className={ style.navItemText }>退出</span>
-            </a>
-          </Col>
-        </Row>
+        <Layout.Content className={ style.content }>
+          {/* 菜单 */}
+          <Row type="flex">
+            <Col { ...grid }>
+              <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
+                <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
+                <span className={ style.navItemText }>超话签到</span>
+              </Link>
+            </Col>
+            <Col { ...grid }>
+              <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
+                <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
+                <span className={ style.navItemText }>用户关注</span>
+              </Link>
+            </Col>
+            <Col { ...grid }>
+              <a className={ style.navItem } onClick={ this.handleExitClick }>
+                <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
+                <span className={ style.navItemText }>退出</span>
+              </a>
+            </Col>
+          </Row>
+        </Layout.Content>
       </Layout>
     );
   }

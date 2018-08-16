@@ -34,3 +34,4 @@ class ModuleLayout extends Component{
 }
 
 export default ModuleLayout;
+export reducer from './store/reducer';

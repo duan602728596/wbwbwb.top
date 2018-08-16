@@ -37,6 +37,7 @@ const dispatch: Function = (dispatch: Function): Object=>({
 class SuperTopicSignIn extends Component{
   static propTypes: Object = {
     cards: PropTypes.array,
+    sinceId: PropTypes.string,
     action: PropTypes.objectOf(PropTypes.func)
   };
 
@@ -196,7 +197,7 @@ class SuperTopicSignIn extends Component{
       >
         <List.Item.Meta description={ item.desc2 }
           title={[
-            <a key="title" href={ item.scheme} target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>,
+            <a key="title" href={ item.scheme } target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>,
             <Tag key="lv" className={ style.tag } color="#2db7f5">{ item.desc1 }</Tag>,
             item.code !== undefined ? [
               <br key="br" />,
@@ -204,7 +205,7 @@ class SuperTopicSignIn extends Component{
             ] : null
           ]}
           avatar={
-            <a href={ item.scheme} target="_blank" rel="noopener noreferrer">
+            <a href={ item.scheme } target="_blank" rel="noopener noreferrer">
               <Avatar src={ item.pic } shape="square" size="large"  />
             </a>
           }
@@ -226,8 +227,9 @@ class SuperTopicSignIn extends Component{
     const { loading }: { loading: boolean } = this.state;
 
     return [
-      <Layout key="main" id="super-topic-sign-in-main" className={ publicStyle.main }>
-        <InfiniteScroll hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
+      <Layout key="main" className={ publicStyle.main }>
+        <InfiniteScroll className={ publicStyle.infiniteScroll }
+          hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
           threshold={ 50 }
           initialLoad={ false }
           useWindow={ false }
@@ -257,14 +259,14 @@ class SuperTopicSignIn extends Component{
               </Col>
             </Row>
           </Layout.Header>
-          <Layout.Content className={ publicStyle.content }>
+          <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
             {
               do{
                 if(this.props.cards.length > 0){
                   <Button className={ style.qiandaoAll }
                     type="primary"
                     block={ true }
-                    disabled={ loading }
+                    loading={ loading }
                     onClick={ this.handleQiandaoAllClick }
                   >
                     一键签到
@@ -293,7 +295,7 @@ class SuperTopicSignIn extends Component{
         </InfiniteScroll>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(
-        <BackTop target={ (): Element => document.getElementById('super-topic-sign-in-main') } />,
+        <BackTop target={ (): Element => document.getElementById('super-topic-sign-in-content') } visibilityHeight={ 200 } />,
         document.body
       ) : null
     ];

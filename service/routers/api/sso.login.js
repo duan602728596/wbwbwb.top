@@ -25,6 +25,9 @@ async function login(ctx, next){
 
     const cookie = res.headers['set-cookie'].join('; ');
 
+    // 格式化数据
+    delete res.data.data;
+
     ctx.status = res.status;
     ctx.body = {
       ...res.data,

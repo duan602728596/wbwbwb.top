@@ -12,7 +12,7 @@ async function getChaohuaList(ctx, next){
       uri += `&since_id=${ query.since_id }`;
     }
 
-    const res = await axios({
+    const { status, data } = await axios({
       url: uri,
       method: 'GET',
       headers: {
@@ -20,8 +20,38 @@ async function getChaohuaList(ctx, next){
       }
     });
 
-    ctx.status = res.status;
-    ctx.body = res.data;
+    // 格式化数据
+    const cards = data.data.cards[0].card_group;
+    data.data.cardlistInfo = {
+      since_id: data.data.cardlistInfo.since_id
+    };
+
+    for(let i = cards.length - 1; i>= 0; i--){
+      const item = cards[i];
+      if(item.card_type === 8){
+        delete item.card_type_name;
+        delete item.title;
+        delete item.itemid;
+        delete item.display_arrow;
+        delete item.buttons;
+        delete item.title_flag_pic;
+      }else{
+        cards.splice(i, 1);
+      }
+    }
+
+    const body= {
+      ok: data.ok,
+      data: {
+        cardlistInfo: data.data.cardlistInfo,
+        cards: [
+          { card_group: data.data.cards[0].card_group }
+        ]
+      }
+    };
+
+    ctx.status = status;
+    ctx.body = body;
   }catch(err){
     ctx.status = 500;
     ctx.body = err;
