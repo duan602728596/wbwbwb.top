@@ -20,7 +20,6 @@ class Index extends Component{
     location: PropTypes.object,
     match: PropTypes.object
   };
-  formRef: Object = createRef();
   patternCallbackBind: ?Function = null;
 
   state: {
@@ -36,7 +35,7 @@ class Index extends Component{
   }
   // 加载广告
   loadAd(): void{
-    const element: Element = this.formRef.current;
+    const element: Element = document.getElementById('login-form');
     const width: number = element.clientWidth;
     const height: number = parseInt(width / (568 / 171));
     this.setState({
@@ -134,7 +133,7 @@ class Index extends Component{
       <Layout key="element" className={ publicStyle.main }>
         <Layout.Content>
           {/* 登陆表单 */}
-          <form ref={ this.formRef } className={ style.form } onSubmit={ this.handleFormSubmit }>
+          <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
             <Ad className={ style.loginAd } src={ this.state.adSrc } />
             <Form.Item className={ style.group } label="微博用户名">
               {
@@ -158,7 +157,7 @@ class Index extends Component{
                       message: '请输入密码！'
                     }
                   ]
-                })(<Input htmltype="password" />)
+                })(<Input type="password" />)
               }
             </Form.Item>
             <Row type="flex">
@@ -176,11 +175,11 @@ class Index extends Component{
                 <Link to="/Login/Description">网站说明</Link>
               </Col>
             </Row>
-            <Button className={ style.webglBtn } type="primary" htmltype="submit" size="large" block={ true }>
+            <Button className={ style.webglBtn } type="primary" htmlType="submit" size="large" block={ true }>
               <Earth />
               登陆
             </Button>
-          </form>
+          </Form>
         </Layout.Content>
         <Layout.Footer className={ style.footer }>
           <span>
