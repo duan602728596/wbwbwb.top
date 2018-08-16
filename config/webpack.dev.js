@@ -5,6 +5,7 @@ const config = require('./webpack.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('./sass.config');
 const postCssConfig = require('./postcss.config');
+const lessConfig = require('./less.config');
 const manifestJson = require('../.dll/manifest.json');
 
 /* 合并配置 */
@@ -22,8 +23,8 @@ module.exports = config({
         use: ['style-loader', cssConfig, postCssConfig, sassConfig]
       },
       { // css
-        test: /^.*\.css$/,
-        use: ['style-loader', 'css-loader']
+        test: /^.*\.(le|c)ss$/,
+        use: ['style-loader', 'css-loader', lessConfig]
       }
     ]
   },

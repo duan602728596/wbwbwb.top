@@ -95,9 +95,11 @@ class Earth extends Component{
   // 渲染器初始化
   initRenderer(): void{
     const current: Element = this.element.current;
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer({
+      alpha: true
+    });
     this.renderer.setSize(current.clientWidth, current.clientHeight);
-    this.renderer.setClearColor(0xffffff);
+    this.renderer.setClearColor(0xffffff, 0);
     current.appendChild(this.renderer.domElement);
   }
   // 动画
@@ -108,17 +110,9 @@ class Earth extends Component{
     this.timer = requestAnimationFrame(this.animation);
   };
   render(): React.Element{
-    return (
-      <div ref={ this.element } className={ style.earth }>
-        {
-          do{
-            if(this.state.noWebGl === true){
-              <img className={ style.noWebGl } src={ require('./earth-no-webgl.png') } />;
-            }
-          }
-        }
-      </div>
-    );
+    return this.state.noWebGl === true
+      ? null
+      : <div ref={ this.element } className={ style.earth } />;
   }
 }
 

@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
-import { createForm } from 'rc-form';
+import { Layout, Row, Col, Form, Input, Checkbox, Button, message } from 'antd';
 import { USER_INFORMATION } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
-import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
-import createInputDecorator from './createInputDecorator';
-import message from '../../../components/message/message';
 import Ad from '../../../components/Ad/index';
 import Earth from './earth/Earth';
 import { prelogin, pattern, verify, login } from '../request';
 
 @withRouter
-@createForm()
+@Form.create()
 class Index extends Component{
   static propTypes: Object = {
     form: PropTypes.object,
@@ -69,13 +66,13 @@ class Index extends Component{
           sessionStorage.setItem(USER_INFORMATION, storageData);
         }
         this.props.history.push('/Index');
-        message('success', '登陆成功！');
+        message.success('登陆成功！');
       }else{
-        message('danger', `（${ step4Data.retcode }）${ step4Data.msg }`);
+        message.error(`（${ step4Data.retcode }）${ step4Data.msg }`);
       }
     }catch(err){
       console.error(err);
-      message('danger', '登陆失败！');
+      message.error('登陆失败！');
     }
   }
   // 验证完毕后的回调函数
@@ -90,11 +87,11 @@ class Index extends Component{
       if(step3.code === '100000'){
         this.login(formValue, id);
       }else{
-        message('danger', `（${ step3.code }）${ step3.msg }`);
+        message.error(`（${ step3.code }）${ step3.msg }`);
       }
     }catch(err){
       console.error(err);
-      message('danger', '验证失败！');
+      message.error('验证失败！');
     }
     document.removeEventListener('weibo-pattlock', this.patternCallbackBind);
     this.patternCallbackBind = null;
@@ -129,20 +126,19 @@ class Index extends Component{
     });
   };
   render(): React.ChildrenArray<React.Element>{
-    const { getFieldProps }: { getFieldProps: Function } = this.props.form;
+    const { getFieldDecorator }: { getFieldDecorator: Function } = this.props.form;
     return [
       <Helmet key="helmet">
         <title>登陆 - 微博签到系统</title>
       </Helmet>,
-      <div key="element" className={ classNames(publicStyle.main, bootstrap['d-flex'], style.loginMain) }>
-        <div className={ style.content }>
+      <Layout key="element" className={ publicStyle.main }>
+        <Layout.Content>
           {/* 登陆表单 */}
           <form ref={ this.formRef } className={ style.form } onSubmit={ this.handleFormSubmit }>
             <Ad className={ style.loginAd } src={ this.state.adSrc } />
-            <div className={ classNames(bootstrap['form-group'], style.group) }>
-              <label htmlFor="username">微博用户名：</label>
+            <Form.Item className={ style.group } label="微博用户名">
               {
-                createInputDecorator(this.props, 'username', {
+                getFieldDecorator('username', {
                   rules: [
                     {
                       required: true,
@@ -150,69 +146,59 @@ class Index extends Component{
                       whitespace: true
                     }
                   ]
-                })(<input className={ bootstrap['form-control'] } id="username" type="text" />)
+                })(<Input />)
               }
-            </div>
-            <div className={ classNames(bootstrap['form-group'], style.group) }>
-              <label htmlFor="password">密码：</label>
+            </Form.Item>
+            <Form.Item className={ style.group } label="密码">
               {
-                createInputDecorator(this.props, 'password', {
+                getFieldDecorator('password', {
                   rules: [
                     {
                       required: true,
                       message: '请输入密码！'
                     }
                   ]
-                })(<input className={ bootstrap['form-control'] } id="password" type="password" />)
+                })(<Input htmltype="password" />)
               }
-            </div>
-            <div className={ classNames(bootstrap['form-check'], style.checkGroup, 'clearfix') }>
-              <div className={ bootstrap['float-left'] }>
-                <input className={ bootstrap['form-check-input'] }
-                  id="remember-password"
-                  type="checkbox"
-                  { ...getFieldProps('remember-password') }
-                />
-                <label className={ bootstrap['form-check-label'] } htmlFor="remember-password">七天内免登陆</label>
-              </div>
-              <div className={ bootstrap['float-right'] }>
+            </Form.Item>
+            <Row type="flex">
+              <Col span={ 12 }>
+                <Form.Item className={ style.checkGroup }>
+                  { getFieldDecorator('remember-password')(<Checkbox aria-label="七天内免登陆" />) }
+                  <label className={ style.checkText } htmlFor="remember-password">七天内免登陆</label>
+                </Form.Item>
+                <Form.Item className={ classNames(style.checkGroup, style.mb40) }>
+                  { getFieldDecorator('vcode')(<Checkbox aria-label="使用验证码登陆" />) }
+                  <label className={ style.checkText } htmlFor="vcode">使用验证码登陆</label>
+                </Form.Item>
+              </Col>
+              <Col className={ style.linkDescription } span={ 12 }>
                 <Link to="/Login/Description">网站说明</Link>
-              </div>
-            </div>
-            <div className={ classNames(bootstrap['form-check'], style.checkGroup) }>
-              <input className={ bootstrap['form-check-input'] }
-                id="vcode"
-                type="checkbox"
-                { ...getFieldProps('vcode') }
-              />
-              <label className={ bootstrap['form-check-label'] } htmlFor="vcode">使用验证码登陆</label>
-            </div>
-            <div className={ style.btnBox }>
+              </Col>
+            </Row>
+            <Button className={ style.webglBtn } type="primary" htmltype="submit" size="large" block={ true }>
               <Earth />
-              <button className={ classNames(bootstrap['btn'], bootstrap['btn-block'], bootstrap['btn-primary']) }
-                type="submit"
-              >
-                登陆
-              </button>
-            </div>
+              登陆
+            </Button>
           </form>
-        </div>
-        <footer className={ classNames(bootstrap['bg-light'], bootstrap['text-center'], style.footer) }>
-          <span className={ bootstrap['d-inline-block'] }>
-            <a href="http://www.miitbeian.gov.cn" target="_blank">辽ICP备18005585号</a>
+        </Layout.Content>
+        <Layout.Footer className={ style.footer }>
+          <span>
+            <a href="http://www.miitbeian.gov.cn" target="_blank" rel="noopener noreferrer">辽ICP备18005585号</a>
           </span>
           {/*
           <span className={ classNames(bootstrap['d-inline-block'], bootstrap['ml-3']) }>
             <img className={ bootstrap['mr-1'] } src={ require('./beian.png') } />
             <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21108102211092"
               target="_blank"
+              rel="noopener noreferrer"
             >
               辽公网安备 21108102211092
             </a>
           </span>
           */}
-        </footer>
-      </div>
+        </Layout.Footer>
+      </Layout>
     ];
   }
 }

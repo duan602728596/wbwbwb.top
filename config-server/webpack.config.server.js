@@ -5,6 +5,7 @@ const babelConfig = require('./babel.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('../config/sass.config');
 const postCssConfig = require('../config/postcss.config');
+const lessConfig = require('../config/less.config');
 
 function config(){
   const { NODE_ENV } = process.env;
@@ -41,8 +42,8 @@ function config(){
           use: [cssConfig, postCssConfig, sassConfig]
         },
         { // css
-          test: /^.*\.css$/,
-          use: ['css-loader/locals']
+          test: /^.*\.(le|c)ss$/,
+          use: ['css-loader/locals', lessConfig]
         },
         { // 图片
           test: /^.*\.(jpe?g|png|gif)$/,

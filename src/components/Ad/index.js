@@ -22,9 +22,10 @@ class Ad extends Component{
     }
   }
   componentDidMount(): void{
-    if(isWindowLoaded === true || document.readyState === 'complete'){
-      this.loadAd();
-    }
+    this.loadAd();
+  }
+  componentDidUpdate(prevProps: Object, prevState: Object): void{
+    this.loadAd();
   }
   handleAdLoad: Function = (): void=>{
     this.loadAd();
@@ -32,7 +33,7 @@ class Ad extends Component{
   };
   loadAd(): void{
     const props: Object = this.props;
-    if(props.src){
+    if((isWindowLoaded === true || document.readyState === 'complete') && props.src){
       let element: ?Element = document.createElement('iframe');
       element.src = this.props.src;
       element.scrolling = 'no';
