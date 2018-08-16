@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
-import { Layout, Row, Col, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message } from 'antd';
+import { Layout, Row, Col, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message, BackTop } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import InfiniteScroll from 'react-infinite-scroller';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
@@ -38,6 +39,7 @@ class SuperTopicSignIn extends Component{
     cards: PropTypes.array,
     action: PropTypes.objectOf(PropTypes.func)
   };
+
   state: {
     loading: boolean
   } = {
@@ -220,12 +222,12 @@ class SuperTopicSignIn extends Component{
     });
     return dom;
   }
-  render(): React.Element{
+  render(): React.ChildrenArray<React.Element>{
     const { loading }: { loading: boolean } = this.state;
 
-    return (
-      <Layout className={ publicStyle.main }>
-        <InfiniteScroll hasMore={  this.props.sinceId === 'END' ? false : (loading === false ) }
+    return [
+      <Layout key="main" id="super-topic-sign-in-main" className={ publicStyle.main }>
+        <InfiniteScroll hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
           threshold={ 50 }
           initialLoad={ false }
           useWindow={ false }
@@ -289,8 +291,12 @@ class SuperTopicSignIn extends Component{
             }
           </Layout.Content>
         </InfiniteScroll>
-      </Layout>
-    );
+      </Layout>,
+      typeof document === 'object' ? ReactDOM.createPortal(
+        <BackTop target={ (): Element => document.getElementById('super-topic-sign-in-main') } />,
+        document.body
+      ) : null
+    ];
   }
 }
 

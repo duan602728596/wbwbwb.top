@@ -2,7 +2,7 @@
 import React, { Component, createRef } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import bootstrap from '../publicStyle/bootstrap.sass';
+import { Tag } from 'antd';
 import style from './style.sass';
 import { isWindowLoaded } from './windowLoad';
 
@@ -51,7 +51,7 @@ class Ad extends Component{
       return (
         <div className={ classNames(style.ad, props.className) }>
           <div ref={ this.iframeBox } className={ style.iframeBox } />
-          <span className={ classNames(bootstrap['bg-secondary'], bootstrap['text-white'], style.text) }>广告</span>
+          <Tag className={ style.text }>广告</Tag>
         </div>
       );
     }else{

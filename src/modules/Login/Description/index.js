@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import classNames from 'classnames';
 import { Layout, Button } from 'antd';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
-import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 
 class Description extends Component{

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
+import { Button } from 'antd';
 import publicStyle from '../../components/publicStyle/publicStyle.sass';
-import bootstrap from '../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 
 class Page404 extends Component{
@@ -10,9 +9,11 @@ class Page404 extends Component{
     return (
       <div className={ publicStyle.main }>
         <img className={ style.nvpu } src={ require('./nvpu.jpg') } />
-        <p className={ classNames(bootstrap['text-center'], style.text) }>你好像迷路了呢！让我带你回家吧！</p>
-        <div className={ bootstrap['text-center'] }>
-          <Link className={ classNames(bootstrap.btn, bootstrap['btn-primary']) } to="/">我要回家</Link>
+        <p className={ style.text }>你好像迷路了呢！让我带你回家吧！</p>
+        <div className={ style.center }>
+          <Link to="/">
+            <Button type="danger" icon="rollback" ghost={ true }>我要回家</Button>
+          </Link>
         </div>
       </div>
     );
