@@ -135,7 +135,7 @@ class Index extends Component{
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
             <Ad className={ style.loginAd } src={ this.state.adSrc } />
-            <Form.Item className={ style.group } label="微博用户名">
+            <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
                 getFieldDecorator('username', {
                   rules: [
@@ -148,7 +148,7 @@ class Index extends Component{
                 })(<Input />)
               }
             </Form.Item>
-            <Form.Item className={ style.group } label="密码">
+            <Form.Item className={ style.group } label="密码：" colon={ false }>
               {
                 getFieldDecorator('password', {
                   rules: [

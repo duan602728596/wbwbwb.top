@@ -5,13 +5,11 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
-import QueueAnim from 'rc-queue-anim';
+import { Layout, Avatar, Modal, Row, Col } from 'antd';
 import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
-import bootstrap from '../../../components/publicStyle/bootstrap.sass';
 import style from './style.sass';
 import { username } from '../store/reducer';
-import CloseModal from './CloseModal';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -47,11 +45,6 @@ class Index extends Component{
     location: PropTypes.object,
     match: PropTypes.object
   };
-  state: {
-    isModalDisplay: boolean
-  } = {
-    isModalDisplay: false // 弹出层的显示和隐藏
-  };
 
   componentDidMount(): void{
     // 获取用户名
@@ -63,66 +56,54 @@ class Index extends Component{
       });
     }
   }
-  // 点击显示modal
-  handleModalDisplayClick(value: boolean, event: Event): void{
-    this.setState({
-      isModalDisplay: value
+  // 退出
+  handleExitClick: Function = (event: Event): void=>{
+    const ref: Object = Modal.confirm({
+      content: '是否退出当前账号？',
+      onOk: (): void => this.props.history.push('/Login'),
+      onCancel: (): void => ref.destroy()
     });
-  }
-  // 点击确认跳转
-  handleGoToLoginClick: Function = (event: Event): void=>{
-    this.props.history.push('/Login');
   };
   render(): React.Element{
     const { username, cookie }: {
       username: string,
       cookie: string
     } = this.props;
+    const grid: Object = {
+      xs: 12,
+      sm: 8
+    };
+
     return (
-      <div className={ publicStyle.main }>
+      <Layout className={ publicStyle.main }>
         {/* 显示用户名 */}
-        <div className={ classNames(bootstrap.navbar, bootstrap['bg-primary'], style.user) }>
-          <a className={ bootstrap['navbar-brand'] }>
-            <img className={ style.avatar } src={ require('./image/avatar.jpg') } />
-            <b>用户：</b>
-            { username }
-          </a>
-        </div>
+        <Layout.Header className={ classNames(style.user) }>
+          <Avatar src={ require('./image/avatar.jpg') } size="large" alt={ username } />
+          <b className={ style.avatarText }>用户：</b>
+          { username }
+        </Layout.Header>
         {/* 菜单 */}
-        <nav className={ classNames(bootstrap.row, style.nav) }>
-          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
+        <Row type="flex">
+          <Col { ...grid }>
             <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
-              <img className={ style.navItemImage } src={ require('./image/icon1.jpg') } />
+              <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
               <span className={ style.navItemText }>超话签到</span>
             </Link>
-          </div>
-          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
+          </Col>
+          <Col { ...grid }>
             <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
-              <img className={ style.navItemImage } src={ require('./image/icon3.jpg') } />
+              <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
               <span className={ style.navItemText }>用户关注</span>
             </Link>
-          </div>
-          <div className={ classNames(bootstrap['col-4'], bootstrap['text-center'], style.navCol) }>
-            <a className={ style.navItem } onClick={ this.handleModalDisplayClick.bind(this, true) }>
-              <img className={ style.navItemImage } src={ require('./image/icon2.jpg') } />
+          </Col>
+          <Col { ...grid }>
+            <a className={ style.navItem } onClick={ this.handleExitClick }>
+              <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
               <span className={ style.navItemText }>退出</span>
             </a>
-          </div>
-        </nav>
-        {/* 弹出层 */}
-        <QueueAnim type="alpha">
-          {
-            do{
-              if(this.state.isModalDisplay === true){
-                <CloseModal key="closeModal"
-                  onOk={ this.handleGoToLoginClick }
-                  onCancel={ this.handleModalDisplayClick.bind(this, false) }
-                />;
-              }
-            }
-          }
-        </QueueAnim>
-      </div>
+          </Col>
+        </Row>
+      </Layout>
     );
   }
 }
