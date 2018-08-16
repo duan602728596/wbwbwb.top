@@ -7,23 +7,22 @@
   background-color: #fff !important
   -webkit-overflow-scrolling: touch
   overflow: auto
-.fixedNav
-  position: fixed
-  z-index: 2
-  top: 0
-  left: 0
-  width: 100%
-.nav
-  margin: 0 auto
-  width: 100%
-  max-width: 600px
-.fixedMain
-  padding-top: 72px
-.iconHome
-  $width: 25px
-  display: inline-block
-  width: $width
-  height: $width
-  background: url('./home.png') no-repeat center center
-  background-size: 100% 100%
-  cursor: pointer
+// header
+.header
+  margin-bottom: 20px
+  padding: 0 20px !important
+// content
+.content
+  padding-left: 15px
+  padding-right: 15px
+  padding-bottom: 30px
+  overflow-x: hidden
+// 面包屑
+.breadcrumb
+  margin-top: 20px !important
+  a, :global(.ant-breadcrumb-separator), :global(.ant-breadcrumb-link)
+    color: #fff !important
+// list
+.list :global(.ant-list-item)
+  padding-left: 10px !important
+  padding-right: 10px !important

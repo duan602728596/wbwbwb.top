@@ -77,7 +77,7 @@ class Index extends Component{
     return (
       <Layout className={ publicStyle.main }>
         {/* 显示用户名 */}
-        <Layout.Header className={ classNames(style.user) }>
+        <Layout.Header className={ classNames(publicStyle.header, style.user) }>
           <Avatar src={ require('./image/avatar.jpg') } size="large" alt={ username } />
           <b className={ style.avatarText }>用户：</b>
           { username }

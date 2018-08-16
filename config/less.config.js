@@ -4,8 +4,7 @@
 // https://github.com/ant-design/ant-design/blob/master/components/style/themes/default.less
 const modifyVars = {
   // -------- Colors -----------
-  '@primary-color': '#faad14',
-  '@layout-header-background': '@primary-color'
+  '@primary-color': '#faad14'
 };
 
 module.exports = {

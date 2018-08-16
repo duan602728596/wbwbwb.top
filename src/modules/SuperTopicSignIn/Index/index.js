@@ -4,12 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
+import { Layout, Row, Col, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import { getUserInformation } from '../../../utils';
+import InfiniteScroll from 'react-infinite-scroller';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
-import bootstrap from '../../../components/publicStyle/bootstrap.sass';
-import message from '../../../components/message/message';
 import { superTopic, qiandao } from '../store/reducer';
 import style from './style.sass';
 import { signin, getSuperTopicList } from '../request';
@@ -61,7 +59,7 @@ class SuperTopicSignIn extends Component{
     this.setState({
       loading: true
     });
-    message('info', '正在加载所有数据。');
+    message.info('正在加载所有数据。');
     try{
       const cards: [] = [];
       let isBreak: boolean = false;
@@ -83,10 +81,10 @@ class SuperTopicSignIn extends Component{
         sinceId,
         cards
       });
-      message('success', '数据加载成功！');
+      message.success('数据加载成功！');
     }catch(err){
       console.error(err);
-      message('danger', '数据加载失败！');
+      message.error('数据加载失败！');
     }
     this.setState({
       loading: false
@@ -108,7 +106,7 @@ class SuperTopicSignIn extends Component{
           }
         }
       }
-      message('success', '一键签到成功！');
+      message.success('一键签到成功！');
     }catch(err){
       console.error(err);
     }
@@ -143,7 +141,7 @@ class SuperTopicSignIn extends Component{
       });
     }catch(err){
       console.error(err);
-      message('danger', `${ item.title_sub }：签到失败！`);
+      message.error(`${ item.title_sub }：签到失败！`);
     }
   }
   // 加载数据
@@ -164,10 +162,10 @@ class SuperTopicSignIn extends Component{
         sinceId: sinceId2,
         cards: cards.concat(cards2)
       });
-      message('success', '数据加载成功！');
+      message.success('数据加载成功！');
     }catch(err){
       console.error(err);
-      message('danger', '数据加载失败！');
+      message.error('数据加载失败！');
     }
     this.setState({
       loading: false
@@ -176,119 +174,122 @@ class SuperTopicSignIn extends Component{
   // sheme
   sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
   // 渲染超话列表
-  superTopicListView(): React.ChildrenArray<React.Element>{
-    const { loading }: { loading: boolean } = this.state;
-    return this.props.cards.map((item: Object, index: number): React.Element=>{
-      if(item.card_type === 8){
-        const containerid: string = this.sheme(item.scheme);
-        const isQiandao: boolean = item.code === '100000' || item.code === 382004;
-        return (
-          <div key={ containerid } className={ classNames(
-            bootstrap['list-group-item'],
-            bootstrap['flex-column'],
-            bootstrap['align-items-start'],
-            style.listItem)
-          }>
-            <a className={ classNames(style.pic) }
-              href={ item.scheme}
-              target="_blank"
-              rel="noopener noreferrer"
+  superTopicListItemView(item: Object, index: number): React.Element{
+    if(!item || item.card_type !== 8) return null;
+    const containerid: string = this.sheme(item.scheme);
+    const isQiandao: boolean = item.code === '100000' || item.code === 382004;
+    return (
+      <List.Item key={ containerid }
+        actions={[
+          isQiandao ? null : (
+            <Button key="qiandao"
+              size="small"
+              disabled={ this.state.loading }
+              onClick={ this.handleQiandaoClick.bind(this, containerid, item, index)}
             >
-              <img src={ item.pic } alt={ item.title_sub } title={ item.title_sub } />
+              签到
+            </Button>
+          )
+        ]}
+      >
+        <List.Item.Meta description={ item.desc2 }
+          title={[
+            <a key="title" href={ item.scheme} target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>,
+            <Tag key="lv" className={ style.tag } color="#2db7f5">{ item.desc1 }</Tag>,
+            item.code !== undefined ? [
+              <br key="br" />,
+              <Tag key="msg" className={ style.msg } color={ item.code === '100000' ? 'green' : 'red' }>{ item.msg }</Tag>
+            ] : null
+          ]}
+          avatar={
+            <a href={ item.scheme} target="_blank" rel="noopener noreferrer">
+              <Avatar src={ item.pic } shape="square" size="large"  />
             </a>
-            <div className={ classNames(bootstrap['d-flex'], bootstrap['justify-content-between'], style.content) }>
-              <h5 className={ classNames(bootstrap['mb-1'], bootstrap['text-primary'], style.title) }>
-                <a href={ item.scheme} target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>
-              </h5>
-              <small className={ bootstrap['text-muted'] }>{ item.desc1 }</small>
-            </div>
-            {
-              do{
-                if(item.code !== undefined){
-                  <span className={ classNames(
-                    bootstrap.badge,
-                    bootstrap['badge-pill'],
-                    item.code === '100000' ? bootstrap['badge-success'] : bootstrap['badge-warning'],
-                    style.badge)
-                  }>
-                    { item.msg }
-                  </span>;
-                }
-              }
-            }
-            <p className={ classNames(bootstrap['mb-1'], style.text) }>{ item.desc2 }</p>
-            {
-              isQiandao ? null : (
-                <button className={ classNames(bootstrap.btn, bootstrap['btn-primary'], bootstrap['btn-sm'], style.qiandao)}
-                  type="button"
-                  disabled={ loading }
-                  onClick={ this.handleQiandaoClick.bind(this, containerid, item, index)}
-                >
-                  签到
-                </button>
-              )
-            }
-          </div>
-        );
+          }
+        />
+      </List.Item>
+    );
+  }
+  superTopicListView(list: Array): React.ChildrenArray<React.Element>{
+    const dom: [] = [];
+    list.forEach((value: Object, index: number, array: []): void=>{
+      const element: ?React.Element = this.superTopicListItemView(value, index);
+      if(element){
+        dom.push(element);
       }
     });
+    return dom;
   }
   render(): React.Element{
     const { loading }: { loading: boolean } = this.state;
+
     return (
-      <div className={ classNames(publicStyle.main, publicStyle.fixedMain) }>
-        <div className={ publicStyle.fixedNav }>
-          <nav className={ publicStyle.nav } aria-label="breadcrumb">
-            <ol className={ bootstrap.breadcrumb }>
-              <li className={ bootstrap['breadcrumb-item'] }>
-                <Link to="/Index">
-                  <i className={ publicStyle.iconHome } />
-                </Link>
-              </li>
-              <li className={ classNames(bootstrap['breadcrumb-item'], bootstrap.active) } aria-current="page">超级话题签到</li>
-              <li className={ classNames(bootstrap['text-right'], style.extra) }>
-                <button className={ classNames(bootstrap.btn, bootstrap['btn-light'], bootstrap['btn-sm']) }
-                  type="button"
-                  disabled={ loading }
+      <Layout className={ publicStyle.main }>
+        <InfiniteScroll hasMore={  this.props.sinceId === 'END' ? false : (loading === false ) }
+          threshold={ 50 }
+          initialLoad={ false }
+          useWindow={ false }
+          loadMore={ this.handleLoadSuperTopicList  }
+        >
+          <Layout.Header className={ publicStyle.header }>
+            <Row type="flex">
+              <Col span={ 12 }>
+                <Breadcrumb className={ publicStyle.breadcrumb }>
+                  <Breadcrumb.Item className={ publicStyle.breadcrumbItem }>
+                    <Link to="/Index">
+                      <Icon type="home" />
+                    </Link>
+                  </Breadcrumb.Item>
+                  <Breadcrumb.Item>超级话题签到</Breadcrumb.Item>
+                </Breadcrumb>
+              </Col>
+              <Col className={ style.extra } span={ 12 }>
+                <Button type="dashed"
+                  size="small"
+                  ghost={ true }
+                  loading={ loading }
                   onClick={ this.handleGetAllSuperTopicList }
                 >
                   加载所有超话
-                </button>
-              </li>
-            </ol>
-          </nav>
-        </div>
-        {/* list */}
-        <QueueAnim className={ classNames(bootstrap['list-group'], style.superTopicList) } duration={ 200 } interval={ 50 }>
-          {
-            do{
-              if(this.props.cards.length > 0){
-                <button className={ classNames(bootstrap.btn, bootstrap['btn-block'], bootstrap['btn-warning'], style.qiandaoAll) }
-                  type="button"
-                  disabled={ loading }
-                  onClick={ this.handleQiandaoAllClick }
-                >
-                  一键签到
-                </button>;
+                </Button>
+              </Col>
+            </Row>
+          </Layout.Header>
+          <Layout.Content className={ publicStyle.content }>
+            {
+              do{
+                if(this.props.cards.length > 0){
+                  <Button className={ style.qiandaoAll }
+                    type="primary"
+                    block={ true }
+                    disabled={ loading }
+                    onClick={ this.handleQiandaoAllClick }
+                  >
+                    一键签到
+                  </Button>;
+                }
               }
             }
-          }
-          { this.superTopicListView() }
-          {
-            do{
-              if(this.props.sinceId !== 'END'){
-                <button className={ classNames(bootstrap.btn, bootstrap['btn-block'], bootstrap['btn-outline-info'], style.loadData) }
-                  type="button"
-                  disabled={ loading }
-                  onClick={ this.handleLoadSuperTopicList }
-                >
-                  { loading ? '加载中...' : '加载数据' }
-                </button>;
+            <List className={ publicStyle.list } itemLayout="horizontal" bordered={ true }>
+              <QueueAnim duration={ 200 } interval={ 50 }>
+                { this.superTopicListView(this.props.cards) }
+              </QueueAnim>
+            </List>
+            {
+              do{
+                if(this.props.sinceID !== 'END'){
+                  loading ? (
+                    <div className={ style.loading}>
+                      <Spin />
+                      <span>加载中...</span>
+                    </div>
+                  ) : null;
+                }
               }
             }
-          }
-        </QueueAnim>
-      </div>
+          </Layout.Content>
+        </InfiniteScroll>
+      </Layout>
     );
   }
 }
