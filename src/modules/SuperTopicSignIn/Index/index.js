@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import { Layout, Row, Col, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message, BackTop } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import InfiniteScroll from 'react-infinite-scroller';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import { superTopic, qiandao } from '../store/reducer';
 import style from './style.sass';
@@ -253,44 +253,39 @@ class SuperTopicSignIn extends Component{
           </Row>
         </Layout.Header>
         <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
-          <InfiniteScroll hasMore={ this.props.sinceId === 'END' ? false : (loading === false ) }
-            threshold={ 50 }
-            initialLoad={ false }
-            useWindow={ false }
-            loadMore={ this.handleLoadSuperTopicList  }
+          {
+            do{
+              if(this.props.cards.length > 0){
+                <Button className={ style.qiandaoAll }
+                  type="primary"
+                  icon="edit"
+                  block={ true }
+                  loading={ loading }
+                  onClick={ this.handleQiandaoAllClick }
+                >
+                  一键签到
+                </Button>;
+              }
+            }
+          }
+          <List className={ publicStyle.list }
+            itemLayout="horizontal"
+            bordered={ true }
+            loadMore={ this.props.sinceId !== 'END' ? (
+              <div className={ classNames(style.loading, { [style.inLoading]: loading }) }>
+                {
+                  loading ? [
+                    <Spin key="spin" />,
+                    <span key="text">加载中...</span>
+                  ] : <Button onClick={ this.handleLoadSuperTopicList }>加载更多数据</Button>
+                }
+              </div>
+            ) : null }
           >
-            {
-              do{
-                if(this.props.cards.length > 0){
-                  <Button className={ style.qiandaoAll }
-                    type="primary"
-                    block={ true }
-                    loading={ loading }
-                    onClick={ this.handleQiandaoAllClick }
-                  >
-                    一键签到
-                  </Button>;
-                }
-              }
-            }
-            <List className={ publicStyle.list } itemLayout="horizontal" bordered={ true }>
-              <QueueAnim duration={ 200 } interval={ 50 }>
-                { this.superTopicListView(this.props.cards) }
-              </QueueAnim>
-            </List>
-            {
-              do{
-                if(this.props.sinceID !== 'END'){
-                  loading ? (
-                    <div className={ style.loading}>
-                      <Spin />
-                      <span>加载中...</span>
-                    </div>
-                  ) : null;
-                }
-              }
-            }
-          </InfiniteScroll>
+            <QueueAnim duration={ 200 } interval={ 50 }>
+              { this.superTopicListView(this.props.cards) }
+            </QueueAnim>
+          </List>
         </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(

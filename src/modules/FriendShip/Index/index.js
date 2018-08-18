@@ -7,7 +7,6 @@ import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import { Layout, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message, BackTop } from 'antd';
 import QueueAnim from 'rc-queue-anim';
-import InfiniteScroll from 'react-infinite-scroller';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 import { friendShip } from '../store/reducer';
