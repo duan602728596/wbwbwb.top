@@ -76,19 +76,3 @@ function mkdir(filePath){
     console.error(err);
   });
 }
-
-(async function(){
-  try{
-    // 删除build-server的image
-    const buildServerImagePath = path.resolve(__dirname, '../build-server/image');
-    if(fs.existsSync(buildServerImagePath)){
-      const images = await readdir(buildServerImagePath);
-      for(let i = 0, j = images.length; i < j; i++){
-        await unlink(path.resolve(buildServerImagePath, images[i]));
-      }
-      await rmdir(buildServerImagePath);
-    }
-  }catch(err){
-    console.error(err);
-  }
-})();

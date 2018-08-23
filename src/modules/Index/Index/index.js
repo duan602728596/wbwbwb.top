@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { Layout, Avatar, Modal, Row, Col } from 'antd';
 import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
+import Footer from '../../../assembly/Footer/index';
 import style from './style.sass';
 import { username } from '../store/reducer';
 
@@ -92,6 +93,12 @@ class Index extends Component{
               </Link>
             </Col>
             <Col { ...grid }>
+              <a className={ style.navItem } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
+                <Avatar className={ style.navAvatar } src={ require('./image/chensi.jpg') } shape="square" size={ 90 } />
+                <span className={ style.navItemText }>口袋48禁用词汇查询</span>
+              </a>
+            </Col>
+            <Col { ...grid }>
               <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
                 <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
                 <span className={ style.navItemText }>用户关注</span>
@@ -105,6 +112,7 @@ class Index extends Component{
             </Col>
           </Row>
         </Layout.Content>
+        <Footer />
       </Layout>
     );
   }

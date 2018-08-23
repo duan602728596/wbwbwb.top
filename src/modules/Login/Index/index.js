@@ -8,6 +8,7 @@ import { USER_INFORMATION } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 import Ad from '../../../components/Ad/index';
+import Footer from '../../../assembly/Footer/index';
 import Earth from './earth/Earth';
 import { prelogin, pattern, verify, login } from '../request';
 
@@ -181,22 +182,7 @@ class Index extends Component{
             </Button>
           </Form>
         </Layout.Content>
-        <Layout.Footer className={ style.footer }>
-          <span>
-            <a href="http://www.miitbeian.gov.cn" target="_blank" rel="noopener noreferrer">辽ICP备18005585号</a>
-          </span>
-          {/*
-          <span className={ classNames(bootstrap['d-inline-block'], bootstrap['ml-3']) }>
-            <img className={ bootstrap['mr-1'] } src={ require('./beian.png') } />
-            <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21108102211092"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              辽公网安备 21108102211092
-            </a>
-          </span>
-          */}
-        </Layout.Footer>
+        <Footer />
       </Layout>
     ];
   }
