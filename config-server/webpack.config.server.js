@@ -1,6 +1,7 @@
 /* webpack配置 */
 const path = require('path');
 const process = require('process');
+const TerserPlugin = require('terser-webpack-plugin');
 const babelConfig = require('./babel.config');
 const cssConfig = require('./css.config');
 const sassConfig = require('../config/sass.config');
@@ -80,6 +81,10 @@ function config(){
       ]
     }
   };
+
+  if(!isDevelopment){
+    conf.optimization.minimizer = [new TerserPlugin()];
+  }
 
   return conf;
 }
