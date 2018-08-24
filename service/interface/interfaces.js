@@ -6,8 +6,7 @@ function pathAnalyze(file){
   if(file2 === ''){
     return 'index';
   }else{
-    return file2.toLowerCase()
-      .replace(/\//g, '.'); 
+    return file2.toLowerCase().replace(/\//g, '.');
   }
 }
 
