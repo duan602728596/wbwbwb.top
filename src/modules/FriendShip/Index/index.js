@@ -56,7 +56,8 @@ class FriendShips extends Component{
         const len: number = data.cards.length;
         const page: number | string = len === 0 ? 'END' : 2;
         const cards: [] = len === 0 ? [] : data.cards;
-        this.props.action.friendShip({ page, cards });
+        const cookie: string = data.cookie;
+        this.props.action.friendShip({ page, cards, cookie });
       });
     }
   }

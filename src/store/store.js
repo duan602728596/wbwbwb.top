@@ -10,20 +10,21 @@ const reducer: Function = createReducer({});
 /* 中间件 */
 const middlewares: Function = applyMiddleware(thunk);
 
-let store: ?Object = null;
+const store: Object = {
+  asyncReducers: {}
+};
 
-function storeFactory(initialState: ?Object): Object{
+export function storeFactory(initialState: ?Object): Object{
   /* initialState */
   const $$initialState: Immutable.Map = Map(fromJS(initialState));
 
   /* store */
-  store = createStore(reducer, $$initialState, compose(middlewares));
-  store.asyncReducers = {};
+  Object.assign(store, createStore(reducer, $$initialState, compose(middlewares)));
 
   return store;
 }
 
-export default storeFactory;
+export default store;
 
 /* 注入store */
 export function injectReducers(asyncReducer: Object): void{

@@ -5,6 +5,6 @@ function handleWindowLoad(event: Event): void{
 
 export let isWindowLoaded: boolean = false;
 
-if(typeof window === 'object' && isWindowLoaded === false){
+if(typeof document === 'object' && isWindowLoaded === false){
   window.addEventListener('load', handleWindowLoad, false);
 }

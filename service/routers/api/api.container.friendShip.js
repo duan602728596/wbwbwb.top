@@ -34,7 +34,7 @@ async function getFriendList(ctx, next){
     uri += `&page=${ query.page }`;
   }
 
-  const { status, data } = await axios({
+  const { status, data, headers } = await axios({
     url: uri,
     method: 'GET',
     headers: {
@@ -54,7 +54,8 @@ async function getFriendList(ctx, next){
 
   ctx.status = status;
   ctx.body = {
-    cards: newCards
+    cards: newCards,
+    cookie: headers['set-cookie'].join('; ')
   };
 }
 
