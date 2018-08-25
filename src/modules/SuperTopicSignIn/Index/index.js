@@ -51,8 +51,8 @@ class SuperTopicSignIn extends Component{
     if(this.props.sinceId === null){
       getSuperTopicList().then((res: Object): void=>{
         const { data }: { data: Object } = res;
-        const sinceId: string = data.data.cardlistInfo?.since_id || 'END';
-        const cards: [] = data.data.cards[0].card_group;
+        const sinceId: string = data.since_id || 'END';
+        const cards: [] = data.cards;
         this.props.action.superTopic({ sinceId, cards });
       });
     }
@@ -70,11 +70,10 @@ class SuperTopicSignIn extends Component{
       while(isBreak === false){
         const res: Object = await getSuperTopicList(sinceId);
         const { data }: { data: Object } = res;
-        const { cardlistInfo }: { cardlistInfo: Object } = data.data;
-        const cards2: [] = data.data.cards[0].card_group;
+        const cards2: [] = data.cards;
         cards.push(...cards2);
-        if('since_id' in cardlistInfo){
-          sinceId = cardlistInfo.since_id;
+        if('since_id' in data && data.since_id){
+          sinceId = data.since_id;
         }else{
           sinceId = 'END';
           isBreak = true;
@@ -159,8 +158,8 @@ class SuperTopicSignIn extends Component{
     try{
       const res: Object = await getSuperTopicList(encodeURI(sinceId));
       const { data }: { data: Object } = res;
-      const sinceId2: string = data.data.cardlistInfo?.since_id || 'END';
-      const cards2: [] = data.data.cards[0].card_group;
+      const sinceId2: string = data?.since_id || 'END';
+      const cards2: [] = data.cards;
       this.props.action.superTopic({
         sinceId: sinceId2,
         cards: cards.concat(cards2)

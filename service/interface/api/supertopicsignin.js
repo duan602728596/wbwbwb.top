@@ -12,9 +12,8 @@ module.exports = async function(ctx){
       method: 'GET'
     });
 
-    const { cardlistInfo } = data.data;
-    sinceId = 'since_id' in cardlistInfo ? cardlistInfo.since_id : 'END';
-    cards = data.data.cards[0].card_group;
+    sinceId = 'since_id' in data && data.since_id ? data.since_id : 'END';
+    cards = data.cards;
   }
 
   return {
