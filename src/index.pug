@@ -1,9 +1,5 @@
 - var imports = require('./imports');
 
-//
-  鲜血与雷霆，力量与荣耀！
-  为了部落！为了希尔瓦娜斯的胜利！
-doctype html
 html
   head
     meta(charset='utf-8')
@@ -19,7 +15,7 @@ html
     title {% title %}
     if htmlWebpackPlugin.options.NODE_ENV === 'production'
       //- 百度统计
-      script.
+      script(type='text/javascript').
         var _hmt = _hmt || [];
         (function(){
           var hm = document.createElement('script');

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
 import style from './style.sass';
 
 class Footer extends Component{
@@ -13,6 +13,11 @@ class Footer extends Component{
         </nav>
         <div>
           <span className={ style.footerSpan }>
+            <a className={ style.github } href="https://github.com/duan602728596/wbwbwb.top" target="_blank" rel="noopener noreferrer">
+              <Icon type="github" />
+            </a>
+          </span>
+          <span className={ classNames(style.ml20, style.footerSpan) }>
             <a href="http://www.miitbeian.gov.cn" target="_blank" rel="noopener noreferrer">辽ICP备18005585号</a>
           </span>
           {/*

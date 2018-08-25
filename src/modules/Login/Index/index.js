@@ -9,7 +9,6 @@ import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 import Ad from '../../../components/Ad/index';
 import Footer from '../../../assembly/Footer/index';
-import Earth from './earth/Earth';
 import { prelogin, pattern, verify, login } from '../request';
 
 @withRouter
@@ -176,10 +175,7 @@ class Index extends Component{
                 <Link to="/Login/Description">网站说明</Link>
               </Col>
             </Row>
-            <Button className={ style.webglBtn } type="primary" htmlType="submit" size="large" block={ true }>
-              <Earth />
-              登陆
-            </Button>
+            <Button type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
           </Form>
         </Layout.Content>
         <Footer />
