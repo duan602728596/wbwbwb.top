@@ -9,6 +9,7 @@ import { Layout, Avatar, Modal, Row, Col } from 'antd';
 import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import Footer from '../../../assembly/Footer/index';
+import Ad from '../../../components/Ad/index';
 import style from './style.sass';
 import { username } from '../store/reducer';
 
@@ -111,6 +112,10 @@ class Index extends Component{
               </a>
             </Col>
           </Row>
+          {/* 广告 */}
+          <div className={ style.indexAdBox }>
+            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/xusiyang.html?t=201808252028" />
+          </div>
         </Layout.Content>
         <Footer />
       </Layout>

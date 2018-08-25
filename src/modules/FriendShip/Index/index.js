@@ -123,10 +123,12 @@ class FriendShips extends Component{
   }
   // 批量取关
   handleQuguanAllClick: Function = async(event: Event): void=>{
+    const quguanList: [] = this.state.quguanList;
+    if(quguanList.length === 0) return void 0;
+
     this.setState({
       loading: true
     });
-    const quguanList: [] = this.state.quguanList;
     try{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();

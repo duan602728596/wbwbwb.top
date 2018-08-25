@@ -23,9 +23,9 @@ class Index extends Component{
   patternCallbackBind: ?Function = null;
 
   state: {
-    adSrc: ?string
+    wangxiaojiaAd: ?string
   } = {
-    adSrc: null
+    wangxiaojiaAd: null
   };
 
   componentDidMount(): void{
@@ -39,7 +39,7 @@ class Index extends Component{
     const width: number = element.clientWidth;
     const height: number = parseInt(width / (568 / 171));
     this.setState({
-      adSrc: `https://popularize.skygrass.club/?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
+      wangxiaojiaAd: `https://popularize.skygrass.club/?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
     });
   }
   // 登陆
@@ -134,7 +134,7 @@ class Index extends Component{
         <Layout.Content>
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src={ this.state.adSrc } />
+            <Ad className={ style.loginAd } src={ this.state.wangxiaojiaAd } />
             <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
                 getFieldDecorator('username', {
@@ -175,7 +175,8 @@ class Index extends Component{
                 <Link to="/Login/Description">网站说明</Link>
               </Col>
             </Row>
-            <Button type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
+            <Button className={ style.loginBtn } type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
+            <Ad className={ style.loginAd } src="https://www.wbwbwb.top:5056/huangtongyang.html?t=201808252028" />
           </Form>
         </Layout.Content>
         <Footer />
