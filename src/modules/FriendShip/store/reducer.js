@@ -17,7 +17,7 @@ const reducer: Function = handleActions({
   [friendShip]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
     const { cards, page }: {
       cards: [],
-      page: ?number
+      page: ?(number | string)
     } = action.payload;
     return $$state.set('cards', List(cards))
       .set('page', page);

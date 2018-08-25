@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import { Layout, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message, BackTop } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
@@ -18,8 +19,8 @@ const state: Function = createStructuredSelector({
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('friendShip') : null,
     ($$data: ?Immutable.Map): [] => $$data ? $$data.get('cards').toJS() : []
   ),
-  page: createSelector(       // page
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('page') : null,
+  page: createSelector(         // page
+    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('friendShip') : null,
     ($$data: ?Immutable.Map): ?(number | string) => $$data ? $$data.get('page') : null
   )
 });
@@ -42,17 +43,48 @@ class FriendShips extends Component{
     action: PropTypes.objectOf(PropTypes.func)
   };
 
+  state: {
+    loading: boolean
+  } = {
+    loading: false // 是否加载
+  };
+
   componentDidMount(): void{
     if(this.props.page === null){
       getFriendShip().then((res: Object): void=>{
         const { data }: { data: Object } = res;
         const len: number = data.cards.length;
         const page: number | string = len === 0 ? 'END' : 2;
-        const cards: [] = len === 0 ? [] : data.cards[len - 1];
+        const cards: [] = len === 0 ? [] : data.cards;
         this.props.action.friendShip({ page, cards });
       });
     }
   }
+  // 加载更多
+  handleLoadFriendShip: Function = async(event: Event): Promise<void>=>{
+    try{
+      this.setState({
+        loading: true
+      });
+      const { cards, page }: {
+        cards: [],
+        page: ?(number | string)
+      } = this.props;
+      const { data }: { data: Object } = await getFriendShip(page);
+      const cards2: [] = data.cards;
+      this.props.action.friendShip({
+        page: cards2.length === 0 ? 'END' : (page + 1),
+        cards: cards.concat(cards2)
+      });
+      message.success('数据加载成功！');
+    }catch(err){
+      console.error(err);
+      message.error('数据加载失败！');
+    }
+    this.setState({
+      loading: false
+    });
+  };
   // 渲染关注列表
   friendShipItemView(item: Object, index: number): React.Element{
     if(!item || item.card_type !== 10) return null;
@@ -84,6 +116,8 @@ class FriendShips extends Component{
     return dom;
   }
   render(): React.ChildrenArray<React.Element>{
+    const { loading }: { loading: boolean } = this.state;
+
     return [
       <Layout key="main" className={ publicStyle.main }>
         <Layout.Header className={ publicStyle.header }>
@@ -97,7 +131,20 @@ class FriendShips extends Component{
           </Breadcrumb>
         </Layout.Header>
         <Layout.Content className={ publicStyle.content } id="friend-ship-content">
-          <List className={ publicStyle.list } itemLayout="horizontal" bordered={ true }>
+          <List className={ publicStyle.list }
+            itemLayout="horizontal"
+            bordered={ true }
+            loadMore={ this.props.sinceId !== 'END' ? (
+              <div className={ classNames(style.loading, { [style.inLoading]: loading }) }>
+                {
+                  loading ? [
+                    <Spin key="spin" />,
+                    <span key="text">加载中...</span>
+                  ] : <Button onClick={ this.handleLoadFriendShip }>加载更多数据</Button>
+                }
+              </div>
+            ) : null }
+          >
             <QueueAnim duration={ 200 } interval={ 50 }>
               { this.friendShipListView(this.props.cards) }
             </QueueAnim>

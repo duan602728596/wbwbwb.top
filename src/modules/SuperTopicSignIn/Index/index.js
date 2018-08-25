@@ -156,8 +156,7 @@ class SuperTopicSignIn extends Component{
       sinceId: ?string
     } = this.props;
     try{
-      const res: Object = await getSuperTopicList(encodeURI(sinceId));
-      const { data }: { data: Object } = res;
+      const { data }: { data: Object } = await getSuperTopicList(encodeURI(sinceId));
       const sinceId2: string = data?.since_id || 'END';
       const cards2: [] = data.cards;
       this.props.action.superTopic({
