@@ -4,6 +4,24 @@
  */
 const axios = require('axios');
 
+// 格式化数据
+function formatData(data){
+  for(let i = data.length - 1; i>= 0; i--){
+    const item = cards[i];
+    if(item.card_type === 8){
+      delete item.card_type_name;
+      delete item.title;
+      delete item.itemid;
+      delete item.display_arrow;
+      delete item.buttons;
+      delete item.title_flag_pic;
+    }else{
+      cards.splice(i, 1);
+    }
+  }
+  return data;
+}
+
 async function getChaohuaList(ctx, next){
   const { query } = ctx.request;
   let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
@@ -20,29 +38,13 @@ async function getChaohuaList(ctx, next){
   });
 
   // 格式化数据
-  const cards = data.data.cards[0].card_group;
+  const cards = format(data.data.cards[0].card_group);
 
-  for(let i = cards.length - 1; i>= 0; i--){
-    const item = cards[i];
-    if(item.card_type === 8){
-      delete item.card_type_name;
-      delete item.title;
-      delete item.itemid;
-      delete item.display_arrow;
-      delete item.buttons;
-      delete item.title_flag_pic;
-    }else{
-      cards.splice(i, 1);
-    }
-  }
-
-  const body= {
+  ctx.status = status;
+  ctx.body = {
     since_id: data.data.cardlistInfo.since_id,
     cards
   };
-
-  ctx.status = status;
-  ctx.body = body;
 }
 
 function apiContainerGetIndex(router){

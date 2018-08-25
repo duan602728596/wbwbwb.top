@@ -44,26 +44,18 @@ async function getFriendList(ctx, next){
 
   // 格式化数据
   const { cards } = data.data;
-  const newCards = [];
+  let newCards = [];
+
   if(cards.length === 2){
-    newCards.push({
-      card_group: formatData(cards[1].card_group)
-    });
+    newCards = formatData(cards[1].card_group);
   }else if(cards.length === 1){
-    newCards.push({
-      card_group: formatData(cards[0].card_group)
-    });
+    newCards = formatData(cards[0].card_group);
   }
 
-  const body= {
-    ok: data.ok,
-    data: {
-      cards: newCards
-    }
-  };
-
   ctx.status = status;
-  ctx.body = body;
+  ctx.body = {
+    cards: newCards
+  };
 }
 
 function apiContainerFriendShip(router){

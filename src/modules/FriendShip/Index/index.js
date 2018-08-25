@@ -46,9 +46,9 @@ class FriendShips extends Component{
     if(this.props.page === null){
       getFriendShip().then((res: Object): void=>{
         const { data }: { data: Object } = res;
-        const len: number = data.data.cards.length;
+        const len: number = data.cards.length;
         const page: number | string = len === 0 ? 'END' : 2;
-        const cards: [] = len === 0 ? [] : data.data.cards[len - 1].card_group;
+        const cards: [] = len === 0 ? [] : data.cards[len - 1];
         this.props.action.friendShip({ page, cards });
       });
     }

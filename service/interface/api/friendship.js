@@ -12,9 +12,9 @@ module.exports = async function(ctx){
       method: 'GET'
     });
 
-    const len = data.data.cards.length;
+    const len = data.cards.length;
     page = len === 0 ? 'END' : 2;
-    cards = len === 0 ? []: data.data.cards[len - 1].card_group;
+    cards = len === 0 ? []: data.cards;
   }
 
   return {
