@@ -13,3 +13,20 @@ export function getFriendShip(page: ?number): Promise{
     method: 'GET'
   });
 }
+
+// 取关和关注
+export function apiFriendships(action: string, id: string, st: string, cookie2: string): Promise{
+  const infor: ?Object = getUserInformation();
+  const cookie: string = `${ infor.cookie }; ${ cookie2 }`;
+
+  return axios({
+    url: '/api/friendships',
+    method: 'POST',
+    data: {
+      action,
+      id,
+      st,
+      cookie
+    }
+  });
+}

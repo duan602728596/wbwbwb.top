@@ -7,7 +7,6 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { storeFactory } from './store/store';
 import './common.sass';
 import Routers from './router/Routers';
-import './components/st/index';
 
 /* 热替换 */
 @hot(module)

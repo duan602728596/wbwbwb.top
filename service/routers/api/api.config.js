@@ -17,7 +17,7 @@ async function getSt(ctx, next){
 
   ctx.status = status;
   ctx.body = {
-    ...data,
+    st: data.data.st,
     cookie: headers['set-cookie'].join('; ')
   };
 }

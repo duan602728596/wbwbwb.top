@@ -86,7 +86,6 @@
     "style-loader": "^0.22.1",
     "supervisor": "^0.12.0",
     "terser-webpack-plugin": "^1.0.2",
-    "three": "^0.95.0",
     "url-loader": "^1.1.0",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",

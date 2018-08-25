@@ -7,7 +7,7 @@ const axios = require('axios');
 // 格式化数据
 function formatData(data){
   for(let i = data.length - 1; i>= 0; i--){
-    const item = cards[i];
+    const item = data[i];
     if(item.card_type === 8){
       delete item.card_type_name;
       delete item.title;
@@ -16,7 +16,7 @@ function formatData(data){
       delete item.buttons;
       delete item.title_flag_pic;
     }else{
-      cards.splice(i, 1);
+      data.splice(i, 1);
     }
   }
   return data;
@@ -38,7 +38,7 @@ async function getChaohuaList(ctx, next){
   });
 
   // 格式化数据
-  const cards = format(data.data.cards[0].card_group);
+  const cards = formatData(data.data.cards[0].card_group);
 
   ctx.status = status;
   ctx.body = {

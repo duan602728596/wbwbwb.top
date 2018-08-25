@@ -1,4 +1,5 @@
 /* 公共函数 */
+import axios from 'axios';
 
 /**
  * jsonp方法
@@ -45,4 +46,14 @@ export function getUserInformation(): ?Object{
   }
   const sUserInformation: ?string = sessionStorage.getItem(USER_INFORMATION);
   return sUserInformation ? JSON.parse(sUserInformation) : null;
+}
+
+/* 获取st */
+export function getSt(): Promise{
+  const infor: ?Object = getUserInformation();
+  const cookie: string = infor.cookie;
+  return axios({
+    url: `/api/config?cookie=${ cookie }`,
+    method: 'GET'
+  });
 }

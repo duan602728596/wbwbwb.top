@@ -4,6 +4,7 @@ const apiContainerGetIndex = require('./api/api.container.getIndex');
 const pAjGeneralButton = require('./api/p.aj.general.button');
 const apiContainerFriendShip = require('./api/api.container.friendShip');
 const apiConfig = require('./api/api.config');
+const apiFriendShips = require('./api/api.friendships');
 
 function routers(routers){
   ssoLogin(routers);
@@ -11,6 +12,7 @@ function routers(routers){
   pAjGeneralButton(routers);
   apiContainerFriendShip(routers);
   apiConfig(routers);
+  apiFriendShips(routers);
 }
 
 module.exports = routers;
