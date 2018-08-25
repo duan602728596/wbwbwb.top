@@ -1,0 +1,3 @@
+body { margin: 0; }
+.link { display: block; border: none; }
+.link, .img { width: 100%; }
