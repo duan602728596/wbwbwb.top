@@ -52,7 +52,7 @@ class FriendShips extends Component{
 
   state: {
     loading: boolean,
-    quguanList: []
+    quguanList: number[]
   } = {
     loading: false, // 是否加载
     quguanList: []  // 取关列表
@@ -133,18 +133,22 @@ class FriendShips extends Component{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();
       const cookie2: string = `${ st.data.cookie }; ${ cookie }`;
+      const cards: [] = this.props.cards;
 
-      for(let i: number = quguanList.length - 1; i >= 0; i--){
-        const item: Object = quguanList[i];
+      for(let i: number = cards.length - 1; i >= 0; i--){
+        const item: Object = cards[i];
+        if(!quguanList.includes(item.id)) continue;
+
         const { data }: Object = await apiFriendships('destory', item.id, st.data.st, cookie2);
         if(data.ok === 1){
           item.isQuguan = true;
+          quguanList.splice(quguanList.indexOf(item.id), 1);
         }else{
           message.error(`${ item.screen_name }：${ data.msg }`);
         }
       }
       this.props.action.apiFriendShip({
-        cards: this.props.cards
+        cards
       });
     }catch(err){
       console.error(err);
@@ -152,7 +156,7 @@ class FriendShips extends Component{
     }
     this.setState({
       loading: false,
-      quguanList: []
+      quguanList
     });
   };
   // 单个取关
@@ -160,6 +164,7 @@ class FriendShips extends Component{
     this.setState({
       loading: true
     });
+    const quguanList: [] = this.state.quguanList;
     try{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();
@@ -168,6 +173,8 @@ class FriendShips extends Component{
 
       if(data.ok === 1){
         item.isQuguan = true;
+        const index: number = quguanList.indexOf(item.id);
+        if(index >= 0) quguanList.splice(index, 1);
       }else{
         message.error(`${ item.screen_name }：${ data.msg }`);
       }
@@ -180,16 +187,16 @@ class FriendShips extends Component{
     }
     this.setState({
       loading: false,
-      quguanList: []
+      quguanList
     });
   }
   // 取关checkbox
   handleQuguanOneChange(item: Object, event: Event): void{
     const quguanList: [] = this.state.quguanList;
-    if(quguanList.includes(item)){
-      quguanList.splice(quguanList.indexOf(item), 1);
+    if(quguanList.includes(item.id)){
+      quguanList.splice(quguanList.indexOf(item.id), 1);
     }else{
-      quguanList.push(item);
+      quguanList.push(item.id);
     }
     this.setState({
       quguanList
@@ -212,7 +219,7 @@ class FriendShips extends Component{
               )
             }
             <Checkbox className={ style.ml10 }
-              checked={ this.state.quguanList.includes(item) }
+              checked={ this.state.quguanList.includes(item.id) }
               disabled={ item.isQuguan === true }
               onChange={ this.handleQuguanOneChange.bind(this, item) }
             />
