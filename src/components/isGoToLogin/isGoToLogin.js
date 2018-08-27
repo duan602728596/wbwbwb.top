@@ -1,7 +1,7 @@
 /* 判断是否跳转到登陆页 */
 import { getUserInformation } from '../../utils';
 
-const T: number = 7 * 24 * 60 * 60 * 1000; // 七天内免登陆
+const T: number = 5 * 24 * 60 * 60 * 1000; // 五天内免登陆
 
 function isGoToLogin(): void{
   const infor: ?Object = getUserInformation();
