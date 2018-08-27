@@ -104,8 +104,12 @@ class Index extends Component{
           { username }
         </Layout.Header>
         <Layout.Content className={ style.content }>
+          {/* 广告 */}
+          <div className={ style.indexAdBox }>
+            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/xusiyang.html?t=201808252028" />
+          </div>
           {/* 菜单 */}
-          <Row type="flex">
+          <Row className={ style.nav } type="flex">
             <Col { ...grid }>
               <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
                 <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
@@ -132,8 +136,8 @@ class Index extends Component{
             </Col>
           </Row>
           {/* 广告 */}
-          <div className={ style.indexAdBox }>
-            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/xusiyang.html?t=201808252028" />
+          <div className={ classNames(style.mt10, style.indexAdBox) }>
+            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/chenyayu.html?t=201808280008" />
           </div>
         </Layout.Content>
         <Footer />
