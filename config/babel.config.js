@@ -8,9 +8,9 @@ const presets = [
     {
       targets: {
         ie: 11,
-        edge: 12,
-        chrome: 40,
-        firefox: 40
+        edge: 16,
+        chrome: 62,
+        firefox: 56
       },
       debug: process.env.NODE_ENV === 'development',
       modules: false,
