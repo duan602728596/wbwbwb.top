@@ -163,8 +163,8 @@ class Index extends Component{
             <Row type="flex">
               <Col span={ 12 }>
                 <Form.Item className={ style.checkGroup }>
-                  { getFieldDecorator('remember-password')(<Checkbox aria-label="七天内免登陆" />) }
-                  <label className={ style.checkText } htmlFor="remember-password">七天内免登陆</label>
+                  { getFieldDecorator('remember-password')(<Checkbox aria-label="五天内免登陆" />) }
+                  <label className={ style.checkText } htmlFor="remember-password">五天内免登陆</label>
                 </Form.Item>
                 <Form.Item className={ classNames(style.checkGroup, style.mb40) }>
                   { getFieldDecorator('vcode')(<Checkbox aria-label="使用验证码登陆" />) }

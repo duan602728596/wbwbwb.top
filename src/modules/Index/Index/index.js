@@ -5,34 +5,39 @@ import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { withRouter, Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { Layout, Avatar, Modal, Row, Col } from 'antd';
+import { Layout, Avatar, Modal, Row, Col, notification } from 'antd';
 import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import Footer from '../../../assembly/Footer/index';
 import Ad from '../../../components/Ad/index';
 import style from './style.sass';
-import { username } from '../store/reducer';
+import { username, prompted } from '../store/reducer';
 
 /* state */
 const state: Function = createStructuredSelector({
-  time: createSelector(     // 当前时间
+  time: createSelector(       // 当前时间
     ($$state: Immutable.Map): ?number => $$state.has('time') ? $$state.get('time') : null,
     ($$data: ?number): number => $$data ? $$data : new Date().getTime()
   ),
-  username: createSelector( // 用户名
+  username: createSelector(   // 用户名
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
     ($$data: ?Immutable.Map): string => $$data ? $$data.get('username') : ''
   ),
-  cookie: createSelector(   // cookie
+  cookie: createSelector(     // cookie
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
     ($$data: ?Immutable.Map): string => $$data ? $$data.get('cookie') : ''
+  ),
+  isPrompted: createSelector( // 提示信息
+    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
+    ($$data: ?Immutable.Map): boolean => $$data ? $$data.get('isPrompted') : false
   )
 });
 
 /* dispatch */
 const dispatch: Function = (dispatch: Function): Object=>({
   action: bindActionCreators({
-    username
+    username,
+    prompted
   }, dispatch)
 });
 
@@ -56,7 +61,21 @@ class Index extends Component{
         username: infor.username,
         cookie: infor.cookie
       });
+      this.prompt();
     }
+  }
+  // 提示信息
+  prompt(): void{
+    if(this.props.isPrompted === true) return void 0;
+    notification.info({
+      duration: 5,
+      placement: 'bottomRight',
+      message: '提示',
+      description: '如果发生无法获取数据的情况，请重新登陆。本网站所有接口为代理获取数据，不会保存账号和密码。',
+      onClose: this.props.action.prompted.bind(null, {
+        data: true
+      })
+    });
   }
   // 退出
   handleExitClick: Function = (event: Event): void=>{
