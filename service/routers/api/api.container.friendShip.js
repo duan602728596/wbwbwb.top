@@ -46,16 +46,16 @@ async function getFriendList(ctx, next){
   const { cards } = data.data;
   let newCards = [];
 
-  if(cards.length === 2){
+  if(data.ok === 1 && cards.length === 2){
     newCards = formatData(cards[1].card_group);
-  }else if(cards.length === 1){
+  }else if(data.ok === 1 && cards.length === 1){
     newCards = formatData(cards[0].card_group);
   }
 
   ctx.status = status;
   ctx.body = {
     cards: newCards,
-    cookie: headers['set-cookie'].join('; ')
+    cookie: data.ok === 1 ? headers['set-cookie'].join('; ') : null
   };
 }
 

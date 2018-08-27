@@ -38,11 +38,11 @@ async function getChaohuaList(ctx, next){
   });
 
   // 格式化数据
-  const cards = formatData(data.data.cards[0].card_group);
+  const cards = data.ok === 1 ? formatData(data.data.cards[0].card_group) : [];
 
   ctx.status = status;
   ctx.body = {
-    since_id: data.data.cardlistInfo.since_id,
+    since_id: data.ok === 1 ? data.data.cardlistInfo.since_id : [],
     cards
   };
 }
