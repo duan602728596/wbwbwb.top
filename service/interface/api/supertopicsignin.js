@@ -6,10 +6,13 @@ module.exports = async function(ctx){
   let cards = [];
   let sinceId = null;
 
-  if(query && 'cookie' in query){
+  if(query && '_' in query){
     const { data } = await axios({
-      url: `${ apiUri }/api/container/getIndex?cookie=${ query.cookie }`,
-      method: 'GET'
+      url: `${ apiUri }/api/container/getIndex`,
+      method: 'GET',
+      headers: {
+        _: query._
+      }
     });
 
     sinceId = 'since_id' in data && data.since_id ? data.since_id : 'END';

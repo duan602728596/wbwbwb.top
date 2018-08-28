@@ -3,6 +3,7 @@
  * 【GET】https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=
  */
 const axios = require('axios');
+const encryption = require('../../encryption');
 
 async function qiandao(ctx, next){
   const { body } = ctx.request;
@@ -12,7 +13,7 @@ async function qiandao(ctx, next){
     url: uri,
     method: 'GET',
     headers: {
-      Cookie: body.cookie
+      Cookie: encryption.decode(ctx.get('_'))
     },
     timeout: 10000
   });

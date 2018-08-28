@@ -7,6 +7,7 @@
  */
 const queryString = require('querystring');
 const axios = require('axios');
+const encryption = require('../../encryption');
 
 async function login(ctx, next){
   const { body } = ctx.request;
@@ -30,7 +31,7 @@ async function login(ctx, next){
   ctx.status = res.status;
   ctx.body = {
     ...res.data,
-    cookie
+    _: encryption.encode(cookie)
   };
 }
 

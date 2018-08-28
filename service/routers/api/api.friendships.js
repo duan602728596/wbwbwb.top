@@ -1,7 +1,7 @@
 /* 关注和取关 */
-
 const queryString = require('querystring');
 const axios = require('axios');
+const encryption = require('../../encryption');
 
 async function friendships(ctx, next){
   const { body } = ctx.request;
@@ -14,7 +14,7 @@ async function friendships(ctx, next){
     url: `https://m.weibo.cn/api/friendships/${ body.action }`,
     method: 'POST',
     headers: {
-      Cookie: body.cookie,
+      Cookie: encryption.decode(ctx.get('_')),
       Referer: 'https://m.weibo.cn/p/index?containerid=231093_-_selffollowed',
       'X-Requested-With': 'XMLHttpRequest',
       'Content-Type': 'application/x-www-form-urlencoded'

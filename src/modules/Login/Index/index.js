@@ -4,7 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import classNames from 'classnames';
 import { Layout, Row, Col, Form, Input, Checkbox, Button, message } from 'antd';
-import { USER_INFORMATION } from '../../../utils';
+import { USER_INFORMATION, encryption } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 import Ad from '../../../components/Ad/index';
@@ -56,7 +56,7 @@ class Index extends Component{
       if(step4Data.retcode === 20000000){
         const storageData: string = JSON.stringify({
           username: formValue.username,
-          cookie: step4Data.cookie,
+          cookie: encryption.decode(step4Data._),
           time: new Date().getTime()
         });
         if(formValue['remember-password']){

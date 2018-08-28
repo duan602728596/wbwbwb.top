@@ -4,6 +4,7 @@
  */
 
 const axios = require('axios');
+const encryption = require('../../encryption');
 
 async function getSt(ctx, next){
   const { query } = ctx.request;
@@ -11,14 +12,14 @@ async function getSt(ctx, next){
     url: 'https://m.weibo.cn/api/config',
     method: 'GET',
     headers: {
-      Cookie: query.cookie
+      Cookie: encryption.decode(ctx.get('_'))
     }
   });
 
   ctx.status = status;
   ctx.body = {
     st: data.data.st,
-    cookie: headers['set-cookie'].join('; ')
+    _: encryption.encode(headers['set-cookie'].join('; '))
   };
 }
 

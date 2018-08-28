@@ -12,6 +12,7 @@ import Footer from '../../../assembly/Footer/index';
 import Ad from '../../../components/Ad/index';
 import style from './style.sass';
 import { username, prompted } from '../store/reducer';
+import { encryption } from '../../../utils';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -94,6 +95,7 @@ class Index extends Component{
       xs: 12,
       sm: 8
     };
+    const ec: string = encryption.encode(cookie);
 
     return (
       <Layout className={ publicStyle.main }>
@@ -111,7 +113,7 @@ class Index extends Component{
           {/* 菜单 */}
           <Row className={ style.nav } type="flex">
             <Col { ...grid }>
-              <Link className={ style.navItem } to={ `/SuperTopicSignIn${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
+              <Link className={ style.navItem } to={ `/SuperTopicSignIn?_=${ ec }` }>
                 <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
                 <span className={ style.navItemText }>超话签到</span>
               </Link>
@@ -123,7 +125,7 @@ class Index extends Component{
               </a>
             </Col>
             <Col { ...grid }>
-              <Link className={ style.navItem } to={ `/FriendShip${ cookie === '' ? '' : `?cookie=${ cookie }` }` }>
+              <Link className={ style.navItem } to={ `/FriendShip?_=${ ec }` }>
                 <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
                 <span className={ style.navItemText }>用户关注</span>
               </Link>

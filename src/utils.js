@@ -1,5 +1,7 @@
 /* 公共函数 */
 import axios from 'axios';
+import CryptoJS from 'crypto-js';
+import { Base64 } from 'js-base64';
 
 /**
  * jsonp方法
@@ -53,7 +55,23 @@ export function getSt(): Promise{
   const infor: ?Object = getUserInformation();
   const cookie: string = infor.cookie;
   return axios({
-    url: `/api/config?cookie=${ cookie }`,
-    method: 'GET'
+    url: '/api/config',
+    method: 'GET',
+    headers: {
+      _: encryption.encode(cookie)
+    }
   });
 }
+
+/* 加密和解密 */
+const KEY: string = '4NIunU7SnILCUn3T0t0QJS8O1yNrZmxgUWnjUC+MZqsyhZPx0xtIKk7y6CQXZ0D6cq0bTqcprPKVVEK9bmVK8D+P+zIJI5791hq30KS+';
+export const encryption: Object = {
+  encode(str: string): string{
+    const ciphertext: Object = CryptoJS.AES.encrypt(str, KEY);
+    return Base64.encode(ciphertext.toString());
+  },
+  decode(str: string): string{
+    const bytes: Object  = CryptoJS.AES.decrypt(Base64.decode(str), KEY);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+};

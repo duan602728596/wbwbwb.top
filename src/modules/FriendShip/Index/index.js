@@ -9,7 +9,7 @@ import classNames from 'classnames';
 import { Layout, Breadcrumb, Icon, Button, List, Avatar, Tag, Spin, message, BackTop, Popconfirm, Checkbox } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
-import { getSt } from '../../../utils';
+import { getSt, encryption } from '../../../utils';
 import style from './style.sass';
 import { friendShip, apiFriendShip } from '../store/reducer';
 import { getFriendShip, apiFriendships } from '../request';
@@ -65,7 +65,7 @@ class FriendShips extends Component{
         const len: number = data.cards.length;
         const page: number | string = len === 0 ? 'END' : 2;
         const cards: [] = len === 0 ? [] : data.cards;
-        const cookie: string = data.cookie;
+        const cookie: string = encryption.decode(data._);
         this.props.action.friendShip({ page, cards, cookie });
       });
     }
@@ -103,7 +103,7 @@ class FriendShips extends Component{
     try{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();
-      const cookie2: string = `${ st.data.cookie }; ${ cookie }`;
+      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
       const { data }: Object = await apiFriendships('create', item.id, st.data.st, cookie2);
       if(data.ok === 1){
         delete item.isQuguan;
@@ -132,7 +132,7 @@ class FriendShips extends Component{
     try{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();
-      const cookie2: string = `${ st.data.cookie }; ${ cookie }`;
+      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
       const cards: [] = this.props.cards;
 
       for(let i: number = cards.length - 1; i >= 0; i--){
@@ -168,7 +168,7 @@ class FriendShips extends Component{
     try{
       const { cookie }: { cookie: string } = this.props;
       const st: Object = await getSt();
-      const cookie2: string = `${ st.data.cookie }; ${ cookie }`;
+      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
       const { data }: Object = await apiFriendships('destory', item.id, st.data.st, cookie2);
 
       if(data.ok === 1){

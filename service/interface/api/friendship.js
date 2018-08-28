@@ -7,16 +7,19 @@ module.exports = async function(ctx){
   let page = null;
   let cookie = null;
 
-  if(query && 'cookie' in query){
+  if(query && '_' in query){
     const { data } = await axios({
-      url: `${ apiUri }/api/container/friendShip?cookie=${ query.cookie }`,
-      method: 'GET'
+      url: `${ apiUri }/api/container/friendShip`,
+      method: 'GET',
+      headers: {
+        _: query._
+      }
     });
 
     const len = data.cards.length;
     page = len === 0 ? 'END' : 2;
     cards = len === 0 ? []: data.cards;
-    cookie = data.cookie;
+    cookie = data._;
   }
 
   return {

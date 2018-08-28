@@ -3,6 +3,7 @@
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super&since_id=
  */
 const axios = require('axios');
+const encryption = require('../../encryption');
 
 // 格式化数据
 function formatData(data){
@@ -33,7 +34,7 @@ async function getChaohuaList(ctx, next){
     url: uri,
     method: 'GET',
     headers: {
-      Cookie: query.cookie
+      Cookie: encryption.decode(ctx.get('_'))
     }
   });
 
