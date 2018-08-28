@@ -5,9 +5,9 @@
 
 const axios = require('axios');
 const encryption = require('../../encryption/encryption');
+const { getHeadersCookie } = require('../../utils');
 
 async function getSt(ctx, next){
-  const { query } = ctx.request;
   const { status, data, headers } = await axios({
     url: 'https://m.weibo.cn/api/config',
     method: 'GET',
@@ -19,7 +19,7 @@ async function getSt(ctx, next){
   ctx.status = status;
   ctx.body = {
     st: data.data.st,
-    _: encryption.encode(headers['set-cookie'].join('; '))
+    _: encryption.encode(getHeadersCookie(headers))
   };
 }
 

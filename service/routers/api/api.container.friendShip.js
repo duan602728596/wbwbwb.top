@@ -5,6 +5,7 @@
 
 const axios = require('axios');
 const encryption = require('../../encryption/encryption');
+const { getHeadersCookie } = require('../../utils');
 
 // 格式化数据
 function formatData(data){
@@ -56,7 +57,7 @@ async function getFriendList(ctx, next){
   ctx.status = status;
   ctx.body = {
     cards: newCards,
-    _: data.ok === 1 ? encryption.encode(headers['set-cookie'].join('; ')) : null
+    _: data.ok === 1 ? encryption.encode(getHeadersCookie(headers)) : null
   };
 }
 
