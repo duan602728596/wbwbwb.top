@@ -1,6 +1,7 @@
 /* 公共函数 */
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
+import { Base64 } from 'js-base64';
 import key from './key';
 
 /**
@@ -67,10 +68,10 @@ export function getSt(): Promise{
 export const encryption: Object = {
   encode(str: string): string{
     const ciphertext: Object = CryptoJS.AES.encrypt(str, key);
-    return btoa(ciphertext.toString());
+    return Base64.encode(ciphertext.toString());
   },
   decode(str: string): string{
-    const bytes: Object  = CryptoJS.AES.decrypt(atob(str), key);
+    const bytes: Object  = CryptoJS.AES.decrypt(Base64.decode(str), key);
     return bytes.toString(CryptoJS.enc.Utf8);
   }
 };
