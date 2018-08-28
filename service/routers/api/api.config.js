@@ -4,7 +4,7 @@
  */
 
 const axios = require('axios');
-const encryption = require('../../encryption');
+const encryption = require('../../encryption/encryption');
 
 async function getSt(ctx, next){
   const { query } = ctx.request;

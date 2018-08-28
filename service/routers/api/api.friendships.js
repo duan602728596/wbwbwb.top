@@ -1,7 +1,7 @@
 /* 关注和取关 */
 const queryString = require('querystring');
 const axios = require('axios');
-const encryption = require('../../encryption');
+const encryption = require('../../encryption/encryption');
 
 async function friendships(ctx, next){
   const { body } = ctx.request;

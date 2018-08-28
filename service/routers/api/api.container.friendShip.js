@@ -4,7 +4,7 @@
  */
 
 const axios = require('axios');
-const encryption = require('../../encryption');
+const encryption = require('../../encryption/encryption');
 
 // 格式化数据
 function formatData(data){

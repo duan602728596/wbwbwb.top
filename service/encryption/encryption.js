@@ -1,16 +1,15 @@
 /* 加密和解密 */
 const CryptoJS = require("crypto-js");
 const { Base64 } = require('js-base64');
-
-const KEY = '4NIunU7SnILCUn3T0t0QJS8O1yNrZmxgUWnjUC+MZqsyhZPx0xtIKk7y6CQXZ0D6cq0bTqcprPKVVEK9bmVK8D+P+zIJI5791hq30KS+';
+const key = require('./key');
 
 function encode(str){
-  const ciphertext = CryptoJS.AES.encrypt(str, KEY);
+  const ciphertext = CryptoJS.AES.encrypt(str, key);
   return Base64.encode(ciphertext.toString());
 }
 
 function decode(str){
-  const bytes  = CryptoJS.AES.decrypt(Base64.decode(str), KEY);
+  const bytes  = CryptoJS.AES.decrypt(Base64.decode(str), key);
   return bytes.toString(CryptoJS.enc.Utf8);
 }
 
