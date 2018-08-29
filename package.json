@@ -8,6 +8,7 @@
     "find": "node ./bin/find.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cross-env": "^5.2.0",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",

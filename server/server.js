@@ -1,6 +1,7 @@
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
+const queryString = require('querystring');
 const process = require('process');
 const path = require('path');
 const zlib = require('zlib');
@@ -10,10 +11,14 @@ const convert = require('koa-convert');
 const compress = require('koa-compress');
 const staticCache = require('koa-static-cache');
 const mime = require('mime-types');
+const axios = require('axios');
 
 const app = new Koa();
 const router = new Router();
 const serverFile = path.join(__dirname, '../static');
+const agent = new https.Agent({
+  rejectUnauthorized: false
+});
 
 /* 读取文件 */
 function readFile(file){
@@ -66,6 +71,25 @@ function readFile(file){
     }
 
     await next();
+  });
+
+  router.get('/_/:url', async(ctx, next)=>{
+    const { query, headers } = ctx.request;
+
+    if(ctx.params.url){
+      const { data, status } = await axios({
+        url: `${ ctx.params.url }?${ queryString.stringify(query) }`,
+        method: 'GET',
+        headers,
+        httpsAgent: agent
+      });
+
+      ctx.status = status;
+      ctx.body = data;
+    }else{
+      ctx.status = 200;
+      ctx.body = '';
+    }
   });
 
   /* http服务 */
