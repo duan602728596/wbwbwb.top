@@ -39,7 +39,8 @@ class Index extends Component{
     const width: number = element.clientWidth;
     const height: number = parseInt(width / (568 / 171));
     this.setState({
-      wangxiaojiaAd: `https://popularize.skygrass.club/?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
+      wangxiaojiaAd: 'https://www.wbwbwb.top:5056/_/https:%2F%2Fpopularize.skygrass.club/'
+        + `?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
     });
   }
   // 登陆
