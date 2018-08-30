@@ -3,11 +3,12 @@ const axios = require('axios');
 function formatData(list){
   const result = [];
   for(const item of list){
+    const picPath = item.picPath.split(/,\s*/g);
     result.push({
       liveId: item.liveId,
       title: item.title,
       subTitle: item.subTitle,
-      picPath: `https://source3.48.cn${ item.picPath }`,
+      picPath: `https://source3.48.cn${ picPath[0] }`,
       streamPath: item.streamPath,
       startTime: item.startTime
     });
@@ -28,7 +29,7 @@ async function liveList(ctx, next){
       'Content-Type': 'application/json'
     },
     data: {
-      lastTime,
+      lastTime: Number(lastTime),
       limit: 20,
       groupId: 0,
       memberId: 0,
