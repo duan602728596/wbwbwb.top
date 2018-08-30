@@ -5,6 +5,8 @@ const pAjGeneralButton = require('./api/p.aj.general.button');
 const apiContainerFriendShip = require('./api/api.container.friendShip');
 const apiConfig = require('./api/api.config');
 const apiFriendShips = require('./api/api.friendships');
+const fortyEightLive = require('./api/48.live');
+const fortyEightLiveList = require('./api/48.live.list');
 
 function routers(routers){
   ssoLogin(routers);
@@ -13,6 +15,8 @@ function routers(routers){
   apiContainerFriendShip(routers);
   apiConfig(routers);
   apiFriendShips(routers);
+  fortyEightLive(routers);
+  fortyEightLiveList(routers);
 }
 
 module.exports = routers;
