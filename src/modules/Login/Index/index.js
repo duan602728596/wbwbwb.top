@@ -8,6 +8,7 @@ import { USER_INFORMATION, encryption } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 import Ad from '../../../components/Ad/index';
+import adList from '../../../components/Ad/adList';
 import Footer from '../../../assembly/Footer/index';
 import { prelogin, pattern, verify, login } from '../request';
 
@@ -127,6 +128,12 @@ class Index extends Component{
   };
   render(): React.ChildrenArray<React.Element>{
     const { getFieldDecorator }: { getFieldDecorator: Function } = this.props.form;
+    const adSrc: ?[] = this.state.wangxiaojiaAd ? [
+      this.state.wangxiaojiaAd,
+      ...adList,
+      this.state.wangxiaojiaAd
+    ] : null;
+
     return [
       <Helmet key="helmet">
         <title>登陆 - 微博签到系统</title>
@@ -135,7 +142,9 @@ class Index extends Component{
         <Layout.Content>
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src={ this.state.wangxiaojiaAd } />
+            <Ad className={ style.loginAd }
+              src={ adSrc }
+            />
             <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
                 getFieldDecorator('username', {
@@ -177,7 +186,7 @@ class Index extends Component{
               </Col>
             </Row>
             <Button className={ style.loginBtn } type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
-            <Ad className={ style.loginAd } src="https://www.wbwbwb.top:5056/huangtongyang.html?t=201808252028" />
+            <Ad className={ style.loginAd } src={ adSrc } />
           </Form>
         </Layout.Content>
         <Footer />

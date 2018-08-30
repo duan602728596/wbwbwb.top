@@ -16,11 +16,11 @@ import { getNewData, getReviewListData } from '../request';
 const state: Function = createStructuredSelector({
   liveList: createSelector(   // 口袋48直播列表
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
-    ($$data: ?Immutable.Map): [] => $$data !== null ? $$data.get('liveList').toJS() : []
+    ($$data: ?Immutable.Map): [] => $$data !== null && $$data.has('liveList') ? $$data.get('liveList').toJS() : []
   ),
   reviewList: createSelector( // 口袋48回放列表
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
-    ($$data: ?Immutable.Map): [] => $$data !== null ? $$data.get('reviewList').toJS() : []
+    ($$data: ?Immutable.Map): [] => $$data !== null && $$data.has('reviewList') ? $$data.get('reviewList').toJS() : []
   )
 });
 
@@ -46,6 +46,15 @@ class FortyEightLive extends Component{
     loading: false // 是否加载
   };
 
+  componentDidMount(): void{
+    if(this.props.liveList.length === 0 && this.props.reviewList.length === 0){
+      getNewData().then((res: Object): void=>{
+        this.props.action.dataList({
+          ...res.data
+        });
+      });
+    }
+  }
   // 加载更多
   handleMoreReviewListClick: Function = async(event: Event): Promise<void>=>{
     this.setState({

@@ -8,7 +8,7 @@ import { isWindowLoaded } from './windowLoad';
 
 class Ad extends Component{
   static propTypes: Object = {
-    src: PropTypes.string,
+    src: PropTypes.any,
     className: PropTypes.string
   };
 
@@ -35,7 +35,9 @@ class Ad extends Component{
     const props: Object = this.props;
     if((isWindowLoaded === true || document.readyState === 'complete') && props.src){
       let element: ?Element = document.createElement('iframe');
-      element.src = this.props.src;
+      element.src = typeof this.props.src === 'string'
+        ? this.props.src
+        : this.props.src[Math.floor(Math.random() * this.props.src.length)];
       element.scrolling = 'no';
       element.width = '100%';
       element.height = '100%';

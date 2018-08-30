@@ -10,9 +10,11 @@ import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import Footer from '../../../assembly/Footer/index';
 import Ad from '../../../components/Ad/index';
+import AdList from '../../../components/Ad/adList';
 import style from './style.sass';
 import { username, prompted } from '../store/reducer';
 import { encryption } from '../../../utils';
+import CarouselAd from '../../../components/CarouselAd/index';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -106,40 +108,54 @@ class Index extends Component{
           { username }
         </Layout.Header>
         <Layout.Content className={ style.content }>
-          {/* 广告 */}
-          <div className={ style.indexAdBox }>
-            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/xusiyang.html?t=201808252028" />
-          </div>
+          {/* 轮播广告 */}
+          <CarouselAd />
           {/* 菜单 */}
           <Row className={ style.nav } type="flex">
             <Col { ...grid }>
-              <Link className={ style.navItem } to={ `/SuperTopicSignIn?_=${ ec }` }>
-                <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
-                <span className={ style.navItemText }>超话签到</span>
-              </Link>
+              <div className={ style.navItem }>
+                <Link className={ style.navLink } to={ `/SuperTopicSignIn?_=${ ec }` }>
+                  <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
+                  <span className={ style.navItemText }>超话签到</span>
+                </Link>
+              </div>
             </Col>
             <Col { ...grid }>
-              <a className={ style.navItem } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
-                <Avatar className={ style.navAvatar } src={ require('./image/chensi.jpg') } shape="square" size={ 90 } />
-                <span className={ style.navItemText }>口袋48禁用词汇查询</span>
-              </a>
+              <div className={ style.navItem }>
+                <a className={ style.navLink } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
+                  <Avatar className={ style.navAvatar } src={ require('./image/chensi.jpg') } shape="square" size={ 90 } />
+                  <span className={ style.navItemText }>口袋48禁用词汇查询</span>
+                </a>
+              </div>
             </Col>
             <Col { ...grid }>
-              <Link className={ style.navItem } to={ `/FriendShip?_=${ ec }` }>
-                <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
-                <span className={ style.navItemText }>用户关注</span>
-              </Link>
+              <div className={ style.navItem }>
+                <Link className={ style.navLink } to={ `/FriendShip?_=${ ec }` }>
+                  <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
+                  <span className={ style.navItemText }>用户关注</span>
+                </Link>
+              </div>
             </Col>
             <Col { ...grid }>
-              <a className={ style.navItem } onClick={ this.handleExitClick }>
-                <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
-                <span className={ style.navItemText }>退出</span>
-              </a>
+              <div className={ style.navItem }>
+                <Link className={ style.navLink } to="48Live">
+                  <Avatar className={ style.navAvatar } src={ require('./image/icon4.jpg') } shape="square" size={ 90 } />
+                  <span className={ style.navItemText }>口袋48网页版</span>
+                </Link>
+              </div>
+            </Col>
+            <Col { ...grid }>
+              <div className={ style.navItem }>
+                <a className={ style.navLink } onClick={ this.handleExitClick }>
+                  <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
+                  <span className={ style.navItemText }>退出</span>
+                </a>
+              </div>
             </Col>
           </Row>
           {/* 广告 */}
           <div className={ classNames(style.mt10, style.indexAdBox) }>
-            <Ad className={ style.indexAd } src="https://www.wbwbwb.top:5056/chenyayu.html?t=201808280008" />
+            <Ad className={ style.indexAd } src={ AdList } />
           </div>
         </Layout.Content>
         <Footer />
