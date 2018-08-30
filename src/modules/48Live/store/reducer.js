@@ -1,17 +1,19 @@
 import { handleActions, combineActions } from 'redux-actions';
-import { fromJS, Map, List } from 'immutable';
-import liveListReducer, * as liveListAction from './lists';
+import { fromJS, Map } from 'immutable';
+import listsReducer, * as listsAction from './lists';
 
 const initData: {
-  lists: Immutable.Map
+  lists: Immutable.Map,
+  item: Immutable.Map
 } = {
-  lists: Map({})
+  lists: Map({}),
+  item: Map({})
 };
 
 /* reducer */
 const reducer: Function = handleActions({
-  [combineActions(...Object.values(liveListAction))]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    return $$state.set('lists', liveListReducer($$state.get('lists'), action));
+  [combineActions(...Object.values(listsAction))]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
+    return $$state.set('lists', listsReducer($$state.get('lists'), action));
   }
 }, fromJS(initData));
 

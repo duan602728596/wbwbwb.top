@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Page404 from '../../assembly/404/index';
 import Index from './Index/index';
+import Item from './Item/index';
 
 @hot(module)
 class ModuleLayout extends Component{
@@ -10,6 +11,7 @@ class ModuleLayout extends Component{
     return (
       <Switch>
         <Route path="/48Live" component={ Index } exact={ true } />
+        <Route path="/48Live/Item" component={ Item } exact={ true } />
         <Route component={ Page404 } />
       </Switch>
     );

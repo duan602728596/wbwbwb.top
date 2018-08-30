@@ -88,18 +88,22 @@ class FortyEightLive extends Component{
   // 渲染cards
   cardsItemView(list: []): React.ChildrenArray<React.Element>{
     return list.map((item: Object, index: number): React.Element=>{
-      const url: string = '';
+      const url: string = '/48Live/Item'
+        + `?title=${ item.title }&subTitle=${ item.subTitle }&streamPath=${ item.streamPath }&picPath=${ item.picPath }`;
       return (
         <Col key={ item.liveId } xs={ 12 } sm={ 8 }>
           <Card className={ style.cards }
             hoverable={ true }
             cover={
-              <a className={ style.cover }>
+              <Link className={ style.cover } to={ url } target="_blank" rel="noopener noreferrer">
                 <img src={ item.picPath } />
-              </a>
+              </Link>
             }
           >
-            <Card.Meta title={ item.title } description={ item.subTitle }
+            <Card.Meta description={ item.subTitle }
+              title={
+                <Link to={ url } target="_blank" rel="noopener noreferrer">{ item.title }</Link>
+              }
             />
           </Card>
         </Col>
