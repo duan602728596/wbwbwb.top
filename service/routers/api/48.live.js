@@ -1,5 +1,4 @@
 const axios = require('axios');
-const mime = require('mime-types');
 
 async function live(ctx, next){
   const { query } = ctx.request;
@@ -12,7 +11,7 @@ async function live(ctx, next){
     });
 
     ctx.append('Connection', 'keep-alive');
-    ctx.append('Content-Type', mime.lookup(query.url));
+    ctx.append('Content-Type', 'application/octet-stream');
     ctx.status = status;
     ctx.body = data;
   }else{
