@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
-import { Layout, Button } from 'antd';
+import { Layout, Button, Modal } from 'antd';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 
@@ -82,6 +82,10 @@ class Item extends Component{
       });
       this.flvPlayer.attachMediaElement(this.videoRef.current);
       this.flvPlayer.load();
+    }else{
+      Modal.error({
+        content: 'The Media Source Extensions API is not supported.'
+      });
     }
   }
   render(): React.Element{
