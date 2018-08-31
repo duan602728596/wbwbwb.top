@@ -2,10 +2,10 @@ const axios = require('axios');
 const mime = require('mime-types');
 
 async function live(ctx, next){
-  const { query, headers: { range } } = ctx.request;
+  const { query } = ctx.request;
 
   if('url' in query){
-    const { data, status, headers } = await axios({
+    const { data, status } = await axios({
       url: query.url,
       method: 'GET',
       responseType: 'stream'
