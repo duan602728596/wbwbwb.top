@@ -149,8 +149,12 @@ class FortyEightLive extends Component{
           </Row>
         </Layout.Header>
         <Layout.Content className={ publicStyle.content } id="48live-list">
-          <Divider orientation="left">直播</Divider>
-          <Row type="flex">{ this.cardsItemView(this.props.liveList) }</Row>
+          {
+            this.props.liveList.length !== 0 ? [
+              <Divider key="divider" orientation="left">直播</Divider>,
+              <Row key="row" type="flex">{ this.cardsItemView(this.props.liveList) }</Row>
+            ] : null
+          }
           <Divider orientation="left">回放</Divider>
           <Row type="flex">{ this.cardsItemView(this.props.reviewList) }</Row>
           <div className={ classNames(style.loading, { [style.inLoading]: loading }) }>
