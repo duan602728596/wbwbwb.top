@@ -19,7 +19,7 @@ module.exports = config({
   module: {
     rules: [
       { // sass
-        test: /^.*\.sass$/,
+        test: /^.*\.s(a|c)ss$/,
         use: ['style-loader', cssConfig, postCssConfig, sassConfig]
       },
       { // css

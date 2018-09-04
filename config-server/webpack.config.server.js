@@ -39,7 +39,7 @@ function config(){
           exclude: /(dll\.js|node_modules)/
         },
         { // sass
-          test: /^.*\.sass$/,
+          test: /^.*\.s(a|c)ss$/,
           use: [cssConfig, postCssConfig, sassConfig]
         },
         { // css
