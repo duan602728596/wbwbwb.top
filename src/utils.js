@@ -1,8 +1,5 @@
 /* 公共函数 */
 import axios from 'axios';
-import CryptoJS from 'crypto-js';
-import { Base64 } from 'js-base64';
-import key from './key';
 
 /**
  * jsonp方法
@@ -64,14 +61,5 @@ export function getSt(): Promise{
   });
 }
 
-/* 加密和解密 */
-export const encryption: Object = {
-  encode(str: string): string{
-    const ciphertext: Object = CryptoJS.AES.encrypt(str, key);
-    return Base64.encode(ciphertext.toString());
-  },
-  decode(str: string): string{
-    const bytes: Object  = CryptoJS.AES.decrypt(Base64.decode(str), key);
-    return bytes.toString(CryptoJS.enc.Utf8);
-  }
-};
+/* 加密解密 */
+export encryption from '../service/encryption/encryption';

@@ -36,7 +36,7 @@ function config(){
         { // react & js
           test: /^.*\.js$/,
           use: [babelConfig],
-          exclude: /(dll\.js|node_modules)/
+          exclude: /(dll\.js|service|node_modules)/
         },
         { // sass
           test: /^.*\.s(a|c)ss$/,

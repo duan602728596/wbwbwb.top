@@ -20,7 +20,7 @@ function config(options){
         { // react & js
           test: /^.*\.js$/,
           use: [babelConfig],
-          exclude: /(dll\.js|weibo-pattlock|node_modules)/
+          exclude: /(dll\.js|weibo-pattlock|service|node_modules)/
         },
         {
           test: /dll\.js|weibo-pattlock/,

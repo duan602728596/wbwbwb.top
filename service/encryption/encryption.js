@@ -1,7 +1,8 @@
 /* 加密和解密 */
 const CryptoJS = require("crypto-js");
 const { Base64 } = require('js-base64');
-const key = require('./key');
+
+const key = 'key';
 
 function encode(str){
   const ciphertext = CryptoJS.AES.encrypt(str, key);
