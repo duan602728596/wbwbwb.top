@@ -13,7 +13,7 @@ import Routers from './router/Routers';
 class App extends Component{
   render(): React.Element{
     return (
-      <Provider store={ storeFactory(window.__INITIAL_STATE__) }>
+      <Provider store={ storeFactory(window.__INITIAL_STATE__ || {}) }>
         <LocaleProvider locale={ zhCN }>
           <BrowserRouter>
             <Switch>
