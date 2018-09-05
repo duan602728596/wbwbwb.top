@@ -1,20 +1,21 @@
-/* 加密和解密 */
-const CryptoJS = require("crypto-js");
-const { Base64 } = require('js-base64');
+/**
+ * 加密和解密
+ * 为了兼容而使用es5语法
+ */
+var CryptoJS = require("crypto-js");
+var { Base64 } = require('js-base64');
 
-const key = 'key';
+var key = 'key';
 
 function encode(str){
-  const ciphertext = CryptoJS.AES.encrypt(str, key);
-  return Base64.encode(ciphertext.toString());
+  return Base64.encode(CryptoJS.AES.encrypt(str, key).toString());
 }
 
 function decode(str){
-  const bytes  = CryptoJS.AES.decrypt(Base64.decode(str), key);
-  return bytes.toString(CryptoJS.enc.Utf8);
+  return CryptoJS.AES.decrypt(Base64.decode(str), key).toString(CryptoJS.enc.Utf8);
 }
 
 module.exports = {
-  encode,
-  decode
+  encode: encode,
+  decode: decode
 };
