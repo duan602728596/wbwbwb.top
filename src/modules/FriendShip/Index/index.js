@@ -260,7 +260,7 @@ class FriendShips extends Component{
           <Breadcrumb className={ publicStyle.breadcrumb }>
             <Breadcrumb.Item className={ publicStyle.breadcrumbItem }>
               <Link to="/Index">
-                <Icon type="home" />
+                <Icon type="home" theme="filled" />
               </Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>用户关注</Breadcrumb.Item>

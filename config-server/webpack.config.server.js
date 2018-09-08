@@ -65,8 +65,23 @@ function config(){
             }
           ]
         },
-        { // 矢量图片 & 文字
-          test: /^.*\.(eot|svg|ttf|woff|woff2)$/,
+        { // svg
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: '@svgr/webpack',
+              options: {
+                babel: false,
+                icon: true,
+              }
+            }
+          ]
+        },
+        { // 文字
+          test: /^.*\.(eot|ttf|woff2?)$/,
           use: [
             {
               loader: 'file-loader',

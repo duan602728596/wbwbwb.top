@@ -1,6 +1,6 @@
 /* 生产环境 服务器 */
 const http = require('http');
-const https = require('https');
+const http2 = require('http2');
 const fs = require('fs');
 const process = require('process');
 const path = require('path');
@@ -87,15 +87,16 @@ function readFile(file){
   routers(router);
 
   /* http服务 */
-  http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 80);
+  http.createServer(app.callback()).listen(process.env.HTTP_SERVER_PORT || 5052);
 
   /* https服务 */
   const key = path.join(__dirname, '../server.key');
   const crt = path.join(__dirname, '../server.crt');
   if(fs.existsSync(key) && fs.existsSync(crt)){
-    https.createServer({
+    http2.createSecureServer({
+      allowHTTP1: true,
       key: await readFile(key),
       cert: await readFile(crt)
-    }, app.callback()).listen(process.env.HTTPS_SERVER_PORT || 443);
+    }, app.callback()).listen(process.env.HTTPS_SERVER_PORT || 5053);
   }
 })();

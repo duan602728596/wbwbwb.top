@@ -232,7 +232,7 @@ class SuperTopicSignIn extends Component{
               <Breadcrumb className={ publicStyle.breadcrumb }>
                 <Breadcrumb.Item className={ publicStyle.breadcrumbItem }>
                   <Link to="/Index">
-                    <Icon type="home" />
+                    <Icon type="home" theme="filled" />
                   </Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>超级话题签到</Breadcrumb.Item>

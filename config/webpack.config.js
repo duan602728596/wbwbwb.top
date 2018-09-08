@@ -63,14 +63,29 @@ function config(options){
             }
           ]
         },
-        { // 矢量图片 & 文字
-          test: /^.*\.(eot|svg|ttf|woff|woff2)$/,
+        { // 文字
+          test: /^.*\.(eot|ttf|woff2?)$/,
           use: [
             {
               loader: 'file-loader',
               options: {
                 name: fileName,
                 outputPath: 'file/'
+              }
+            }
+          ]
+        },
+        { // svg
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: '@svgr/webpack',
+              options: {
+                babel: false,
+                icon: true,
               }
             }
           ]
