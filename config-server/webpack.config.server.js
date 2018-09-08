@@ -65,6 +65,19 @@ function config(){
             }
           ]
         },
+        { // 文字
+          test: /^.*\.(eot|ttf|woff2?)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: fileName,
+                outputPath: 'file/',
+                emitFile: false
+              }
+            }
+          ]
+        },
         { // svg
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           use: [
@@ -76,19 +89,6 @@ function config(){
               options: {
                 babel: false,
                 icon: true,
-              }
-            }
-          ]
-        },
-        { // 文字
-          test: /^.*\.(eot|ttf|woff2?)$/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: fileName,
-                outputPath: 'file/',
-                emitFile: false
               }
             }
           ]
