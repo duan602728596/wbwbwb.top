@@ -18,10 +18,6 @@ import CarouselAd from '../../../components/CarouselAd/index';
 
 /* state */
 const state: Function = createStructuredSelector({
-  time: createSelector(       // 当前时间
-    ($$state: Immutable.Map): ?number => $$state.has('time') ? $$state.get('time') : null,
-    ($$data: ?number): number => $$data ? $$data : new Date().getTime()
-  ),
   username: createSelector(   // 用户名
     ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
     ($$data: ?Immutable.Map): string => $$data ? $$data.get('username') : ''
@@ -48,7 +44,6 @@ const dispatch: Function = (dispatch: Function): Object=>({
 @connect(state, dispatch)
 class Index extends Component{
   static propTypes: Object = {
-    time: PropTypes.number,
     username: PropTypes.string,
     action: PropTypes.objectOf(PropTypes.func),
     history: PropTypes.object,
