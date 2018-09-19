@@ -9,7 +9,11 @@ import { isWindowLoaded } from './windowLoad';
 class Ad extends Component{
   static propTypes: Object = {
     src: PropTypes.any,
-    className: PropTypes.string
+    className: PropTypes.string,
+    text: PropTypes.bool
+  };
+  static defaultProps: Object = {
+    text: true
   };
 
   iframeBox: Object = createRef();
@@ -53,7 +57,7 @@ class Ad extends Component{
       return (
         <div className={ classNames(style.ad, props.className) }>
           <div ref={ this.iframeBox } className={ style.iframeBox } />
-          <Tag className={ style.text }>广告</Tag>
+          { this.props.text ? <Tag className={ style.text }>广告</Tag> : null }
         </div>
       );
     }else{

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import style from './style.sass';
+import Ad from '../Ad';
 
 const list: [] = [
   {
@@ -49,19 +50,23 @@ class CarouselAd extends Component{
   // 渲染轮播图
   carouselItemView(lists: []): React.ChildrenArray<React.Element>{
     return lists.map((item: Object, index: number): React.Element=>{
-      return (
-        <div key={ index } className={ style.carouselItem }>
-          <a className={ style.carouselItemImage } href={ item.url } title={ item.title } target="_blank" rel="noopener noreferrer">
-            <img src={ item.img } title={ item.title } alt={ item.title } />
-          </a>
-        </div>
-      );
+      if(/^.*\.(jpe?g|gif|png)$/.test(item.img)){
+        return (
+          <div key={ index } className={ style.carouselItem }>
+            <a className={ style.carouselItemImage } href={ item.url } title={ item.title } target="_blank" rel="noopener noreferrer">
+              <img src={ item.img } title={ item.title } alt={ item.title } />
+            </a>
+          </div>
+        );
+      }else{
+        return <Ad KEY={ index } className={ style.carouselItem } src={ item.img } text={ false } />;
+      }
     });
   }
   render(): React.Element{
     return (
       <div className={ style.carouselBox }>
-        <Carousel vertical={ true } autoplay={ true }>{ this.carouselItemView(this.randomList([...list])) }</Carousel>
+        <Carousel autoplay={ true }>{ this.carouselItemView(this.randomList([...list])) }</Carousel>
       </div>
     );
   }
