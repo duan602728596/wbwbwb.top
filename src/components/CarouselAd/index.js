@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Carousel } from 'antd';
 import style from './style.sass';
-import Ad from '../Ad';
 
 const list: [] = [
   {
-    img: `https://www.wbwbwb.top:5056/_/https:%2F%2Fpopularize.skygrass.club/?w=568&h=171&t=${ new Date().getTime() }`,
+    img: 'https://oss.skygrass.club/popularize/wxj1.jpg?x-oss-process=image/resize,m_mfit,w_568,h_171',
     url: 'https://weibo.com/p/1004065490234918/home?from=page_100406&mod=TAB#place',
     title: '滑板少女王晓佳 @SNH48-王晓佳'
   },
@@ -50,17 +49,13 @@ class CarouselAd extends Component{
   // 渲染轮播图
   carouselItemView(lists: []): React.ChildrenArray<React.Element>{
     return lists.map((item: Object, index: number): React.Element=>{
-      if(/^.*\.(jpe?g|gif|png)$/.test(item.img)){
-        return (
-          <div key={ index } className={ style.carouselItem }>
-            <a className={ style.carouselItemImage } href={ item.url } title={ item.title } target="_blank" rel="noopener noreferrer">
-              <img src={ item.img } title={ item.title } alt={ item.title } />
-            </a>
-          </div>
-        );
-      }else{
-        return <Ad KEY={ index } className={ style.carouselItem } src={ item.img } text={ false } />;
-      }
+      return (
+        <div key={ index } className={ style.carouselItem }>
+          <a className={ style.carouselItemImage } href={ item.url } title={ item.title } target="_blank" rel="noopener noreferrer">
+            <img src={ item.img } title={ item.title } alt={ item.title } />
+          </a>
+        </div>
+      );
     });
   }
   render(): React.Element{
