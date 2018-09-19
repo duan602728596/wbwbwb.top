@@ -23,26 +23,9 @@ class Index extends Component{
   };
   patternCallbackBind: ?Function = null;
 
-  state: {
-    wangxiaojiaAd: ?string
-  } = {
-    wangxiaojiaAd: null
-  };
-
   componentDidMount(): void{
     localStorage.removeItem(USER_INFORMATION);
     sessionStorage.removeItem(USER_INFORMATION);
-    this.loadAd();
-  }
-  // 加载广告
-  loadAd(): void{
-    const element: Element = document.getElementById('login-form');
-    const width: number = element.clientWidth;
-    const height: number = parseInt(width / (568 / 171));
-    this.setState({
-      wangxiaojiaAd: 'https://www.wbwbwb.top:5056/_/https:%2F%2Fpopularize.skygrass.club/'
-        + `?w=${ width }&h=${ height }&t=${ new Date().getTime() }`
-    });
   }
   // 登陆
   async login(formValue: Object, id: ?string): Promise<void>{
@@ -128,12 +111,6 @@ class Index extends Component{
   };
   render(): React.ChildrenArray<React.Element>{
     const { getFieldDecorator }: { getFieldDecorator: Function } = this.props.form;
-    const adSrc: ?[] = this.state.wangxiaojiaAd ? [
-      this.state.wangxiaojiaAd,
-      ...adList,
-      this.state.wangxiaojiaAd
-    ] : null;
-
     return [
       <Helmet key="helmet">
         <title>登陆 - 微博签到系统</title>
@@ -143,7 +120,7 @@ class Index extends Component{
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
             <Ad className={ style.loginAd }
-              src={ adSrc }
+              src={ adList }
             />
             <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
@@ -186,7 +163,7 @@ class Index extends Component{
               </Col>
             </Row>
             <Button className={ style.loginBtn } type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
-            <Ad className={ style.loginAd } src={ adSrc } />
+            <Ad className={ style.loginAd } src={ adList } />
           </Form>
         </Layout.Content>
         <Footer />

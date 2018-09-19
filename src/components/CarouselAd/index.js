@@ -4,6 +4,11 @@ import style from './style.sass';
 
 const list: [] = [
   {
+    img: `https://www.wbwbwb.top:5056/_/https:%2F%2Fpopularize.skygrass.club/?w=568&h=171&t=${ new Date().getTime() }`,
+    url: 'https://weibo.com/p/1004065490234918/home?from=page_100406&mod=TAB#place',
+    title: '滑板少女王晓佳 @SNH48-王晓佳'
+  },
+  {
     img: 'https://www.wbwbwb.top:5056/image/hty1.jpg',
     url: 'https://weibo.com/u/5863498042?refer_flag=1001030102_&is_all=1',
     title: '欢迎关注@SNH48-黄彤扬'
@@ -16,7 +21,7 @@ const list: [] = [
   {
     img: 'https://www.wbwbwb.top:5056/image/chenyayu1.jpg',
     url: 'https://weibo.com/u/6017289512?refer_flag=1001030102_',
-    title: 'BEJ48-陈雅钰'
+    title: '@BEJ48-陈雅钰'
   },
   {
     img: 'https://www.wbwbwb.top:5056/image/linsiyi1.jpg',
