@@ -116,7 +116,7 @@ class Index extends Component{
         <title>登陆 - 微博签到系统</title>
       </Helmet>,
       <Layout key="element" className={ publicStyle.main }>
-        <Layout.Content>
+        <Layout.Content className={ style.content }>
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
             <Ad className={ style.loginAd }
