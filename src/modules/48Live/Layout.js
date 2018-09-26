@@ -9,16 +9,13 @@ import Item from './Item/index';
 @hot(module)
 class ModuleLayout extends Component{
   render(): React.ChildrenArray<React.Element>{
-    return [
-      <Helmet key="helmet">
-        <title>口袋48直播</title>
-      </Helmet>,
+    return (
       <Switch key="route">
         <Route path="/48Live" component={ Index } exact={ true } />
         <Route path="/48Live/Item" component={ Item } exact={ true } />
         <Route component={ Page404 } />
       </Switch>
-    ];
+    );
   }
 }
 

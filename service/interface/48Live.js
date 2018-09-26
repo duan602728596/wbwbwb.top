@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { apiUri } = require('../../config');
+const { apiUri } = require('../config');
 
 module.exports = async function(ctx){
   const { data } = await axios({
@@ -9,8 +9,11 @@ module.exports = async function(ctx){
 
   return {
     title: '口袋48成员直播',
-    '48live': {
-      lists: data
+    initialState: {
+      time: new Date().getTime(),
+      '48live': {
+        lists: data
+      }
     }
   };
 };

@@ -4,8 +4,8 @@
  */
 
 const axios = require('axios');
-const encryption = require('../../encryption/encryption');
-const { getHeadersCookie } = require('../../utils');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 async function getSt(ctx, next){
   const { status, data, headers } = await axios({

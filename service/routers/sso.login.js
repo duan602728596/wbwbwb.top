@@ -7,8 +7,8 @@
  */
 const queryString = require('querystring');
 const axios = require('axios');
-const encryption = require('../../encryption/encryption');
-const { getHeadersCookie } = require('../../utils');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 async function login(ctx, next){
   const { body } = ctx.request;

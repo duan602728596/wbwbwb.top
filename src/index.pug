@@ -14,7 +14,7 @@ html
     link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
     title {% title %}
-    if htmlWebpackPlugin.options.NODE_ENV === 'production'
+    if htmlWebpackPlugin.options.mode === 'production'
       //- 百度统计
       script(type='text/javascript').
         var _hmt = _hmt || [];
@@ -25,8 +25,8 @@ html
           s.parentNode.insertBefore(hm, s);
         })();
   body
-    div.react-app#react-app(data-app) {% render %}
+    div.app#app {% render %}
     script= 'window.__INITIAL_STATE__ = {% initialState %};'
     script(type='text/javascript' src=require('./weibo-pattlock'))
-    if htmlWebpackPlugin.options.NODE_ENV === 'development'
+    if htmlWebpackPlugin.options.mode === 'development'
       script(type='text/javascript' src=imports.dll)

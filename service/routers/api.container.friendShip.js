@@ -4,8 +4,8 @@
  */
 
 const axios = require('axios');
-const encryption = require('../../encryption/encryption');
-const { getHeadersCookie } = require('../../utils');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 // 格式化数据
 function formatData(data){

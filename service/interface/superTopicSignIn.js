@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { apiUri } = require('../../config');
+const { apiUri } = require('../config');
 
 module.exports = async function(ctx){
   const { query } = ctx.request;
@@ -21,9 +21,12 @@ module.exports = async function(ctx){
 
   return {
     title: '超级话题签到',
-    superTopicSignIn: {
-      cards,
-      sinceId
+    initialState: {
+      time: new Date().getTime(),
+      superTopicSignIn: {
+        cards,
+        sinceId
+      }
     }
   };
 };

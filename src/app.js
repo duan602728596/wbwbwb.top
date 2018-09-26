@@ -5,7 +5,7 @@ import App from './AppModule';
 /* app */
 ReactDOM.hydrate(
   <App />,
-  document.getElementById('react-app')
+  document.getElementById('app')
 );
 
 if(module.hot){

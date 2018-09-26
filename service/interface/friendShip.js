@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { apiUri } = require('../../config');
+const { apiUri } = require('../config');
 
 module.exports = async function(ctx){
   const { query } = ctx.request;
@@ -24,10 +24,13 @@ module.exports = async function(ctx){
 
   return {
     title: '用户关注',
-    friendShip: {
-      cards,
-      page,
-      cookie
+    initialState: {
+      time: new Date().getTime(),
+      friendShip: {
+        cards,
+        page,
+        cookie
+      }
     }
   };
 };
