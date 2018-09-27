@@ -1,7 +1,7 @@
-const path = require('path');
-const process = require('process');
+import path from 'path';
+import process from 'process';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment: string = process.env.NODE_ENV === 'development';
 
 module.exports = {
   frame: 'react',
