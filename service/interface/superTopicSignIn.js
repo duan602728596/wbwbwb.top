@@ -1,13 +1,13 @@
-const axios = require('axios');
-const { apiUri } = require('../config');
+import axios from 'axios';
+import { apiUri } from '../config';
 
-module.exports = async function(ctx){
-  const { query } = ctx.request;
-  let cards = [];
-  let sinceId = null;
+export default async function(ctx: Object): Promise<void>{
+  const { query }: { query: Object } = ctx.request;
+  let cards: [] = [];
+  let sinceId: ?string = null;
 
   if(query && '_' in query){
-    const { data } = await axios({
+    const { data }: { data: Object } = await axios({
       url: `${ apiUri }/api/container/getIndex`,
       method: 'GET',
       headers: {
@@ -29,4 +29,4 @@ module.exports = async function(ctx){
       }
     }
   };
-};
+}

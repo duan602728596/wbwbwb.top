@@ -2,20 +2,20 @@
  * 加密和解密
  * 为了兼容而使用es5语法
  */
-var CryptoJS = require("crypto-js");
-var { Base64 } = require('js-base64');
+import CryptoJS from 'crypto-js';
+import { Base64 } from 'js-base64';
 
-var key = 'key';
+const key: string = 'key';
 
-function encode(str){
+export function encode(str: string): string{
   return Base64.encode(CryptoJS.AES.encrypt(str, key).toString());
 }
 
-function decode(str){
+export function decode(str: string): string{
   return CryptoJS.AES.decrypt(Base64.decode(str), key).toString(CryptoJS.enc.Utf8);
 }
 
-module.exports = {
-  encode: encode,
-  decode: decode
+export default {
+  encode,
+  decode
 };

@@ -1,11 +1,14 @@
-const axios = require('axios');
-const mime = require('mime-types');
+import axios from 'axios';
+import mime from 'mime-types';
 
-async function live(ctx, next){
-  const { query } = ctx.request;
+async function live(ctx: Object, next: Function): Promise<void>{
+  const { query }: { query: Object } = ctx.request;
 
   if('url' in query){
-    const { data, status } = await axios({
+    const { data, status }: {
+      data: Object,
+      status: number
+    } = await axios({
       url: query.url,
       method: 'GET',
       responseType: 'stream'
@@ -19,8 +22,8 @@ async function live(ctx, next){
   }
 }
 
-function fortyEightLive(router){
+function fortyEightLive(router: Object): void{
   router.get('/48/live', live);
 }
 
-module.exports = fortyEightLive;
+export default fortyEightLive;

@@ -2,14 +2,14 @@
  * 签到
  * 【GET】https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=
  */
-const axios = require('axios');
-const encryption = require('../encryption/encryption');
+import axios from 'axios';
+import encryption from '../encryption/encryption';
 
-async function qiandao(ctx, next){
-  const { body } = ctx.request;
-  let uri = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
+async function qiandao(ctx: Object, next: Function): Promise<void>{
+  const { body }: { body: Object } = ctx.request;
+  const uri: string = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
 
-  const res = await axios({
+  const res: Object = await axios({
     url: uri,
     method: 'GET',
     headers: {
@@ -22,8 +22,8 @@ async function qiandao(ctx, next){
   ctx.body = res.data;
 }
 
-function pAjGeneralButton(router){
+function pAjGeneralButton(router: Object): void{
   router.post('/p/aj/general/button', qiandao);
 }
 
-module.exports = pAjGeneralButton;
+export default pAjGeneralButton;

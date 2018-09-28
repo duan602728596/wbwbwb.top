@@ -1,7 +1,7 @@
-const axios = require('axios');
-const { apiUri } = require('../config');
+import axios from 'axios';
+import { apiUri } from '../config';
 
-module.exports = async function(ctx){
+export default async function(ctx: Object): Promise<void>{
   const { data } = await axios({
     url: `${ apiUri }/48/live/list`,
     method: 'GET'
@@ -16,4 +16,4 @@ module.exports = async function(ctx){
       }
     }
   };
-};
+}

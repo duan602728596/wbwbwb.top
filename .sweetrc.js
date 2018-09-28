@@ -1,7 +1,7 @@
 import path from 'path';
 import process from 'process';
 
-const isDevelopment: string = process.env.NODE_ENV === 'development';
+const isDevelopment: boolean = process.env.NODE_ENV === 'development';
 
 module.exports = {
   frame: 'react',
@@ -70,7 +70,7 @@ module.exports = {
   ],
   js: {
     plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
-    exclude: /(dll\.js|weibo-pattlock|service|node_modules)/
+    exclude: /(dll\.js|weibo-pattlock|node_modules)/
   },
   sass: { include: /src/ },
   css: {

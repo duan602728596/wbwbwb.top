@@ -1,14 +1,14 @@
 /* 路由配置 */
-const ssoLogin = require('./routers/sso.login');
-const apiContainerGetIndex = require('./routers/api.container.getIndex');
-const pAjGeneralButton = require('./routers/p.aj.general.button');
-const apiContainerFriendShip = require('./routers/api.container.friendShip');
-const apiConfig = require('./routers/api.config');
-const apiFriendShips = require('./routers/api.friendships');
-const fortyEightLive = require('./routers/48.live');
-const fortyEightLiveList = require('./routers/48.live.list');
+import ssoLogin from './routers/sso.login';
+import apiContainerGetIndex from './routers/api.container.getIndex';
+import pAjGeneralButton from './routers/p.aj.general.button';
+import apiContainerFriendShip from './routers/api.container.friendShip';
+import apiConfig from './routers/api.config';
+import apiFriendShips from './routers/api.friendships';
+import fortyEightLive from './routers/48.live';
+import fortyEightLiveList from './routers/48.live.list';
 
-function routers(routers){
+function routers(routers: Object): void{
   ssoLogin(routers);
   apiContainerGetIndex(routers);
   pAjGeneralButton(routers);
@@ -19,4 +19,4 @@ function routers(routers){
   fortyEightLiveList(routers);
 }
 
-module.exports = routers;
+export default routers;

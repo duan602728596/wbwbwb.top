@@ -1,6 +1,6 @@
-module.exports = async function(ctx){
-  const { query } = ctx.request;
-  const query2 = query || {};
+export default async function(ctx: Object): Promise<void>{
+  const { query }: { query: Object } = ctx.request;
+  const query2: Object = query || {};
 
   return {
     title: `${ query2.subTitle } - ${ query2.title }`,
@@ -16,4 +16,4 @@ module.exports = async function(ctx){
       }
     }
   };
-};
+}

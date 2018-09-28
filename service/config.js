@@ -1,5 +1,5 @@
-const process = require('process');
+import process from 'process';
 
-module.exports = {
+export default {
   apiUri: `http://localhost:${ process.env.HTTP_SERVER_PORT }`
 };

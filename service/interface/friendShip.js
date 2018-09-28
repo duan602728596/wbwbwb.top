@@ -1,14 +1,14 @@
-const axios = require('axios');
-const { apiUri } = require('../config');
+import axios from 'axios';
+import { apiUri } from '../config';
 
-module.exports = async function(ctx){
-  const { query } = ctx.request;
-  let cards = [];
-  let page = null;
-  let cookie = null;
+export default async function(ctx: Object): Promise<void>{
+  const { query }: { query: Object } = ctx.request;
+  let cards: [] = [];
+  let page: ?string = null;
+  let cookie: ?string = null;
 
   if(query && '_' in query){
-    const { data } = await axios({
+    const { data }: { data: Object } = await axios({
       url: `${ apiUri }/api/container/friendShip`,
       method: 'GET',
       headers: {
@@ -16,9 +16,9 @@ module.exports = async function(ctx){
       }
     });
 
-    const len = data.cards.length;
+    const len: number = data.cards.length;
     page = len === 0 ? 'END' : 2;
-    cards = len === 0 ? []: data.cards;
+    cards = len === 0 ? [] : data.cards;
     cookie = data._;
   }
 
@@ -33,4 +33,4 @@ module.exports = async function(ctx){
       }
     }
   };
-};
+}

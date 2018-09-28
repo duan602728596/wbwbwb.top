@@ -3,12 +3,16 @@
  * 【GET】https://m.weibo.cn/api/config
  */
 
-const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+import axios from 'axios';
+import encryption from '../encryption/encryption';
+import { getHeadersCookie } from '../utils';
 
-async function getSt(ctx, next){
-  const { status, data, headers } = await axios({
+async function getSt(ctx: Object, next: Function): Promise<void>{
+  const { status, data, headers }: {
+    status: number,
+    data: Object,
+    headers: Object
+  } = await axios({
     url: 'https://m.weibo.cn/api/config',
     method: 'GET',
     headers: {
@@ -23,8 +27,8 @@ async function getSt(ctx, next){
   };
 }
 
-function apiConfig(router){
+function apiConfig(router: Object): void{
   router.get('/api/config', getSt);
 }
 
-module.exports = apiConfig;
+export default apiConfig;

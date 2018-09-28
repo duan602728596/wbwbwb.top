@@ -5,16 +5,20 @@
  * password
  * vid
  */
-const queryString = require('querystring');
-const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+import queryString from 'querystring';
+import axios from 'axios';
+import encryption from '../encryption/encryption';
+import { getHeadersCookie } from '../utils';
 
-async function login(ctx, next){
-  const { body } = ctx.request;
-  const queryData = queryString.stringify(body);
+async function login(ctx: Object, next: Function): Promise<void>{
+  const { body }: { body: Object } = ctx.request;
+  const queryData: string = queryString.stringify(body);
 
-  const { data, headers, status } = await axios({
+  const { data, headers, status }: {
+    data: Object,
+    headers: Object,
+    status: number
+  } = await axios({
     url: 'https://passport.weibo.cn/sso/login',
     method: 'POST',
     headers: {
@@ -34,8 +38,8 @@ async function login(ctx, next){
   };
 }
 
-function ssoLogin(router){
+function ssoLogin(router: Object): void{
   router.post('/sso/login', login);
 }
 
-module.exports = ssoLogin;
+export default ssoLogin;
