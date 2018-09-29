@@ -2,7 +2,7 @@
 import { getUserInformation } from '../../utils';
 import store from '../../store/store';
 
-const T: number = 5 * 24 * 60 * 60 * 1000; // 五天内免登陆
+const T: number = 30 * 24 * 60 * 60 * 1000; // 三十天内免登陆
 
 function isGoToLogin(): void{
   const infor: ?Object = getUserInformation();
