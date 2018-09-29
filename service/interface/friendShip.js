@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { apiUri } from '../config';
+import config from '../config';
 
 export default async function(ctx: Object): Promise<void>{
   const { query }: { query: Object } = ctx.request;
@@ -9,7 +9,7 @@ export default async function(ctx: Object): Promise<void>{
 
   if(query && '_' in query){
     const { data }: { data: Object } = await axios({
-      url: `${ apiUri }/api/container/friendShip`,
+      url: `${ config.apiUri }/api/container/friendShip`,
       method: 'GET',
       headers: {
         _: query._

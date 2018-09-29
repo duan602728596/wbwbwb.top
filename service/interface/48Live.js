@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { apiUri } from '../config';
+import config from '../config';
 
 export default async function(ctx: Object): Promise<void>{
-  const { data } = await axios({
-    url: `${ apiUri }/48/live/list`,
+  const { data }: { data: Object } = await axios({
+    url: `${ config.apiUri }/48/live/list`,
     method: 'GET'
   });
 
