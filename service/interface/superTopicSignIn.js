@@ -1,14 +1,14 @@
 import axios from 'axios';
 import config from '../config';
 
-export default async function(ctx: Object): Promise<void>{
+export default async function(ctx: Object, sweetOptions: Object): Promise<void>{
   const { query }: { query: Object } = ctx.request;
   let cards: [] = [];
   let sinceId: ?string = null;
 
   if(query && '_' in query){
     const { data }: { data: Object } = await axios({
-      url: `${ config.apiUri }/api/container/getIndex`,
+      url: `${ config.apiUri(sweetOptions.httpPort) }/api/container/getIndex`,
       method: 'GET',
       headers: {
         _: query._

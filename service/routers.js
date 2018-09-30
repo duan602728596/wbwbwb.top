@@ -8,7 +8,7 @@ import apiFriendShips from './routers/api.friendships';
 import fortyEightLive from './routers/48.live';
 import fortyEightLiveList from './routers/48.live.list';
 
-function routers(routers: Object): void{
+function routers(routers: Object, sweetOptions: Object): void{
   ssoLogin(routers);
   apiContainerGetIndex(routers);
   pAjGeneralButton(routers);

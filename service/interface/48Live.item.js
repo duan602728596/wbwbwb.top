@@ -1,4 +1,4 @@
-export default async function(ctx: Object): Promise<void>{
+export default async function(ctx: Object, sweetOptions: Object): Promise<void>{
   const { query }: { query: Object } = ctx.request;
   const query2: Object = query || {};
 
