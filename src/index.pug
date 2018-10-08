@@ -25,6 +25,14 @@ html
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(hm, s);
         })();
+    //- webp
+    script(type='text/javascript').
+      var isSupportWebP = isSupportWebP || false;
+      (function (){
+        var canvas = document.createElement('canvas');
+        var image = canvas.toDataURL('image/webp');
+        isSupportWebP = image.indexOf('data:image/webp') >= 0;
+      })();
   body
     div.app#app {% render %}
     script= 'window.__INITIAL_STATE__ = {% initialState %};'
