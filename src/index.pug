@@ -28,10 +28,11 @@ html
     //- webp
     script(type='text/javascript').
       var isSupportWebP = isSupportWebP || false;
-      (function (){
+      (function(){
         var canvas = document.createElement('canvas');
         var image = canvas.toDataURL('image/webp');
         isSupportWebP = image.indexOf('data:image/webp') >= 0;
+        canvas = null;
       })();
   body
     div.app#app {% render %}

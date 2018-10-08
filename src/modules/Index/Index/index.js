@@ -13,7 +13,7 @@ import Ad from '../../../components/Ad/index';
 import AdList from '../../../components/Ad/adList';
 import style from './style.sass';
 import { username, prompted } from '../store/reducer';
-import { encryption } from '../../../utils';
+import { encryption, loadWebP } from '../../../utils';
 import CarouselAd from '../../../components/CarouselAd/index';
 
 /* state */
@@ -98,7 +98,10 @@ class Index extends Component{
       <Layout className={ publicStyle.main }>
         {/* 显示用户名 */}
         <Layout.Header className={ classNames(publicStyle.header, style.user) }>
-          <Avatar src={ require('./image/avatar.jpg') } size="large" alt={ username } />
+          <Avatar src={ loadWebP(require('./image/avatar.webp'), require('./image/avatar.jpg')) }
+            size="large"
+            alt={ username }
+          />
           <b className={ style.avatarText }>用户：</b>
           { username }
         </Layout.Header>
@@ -110,7 +113,11 @@ class Index extends Component{
             <Col { ...grid }>
               <div className={ style.navItem }>
                 <Link className={ style.navLink } to={ `/SuperTopicSignIn?_=${ ec }` }>
-                  <Avatar className={ style.navAvatar } src={ require('./image/icon1.jpg') } shape="square" size={ 90 } />
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/icon1.webp'), require('./image/icon1.jpg')) }
+                    shape="square"
+                    size={ 90 }
+                  />
                   <span className={ style.navItemText }>超话签到</span>
                 </Link>
               </div>
@@ -118,7 +125,11 @@ class Index extends Component{
             <Col { ...grid }>
               <div className={ style.navItem }>
                 <a className={ style.navLink } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
-                  <Avatar className={ style.navAvatar } src={ require('./image/chensi.jpg') } shape="square" size={ 90 } />
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/chensi.webp'), require('./image/chensi.jpg')) }
+                    shape="square"
+                    size={ 90 }
+                  />
                   <span className={ style.navItemText }>口袋48禁用词汇查询</span>
                 </a>
               </div>
@@ -126,7 +137,11 @@ class Index extends Component{
             <Col { ...grid }>
               <div className={ style.navItem }>
                 <Link className={ style.navLink } to={ `/FriendShip?_=${ ec }` }>
-                  <Avatar className={ style.navAvatar } src={ require('./image/icon3.jpg') } shape="square" size={ 90 } />
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/icon3.webp'), require('./image/icon3.jpg')) }
+                    shape="square"
+                    size={ 90 }
+                  />
                   <span className={ style.navItemText }>用户关注</span>
                 </Link>
               </div>
@@ -134,7 +149,11 @@ class Index extends Component{
             <Col { ...grid }>
               <div className={ style.navItem }>
                 <Link className={ style.navLink } to="48Live">
-                  <Avatar className={ style.navAvatar } src={ require('./image/icon4.jpg') } shape="square" size={ 90 } />
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/icon4.webp'), require('./image/icon4.jpg')) }
+                    shape="square"
+                    size={ 90 }
+                  />
                   <span className={ style.navItemText }>口袋48网页版</span>
                 </Link>
               </div>
@@ -142,7 +161,11 @@ class Index extends Component{
             <Col { ...grid }>
               <div className={ style.navItem }>
                 <a className={ style.navLink } onClick={ this.handleExitClick }>
-                  <Avatar className={ style.navAvatar } src={ require('./image/icon2.jpg') } shape="square" size={ 90 } />
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/icon2.webp'), require('./image/icon2.jpg')) }
+                    shape="square"
+                    size={ 90 }
+                  />
                   <span className={ style.navItemText }>退出</span>
                 </a>
               </div>

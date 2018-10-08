@@ -63,3 +63,12 @@ export function getSt(): Promise{
 
 /* 加密解密 */
 export encryption from '../service/encryption/encryption';
+
+/* 加载webp */
+export function loadWebP(webp: string, img: string): string{
+  if((typeof isSupportWebP === 'boolean' && isSupportWebP === true) || typeof isSupportWebP !== 'boolean'){
+    return webp;
+  }else{
+    return img;
+  }
+}
