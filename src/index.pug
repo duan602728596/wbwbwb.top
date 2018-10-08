@@ -27,11 +27,11 @@ html
         })();
     //- webp
     script(type='text/javascript').
-      var isSupportWebP = isSupportWebP || false;
+      var isSupportedWebP = isSupportedWebP || false;
       (function(){
         var canvas = document.createElement('canvas');
         var image = canvas.toDataURL('image/webp');
-        isSupportWebP = image.indexOf('data:image/webp') >= 0;
+        isSupportedWebP = image.indexOf('data:image/webp') >= 0;
         canvas = null;
       })();
   body

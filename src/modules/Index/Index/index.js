@@ -61,6 +61,24 @@ class Index extends Component{
       });
       this.prompt();
     }
+
+    // 加载图片
+    this.loadImgIfNotIsSupportedWebP();
+  }
+  // 图片加载提示
+  loadImgIfNotIsSupportedWebP(): void{
+    if((typeof isSupportedWebP === 'boolean' && isSupportedWebP === true) || typeof isSupportedWebP !== 'boolean'){
+      return void 0;
+    }
+
+    const img: HTMLImageElement[] = document.getElementsByTagName('img');
+
+    for(const item: HTMLImageElement of img){
+      if(/\.webp$/.test(item.src) || item.src.includes('image/webp')){
+        const src: string = item.parentNode.getAttribute('data-src');
+        item.src = src;
+      }
+    }
   }
   // 提示信息
   prompt(): void{
@@ -99,6 +117,7 @@ class Index extends Component{
         {/* 显示用户名 */}
         <Layout.Header className={ classNames(publicStyle.header, style.user) }>
           <Avatar src={ loadWebP(require('./image/avatar.webp'), require('./image/avatar.jpg')) }
+            data-src={ require('./image/avatar.jpg') }
             size="large"
             alt={ username }
           />
@@ -115,6 +134,7 @@ class Index extends Component{
                 <Link className={ style.navLink } to={ `/SuperTopicSignIn?_=${ ec }` }>
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/icon1.webp'), require('./image/icon1.jpg')) }
+                    data-src={ require('./image/icon1.jpg') }
                     shape="square"
                     size={ 90 }
                   />
@@ -127,6 +147,7 @@ class Index extends Component{
                 <a className={ style.navLink } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/chensi.webp'), require('./image/chensi.jpg')) }
+                    data-src={ require('./image/chensi.jpg') }
                     shape="square"
                     size={ 90 }
                   />
@@ -139,6 +160,7 @@ class Index extends Component{
                 <Link className={ style.navLink } to={ `/FriendShip?_=${ ec }` }>
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/icon3.webp'), require('./image/icon3.jpg')) }
+                    data-src={ require('./image/icon3.jpg') }
                     shape="square"
                     size={ 90 }
                   />
@@ -151,6 +173,7 @@ class Index extends Component{
                 <Link className={ style.navLink } to="48Live">
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/icon4.webp'), require('./image/icon4.jpg')) }
+                    data-src={ require('./image/icon4.jpg') }
                     shape="square"
                     size={ 90 }
                   />
@@ -163,6 +186,7 @@ class Index extends Component{
                 <a className={ style.navLink } onClick={ this.handleExitClick }>
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/icon2.webp'), require('./image/icon2.jpg')) }
+                    data-src={ require('./image/icon2.jpg') }
                     shape="square"
                     size={ 90 }
                   />

@@ -66,7 +66,7 @@ export encryption from '../service/encryption/encryption';
 
 /* 加载webp */
 export function loadWebP(webp: string, img: string): string{
-  if((typeof isSupportWebP === 'boolean' && isSupportWebP === true) || typeof isSupportWebP !== 'boolean'){
+  if((typeof isSupportedWebP === 'boolean' && isSupportedWebP === true) || typeof isSupportedWebP !== 'boolean'){
     return webp;
   }else{
     return img;
