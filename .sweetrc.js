@@ -23,23 +23,10 @@ export default {
   entry: {
     app: [path.join(__dirname, 'src/app.js')]
   },
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: isDevelopment ? 'script/[name].js' : 'script/[chunkhash:5].js',
-    chunkFilename: isDevelopment ? 'script/[name].js' : 'script/[chunkhash:5].js',
-    publicPath: '/'
-  },
+  output: { publicPath: '/' },
   serverRender: true,
   serverEntry: {
     server: [path.join(__dirname, 'src/AppServer.js')]
-  },
-  serverOutput: {
-    path: path.join(__dirname, 'build'),
-    filename: '[name].js',
-    chunkFilename: '[name].js',
-    publicPath: '/',
-    library: '[name]',
-    libraryTarget: 'umd'
   },
   loaders: {
     svg: {

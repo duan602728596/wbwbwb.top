@@ -5,6 +5,6 @@ config-server
 bin
 .dll
 build
-build-server
+buildServer
 .sweetrc.js
 src/weibo-pattlock.js

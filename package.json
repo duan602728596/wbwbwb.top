@@ -2,10 +2,11 @@
   "name": "wbwbwb.top",
   "scripts": {
     "dll": "milktea dll",
-    "start": "npm run clean && cross-env NODE_ENV=development milktea start --server --serverRoot=build --serverRender --serverRenderFile=build/server.js",
-    "build": "npm run clean && cross-env NODE_ENV=production milktea build --serverRender=true",
+    "start": "npm run clean && npm run clean-server && cross-env NODE_ENV=development milktea start --server --serverRender",
+    "build": "npm run clean && npm run clean-server && cross-env NODE_ENV=production milktea build --serverRender",
     "clean": "rimraf ./build",
-    "server": "milktea server --serverRoot=build --serverRender --serverRenderFile=build/server.js --httpPort=80 --httpsPort=443",
+    "clean-server": "rimraf ./buildServer",
+    "server": "milktea server --serverRender --httpPort=80 --httpsPort=443",
     "eslint": "eslint ./src",
     "update": "milktea update"
   },

@@ -14,7 +14,7 @@ yarn-error.log
 .happypack
 .dll
 build
-build-server
+buildServer
 
 # babel
 .babelCache
