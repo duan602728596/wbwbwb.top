@@ -6,7 +6,6 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible' content='IE=Edge')
     meta(name='renderer' content='webkit')
-    //- TODO: https://isux.tencent.com/articles/isux-h5-in-iphone.html
     meta(name='viewport' content='width=device-width, initial-scale=1, user-scalable=no')
     meta(name='keywords' content='微博, 微博自动签到, 微博管理, SNH48, BEJ48, GNZ48, SHY48, CKG48')
     meta(name='description' content='微博自动签到、微博管理网站。')
@@ -16,16 +15,6 @@ html
     link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
     title {% title %}
-    if htmlWebpackPlugin.options.mode === 'production'
-      //- 百度统计
-      script(type='text/javascript').
-        var _hmt = _hmt || [];
-        (function(){
-          var hm = document.createElement('script');
-          hm.src = 'https://hm.baidu.com/hm.js?94ab4bdc6863d214c90a238db4d3f2ea';
-          var s = document.getElementsByTagName('script')[0];
-          s.parentNode.insertBefore(hm, s);
-        })();
     //- webp
     script(type='text/javascript').
       var isSupportedWebP = isSupportedWebP || false;
