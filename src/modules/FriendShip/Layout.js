@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 import Helmet from 'react-helmet';
+import reducer from './store/reducer';
 import isGoToLogin from '../../components/isGoToLogin/isGoToLogin';
 import Page404 from '../../assembly/404/index';
 import Index from './Index/index';
@@ -14,9 +15,15 @@ class ModuleLayout extends Component{
   static propTypes: Object = {
     history: PropTypes.object,
     location: PropTypes.object,
-    match: PropTypes.object
+    match: PropTypes.object,
+    injectReducers: PropTypes.func
   };
 
+  constructor(): void{
+    super(...arguments);
+
+    this.props.injectReducers && this.props.injectReducers(reducer);
+  }
   componentDidMount(): void{
     isGoToLogin.call(this);
   }
@@ -34,4 +41,3 @@ class ModuleLayout extends Component{
 }
 
 export default ModuleLayout;
-export reducer from './store/reducer';

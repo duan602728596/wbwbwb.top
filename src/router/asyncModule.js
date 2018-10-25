@@ -1,6 +1,5 @@
 /* 异步加载模块 */
-import React, { Component } from 'react';
-import Loadable from 'react-loadable';
+import React, { lazy, Suspense } from 'react';
 import { injectReducers } from '../store/store';
 
 /**
@@ -8,20 +7,13 @@ import { injectReducers } from '../store/store';
  * @param { Function } loader: 需要异步注入的模块
  */
 function asyncModule(loader: Function): React.Element{
-  return Loadable({
-    loader,
-    loading: (): null => null,
-    render(Module: Object, props: Object): React.Element{
-      const AsyncModule: Function = Module.default;
-      /* 异步注入reducer */
-      if('reducer' in Module){
-        injectReducers(Module.reducer);
-      }
-      return (
-        <AsyncModule { ...props } />
-      );
-    }
-  });
+  const Module: Function = lazy(loader);
+
+  return (): React.Element => (
+    <Suspense fallback={ null }>
+      <Module injectReducers={ injectReducers } />
+    </Suspense>
+  );
 }
 
 export default asyncModule;

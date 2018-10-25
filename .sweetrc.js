@@ -17,8 +17,7 @@ export default {
     'immutable',
     'redux-immutable',
     'reselect',
-    'react-helmet',
-    'react-loadable'
+    'react-helmet'
   ],
   entry: {
     app: [path.join(__dirname, 'src/app.js')]
