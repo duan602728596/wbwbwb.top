@@ -1,5 +1,6 @@
 import path from 'path';
 import process from 'process';
+import PreloadWebpackPlugin from 'preload-webpack-plugin';
 
 const isDevelopment: boolean = process.env.NODE_ENV === 'development';
 
@@ -64,5 +65,11 @@ export default {
     },
     include: /node_modules[\\/]antd/
   },
-  html: [{ template: path.join(__dirname, 'src/index.pug') }]
+  html: [{ template: path.join(__dirname, 'src/index.pug') }],
+  plugins: [
+    new PreloadWebpackPlugin({
+      rel: 'prefetch',
+      include: 'asyncChunks'
+    })
+  ]
 };
