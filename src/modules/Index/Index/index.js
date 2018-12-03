@@ -144,7 +144,7 @@ class Index extends Component{
             </Col>
             <Col { ...grid }>
               <div className={ style.navItem }>
-                <a className={ style.navLink } href="https://bw.lovelyctx.com/" target="_blank" rel="noopener noreferrer">
+                <a className={ style.navLink } href="https://bw.lovelyctx.com" target="_blank" rel="noopener noreferrer">
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/chensi.webp'), require('./image/chensi.jpg')) }
                     data-src={ require('./image/chensi.jpg') }
