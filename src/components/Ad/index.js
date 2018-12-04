@@ -28,6 +28,9 @@ class Ad extends Component{
   componentDidMount(): void{
     this.loadAd();
   }
+  shouldComponentUpdate(): boolean{
+    return false;
+  }
   componentDidUpdate(prevProps: Object, prevState: Object): void{
     this.loadAd();
   }

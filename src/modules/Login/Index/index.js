@@ -119,9 +119,7 @@ class Index extends Component{
         <Layout.Content className={ style.content }>
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd }
-              src={ adList }
-            />
+            <Ad className={ style.loginAd } src={ adList } />
             <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
                 getFieldDecorator('username', {
