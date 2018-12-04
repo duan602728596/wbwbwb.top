@@ -157,6 +157,19 @@ class Index extends Component{
             </Col>
             <Col { ...grid }>
               <div className={ style.navItem }>
+                <a className={ style.navLink } href="http://docs.skygrass.club" target="_blank" rel="noopener noreferrer">
+                  <Avatar className={ style.navAvatar }
+                    src={ loadWebP(require('./image/wangxiaojia.webp'), require('./image/wangxiaojia.jpg')) }
+                    data-src={ require('./image/wangxiaojia.jpg') }
+                    shape="square"
+                    size={ 90 }
+                  />
+                  <span className={ style.navItemText }>QQ群黑名单API文档</span>
+                </a>
+              </div>
+            </Col>
+            <Col { ...grid }>
+              <div className={ style.navItem }>
                 <Link className={ style.navLink } to={ `/FriendShip?_=${ ec }` }>
                   <Avatar className={ style.navAvatar }
                     src={ loadWebP(require('./image/icon3.webp'), require('./image/icon3.jpg')) }
