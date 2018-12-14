@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { renderToString } from 'react-dom/server';
+import { renderToNodeStream } from 'react-dom/server';
 import { StaticRouter, Switch } from 'react-router';
 import { Provider } from 'react-redux';
 import Helmet from 'react-helmet';
@@ -9,8 +9,8 @@ import { storeFactory } from './store/store';
 import './common.sass';
 import ServerRouters from './router/ServerRouters';
 
-function server(url: string, context: Object = {}, initialState: Object): string{
-  const htmlString: string = renderToString(
+function server(url: string, context: Object = {}, initialState: Object): ReadStream{
+  const stream: ReadStream = renderToNodeStream(
     <Provider store={ storeFactory(initialState) }>
       <LocaleProvider locale={ zhCN }>
         <StaticRouter location={ url } context={ context }>
@@ -22,7 +22,7 @@ function server(url: string, context: Object = {}, initialState: Object): string
     </Provider>
   );
   const helmet: any = Helmet.renderStatic();
-  return htmlString;
+  return stream;
 }
 
 export default server;
