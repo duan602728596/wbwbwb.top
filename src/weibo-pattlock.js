@@ -256,9 +256,9 @@
     initFunction();
     codeId = id;
     if(imageUrl){
-      const u = imageUrl.split('|');
-      const bg = 'url(' + u[0] + ')';
-      const lock = atob(u[1]).split('_'); // Base64.decode
+      var u = imageUrl.split('|');
+      var bg = 'url(' + u[0] + ')';
+      var lock = atob(u[1]).split('_'); // Base64.decode
       recombineShadow(bg, lock);
     }
   }
