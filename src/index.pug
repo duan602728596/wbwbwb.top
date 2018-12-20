@@ -18,7 +18,8 @@ html
     include ./scripts.pug
   body
     div.app#app <%= render %>
-    script= 'window.__INITIAL_STATE__ = <%= initialState %>;'
-    script(type='text/javascript' src=require('./weibo-pattlock'))
+    script
+      | window.__INITIAL_STATE__ = <%= initialState %>;
+    script(src=require('./weibo-pattlock'))
     if htmlWebpackPlugin.options.mode === 'development'
-      script(type='text/javascript' src=imports.dll)
+      script(src=imports.dll)
