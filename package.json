@@ -8,6 +8,7 @@
     "clean-server": "rimraf ./buildServer",
     "server": "milktea server --serverRender --httpPort=80 --httpsPort=443",
     "pm2-server": "pm2 start runServer.js",
+    "compress": "node ./bin/compress.js",
     "eslint": "eslint ./src",
     "update": "milktea update"
   },

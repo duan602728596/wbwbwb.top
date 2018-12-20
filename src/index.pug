@@ -15,15 +15,7 @@ html
     link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
     title <%= title %>
-    //- webp
-    script(type='text/javascript').
-      var isSupportedWebP = isSupportedWebP || false;
-      (function(){
-        var canvas = document.createElement('canvas');
-        var image = canvas.toDataURL('image/webp');
-        isSupportedWebP = image.indexOf('data:image/webp') >= 0;
-        canvas = null;
-      })();
+    include ./scripts.pug
   body
     div.app#app <%= render %>
     script= 'window.__INITIAL_STATE__ = <%= initialState %>;'
