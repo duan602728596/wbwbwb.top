@@ -86,7 +86,8 @@ class Index extends Component{
       const ub64: string = btoa(formValue.username); // base64加密
       const step1: Object = await prelogin(ub64);
       // 需要验证码
-      if(('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1) || formValue.vcode){
+      // 原验证方法：('showpin' in step1 && step1.showpin === 1) || ('smsurl' in step1)
+      if(formValue.vcode){
         // 获取验证码
         const step2: Object = await pattern(formValue.username);
         this.patternCallbackBind = this.patternCallback.bind(this, formValue, step2.id);
