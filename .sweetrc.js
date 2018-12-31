@@ -42,7 +42,7 @@ export default {
   },
   rules: [
     {
-      test: /(dll\.js|weibo-pattlock)/,
+      test: /(dll\.js|weibo-pattlock|gt\.js)/,
       use: [{
         loader: 'file-loader',
         options: {
@@ -54,7 +54,7 @@ export default {
   ],
   js: {
     plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
-    exclude: /(dll\.js|weibo-pattlock|node_modules)/
+    exclude: /(dll\.js|weibo-pattlock|gt\.js|node_modules)/
   },
   sass: { include: /src/ },
   css: {
@@ -66,7 +66,7 @@ export default {
     include: /node_modules[\\/]antd/
   },
   html: [{ template: path.join(__dirname, 'src/index.pug') }],
-  plugins: [
+  plugins: isDevelopment ? undefined : [
     new PreloadWebpackPlugin({
       rel: 'prefetch',
       include: 'asyncChunks'

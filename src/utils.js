@@ -1,42 +1,6 @@
 /* 公共函数 */
 import axios from 'axios';
 
-/**
- * jsonp方法
- * @param { string } uri: 请求地址
- */
-export function jsonp(uri: string): Promise{
-  let script: Element = document.createElement('script');
-  return new Promise((resolve: Function, reject: Function): void=>{
-    // callback
-    const time: number = new Date().getTime();
-    const callbackName: string = `jsonpCallback${ time }`;
-    script.src = `${ uri }&callback=${ callbackName }`;
-    script.id = callbackName;
-
-    window[callbackName] = (data: Object): void=>{
-      resolve(data);
-    };
-    // load
-    const handleScriptLoad: Function = (event: Event): void=>{
-      delete window[callbackName];
-      script.removeEventListener('load', handleScriptLoad);
-      script.removeEventListener('error', handleScriptError);
-      document.body.removeChild(script);
-      script = null;
-    };
-    // error
-    const handleScriptError: Function = (event: Event): void=>{
-      handleScriptLoad();
-      reject(event);
-    };
-
-    script.addEventListener('load', handleScriptLoad, false);
-    script.addEventListener('error', handleScriptError, false);
-    document.body.appendChild(script);
-  });
-}
-
 /* 获取用户信息 */
 export const USER_INFORMATION: string = 'userInformation';
 export function getUserInformation(): ?Object{
@@ -71,4 +35,22 @@ export function loadWebP(webp: string, img: string): string{
   }else{
     return img;
   }
+}
+
+/* qs */
+export function getQuery(url: string): Object{
+  const urlArr: string[] = url.split('?');
+  const result: Object = {};
+
+  if(url.length > 1){
+    const q: string[] = urlArr[1].split('&');
+
+    for(const item: string of q){
+      const g: string[] = item.split('=');
+      result[g[0]] = g[1];
+    }
+
+  }
+
+  return result;
 }

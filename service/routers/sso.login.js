@@ -32,8 +32,6 @@ async function login(ctx: Object, next: Function): Promise<void>{
   });
 
   // 格式化数据
-  delete data.data;
-
   ctx.status = status;
   ctx.body = {
     ...data,
