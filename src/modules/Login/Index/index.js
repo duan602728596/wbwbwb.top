@@ -34,9 +34,7 @@ class Index extends Component{
   }
   // 关闭
   handleCloseEmbedCaptchaClick: Function = (event: Event): void=>{
-    this.setState({
-      isEmbedCaptchaDisplay: false
-    });
+    this.setState({ isEmbedCaptchaDisplay: false });
   };
   // 登陆成功的回调函数
   loginSuccessCallback(username: string, cookie: string, rememberPassword: boolean): void{
@@ -54,7 +52,7 @@ class Index extends Component{
     message.success('登陆成功！');
   }
   // 验证的回调函数
-  handleEmbed(id: string, formValue: Object, captchaObj: Object): void{
+  handleEmbed(id: string, cookie: string, formValue: Object, captchaObj: Object): void{
     const _this: this = this;
 
     this.setState({
@@ -67,13 +65,14 @@ class Index extends Component{
           geetest_challenge: result.geetest_challenge,
           geetest_validate: result.geetest_validate,
           geetest_seccode: result.geetest_seccode
-        });
+        }, cookie);
 
         const step1Data: Object = step1.data;
 
         if(step1Data.retcode === 100000){
-          const step2: Object = await geetestCaptcha(id);
+          const step2: Object = await geetestCaptcha(id, cookie);
 
+          this.setState({ isEmbedCaptchaDisplay: false });
           _this.loginSuccessCallback(formValue.username, step2.data._, formValue['remember-password']);
         }else{
           message.error(`（${ step1Data.retcode }）${ step1Data.msg }`);
@@ -98,7 +97,7 @@ class Index extends Component{
         // 需要验证码
         const errUrl: string = step0Data.data.errurl;
         const q: Object = getQuery(errUrl);
-        const { data }: { data: Object } = await geetest(q.id);
+        const { data }: { data: Object } = await geetest(q.id, step0Data._);
 
         window.initGeetest({
           gt: data.gt,
@@ -106,7 +105,7 @@ class Index extends Component{
           new_captcha: data.new_captcha,
           product: 'embed',
           offline: !data.success
-        }, this.handleEmbed.bind(this, q.id, formValue));
+        }, this.handleEmbed.bind(this, q.id, step0Data._, formValue));
       }else{
         message.error(`（${ step0Data.retcode }）${ step0Data.msg }`);
       }
@@ -165,10 +164,6 @@ class Index extends Component{
                 <Form.Item className={ style.checkGroup }>
                   { getFieldDecorator('remember-password')(<Checkbox aria-label="三十天内免登陆" />) }
                   <label className={ style.checkText } htmlFor="remember-password">三十天内免登陆</label>
-                </Form.Item>
-                <Form.Item className={ classNames(style.checkGroup, style.mb40) }>
-                  { getFieldDecorator('vcode')(<Checkbox aria-label="使用验证码登陆" />) }
-                  <label className={ style.checkText } htmlFor="vcode">使用验证码登陆</label>
                 </Form.Item>
               </Col>
               <Col className={ style.linkDescription } span={ 12 }>

@@ -14,6 +14,11 @@ async function login(ctx: Object, next: Function): Promise<void>{
   const { body }: { body: Object } = ctx.request;
   const queryData: string = queryString.stringify(body);
 
+  const step0: Object = await axios({
+    url: 'https://m.weibo.cn/'
+  });
+  const cookie0: string = getHeadersCookie(step0.headers);
+
   const { data, headers, status }: {
     data: Object,
     headers: Object,
@@ -26,7 +31,8 @@ async function login(ctx: Object, next: Function): Promise<void>{
       'Content-Type': 'application/x-www-form-urlencoded',
       'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
       Host: 'passport.weibo.cn',
-      Origin: 'https://passport.weibo.cn'
+      Origin: 'https://passport.weibo.cn',
+      Cookie: cookie0
     },
     data: `${ queryData }&r=https://m.weibo.cn/&entry=mweibo&pagerefer=https://m.weibo.cn/login?backURL=https%253A%252F%252Fm.weibo.cn%252F`
   });
@@ -35,7 +41,7 @@ async function login(ctx: Object, next: Function): Promise<void>{
   ctx.status = status;
   ctx.body = {
     ...data,
-    _: encryption.encode(getHeadersCookie(headers))
+    _: encryption.encode(`${ cookie0 }; ${ getHeadersCookie(headers) }`)
   };
 }
 

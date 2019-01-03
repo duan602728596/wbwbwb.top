@@ -1,34 +1,37 @@
 import queryString from 'querystring';
 import axios from 'axios';
+import encryption from '../encryption/encryption';
+import { getHeadersCookie } from '../utils';
 
+/* 验证验证码 */
 async function geetestValidate(ctx: Object, next: Function): Promise<void>{
   const { query }: { query: Object } = ctx.request;
 
-  let uri: string = 'https://security.weibo.com/captcha/ajgeetest?action=validate&key=';
-
   if('key' in query){
-    uri += query.key;
-
     const { body }: { body: Object } = ctx.request;
     const queryData: string = queryString.stringify(body);
-    const { data, status }: {
+    const { data, status, headers }: {
       data: Object,
-      status: number
+      status: number,
+      headers: Object
     } = await axios({
-      url: uri,
+      url: `https://security.weibo.com/captcha/ajgeetest?action=validate&key=${ query.key }`,
       method: 'POST',
       headers: {
         Referer: `https://security.weibo.com/captcha/geetest?key=${ query.key }&c=`,
         'Content-Type': 'application/x-www-form-urlencoded',
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
         Host: 'security.weibo.com',
-        Origin: 'https://security.weibo.com'
+        Origin: 'https://security.weibo.com',
+        Cookie: encryption.decode(query._)
       },
       data: queryData
     });
 
     ctx.status = status;
-    ctx.body = data;
+    ctx.body = {
+      ...data,
+      cookie: getHeadersCookie(headers)
+    };
   }else{
     ctx.status = 500;
   }

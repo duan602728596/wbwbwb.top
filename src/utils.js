@@ -12,6 +12,10 @@ export function getUserInformation(): ?Object{
   return sUserInformation ? JSON.parse(sUserInformation) : null;
 }
 
+/* 加密解密 */
+import _encryption from '../service/encryption/encryption';
+export const encryption: Object = _encryption;
+
 /* 获取st */
 export function getSt(): Promise{
   const infor: ?Object = getUserInformation();
@@ -24,9 +28,6 @@ export function getSt(): Promise{
     }
   });
 }
-
-/* 加密解密 */
-export encryption from '../service/encryption/encryption';
 
 /* 加载webp */
 export function loadWebP(webp: string, img: string): string{
