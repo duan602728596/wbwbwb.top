@@ -35,10 +35,21 @@ function writeFile(file, data){
   const code = await Promise.all([
     readFile(path.join(__dirname, 'scripts/ie.js')),
     readFile(path.join(__dirname, 'scripts/webp.js')),
+    readFile(path.join(__dirname, 'scripts/gt.js'))
   ]);
 
-  const [ie, webp] = [terser.minify(code[0]), terser.minify(code[1])];
+  // 压缩
+  const [ie, webp, gt] = [
+    terser.minify(code[0]),
+    terser.minify(code[1]),
+    terser.minify(code[2])
+  ];
+
+  // 0、1生成pug
   const scripts = `script ${ ie.code }\nscript ${ webp.code }`;
 
   await writeFile(path.join(__dirname, '../src/scripts.pug'), scripts);
+
+  // 2 压缩成min
+  await writeFile(path.join(__dirname, '../src/gt.min.js'), gt.code);
 })();

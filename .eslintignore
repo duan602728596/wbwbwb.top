@@ -9,4 +9,4 @@ buildServer
 runServer.js
 .sweetrc.js
 src/weibo-pattlock.js
-src/gt.js
+src/gt.min.js
