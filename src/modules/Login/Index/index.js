@@ -72,7 +72,7 @@ class Index extends Component{
         if(step1Data.retcode === 100000){
           const step2: Object = await geetestCaptcha(id, cookie);
 
-          this.setState({ isEmbedCaptchaDisplay: false });
+          _this.setState({ isEmbedCaptchaDisplay: false });
           _this.loginSuccessCallback(formValue.username, step2.data._, formValue['remember-password']);
         }else{
           message.error(`（${ step1Data.retcode }）${ step1Data.msg }`);
