@@ -1,5 +1,9 @@
 /* 公共函数 */
 import axios from 'axios';
+import _encryption from '../service/encryption/encryption';
+
+/* 加密解密 */
+export const encryption: Object = _encryption;
 
 /* 获取用户信息 */
 export const USER_INFORMATION: string = 'userInformation';
@@ -11,10 +15,6 @@ export function getUserInformation(): ?Object{
   const sUserInformation: ?string = sessionStorage.getItem(USER_INFORMATION);
   return sUserInformation ? JSON.parse(sUserInformation) : null;
 }
-
-/* 加密解密 */
-import _encryption from '../service/encryption/encryption';
-export const encryption: Object = _encryption;
 
 /* 获取st */
 export function getSt(): Promise{

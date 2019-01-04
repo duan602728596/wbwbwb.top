@@ -10,6 +10,7 @@ export function login(data: Object): Promise{
   });
 }
 
+// 初始化验证
 export function geetest(key: string, cookie: string): Promise{
   return axios({
     url: `/api/geetest?&key=${ key }&_=${ cookie }`,
@@ -17,6 +18,7 @@ export function geetest(key: string, cookie: string): Promise{
   });
 }
 
+// 验证ing
 export function geetestValidate(key: string, data: Object, cookie: string): Promise{
   return axios({
     url: `/api/geetest/validate?&key=${ key }&_=${ cookie }`,
@@ -25,6 +27,7 @@ export function geetestValidate(key: string, data: Object, cookie: string): Prom
   });
 }
 
+// 验证后的一系列操作
 export function geetestCaptcha(key: string, cookie: string): Promise{
   return axios({
     url: `/api/geetest/captcha?key=${ key }&_=${ cookie }`,

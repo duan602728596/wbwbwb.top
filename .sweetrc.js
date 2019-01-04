@@ -42,7 +42,7 @@ export default {
   },
   rules: [
     {
-      test: /(dll\.js|weibo-pattlock|gt\.min\.js)/,
+      test: /(dll\.js|gt\.min\.js)/,
       use: [{
         loader: 'file-loader',
         options: {
@@ -54,7 +54,7 @@ export default {
   ],
   js: {
     plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
-    exclude: /(dll\.js|weibo-pattlock|gt\.min\.js|node_modules)/
+    exclude: /(dll\.js|gt\.min\.js|node_modules)/
   },
   sass: { include: /src/ },
   css: {

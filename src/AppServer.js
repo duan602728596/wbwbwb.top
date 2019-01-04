@@ -9,8 +9,8 @@ import { storeFactory } from './store/store';
 import './common.sass';
 import ServerRouters from './router/ServerRouters';
 
-function server(url: string, context: Object = {}, initialState: Object): ReadStream{
-  const stream: ReadStream = renderToNodeStream(
+function server(url: string, context: Object = {}, initialState: Object): Stream{
+  const stream: Stream = renderToNodeStream(
     <Provider store={ storeFactory(initialState) }>
       <LocaleProvider locale={ zhCN }>
         <StaticRouter location={ url } context={ context }>

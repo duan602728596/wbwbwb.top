@@ -7,9 +7,9 @@ import apiConfig from './routers/api.config';
 import apiFriendShips from './routers/api.friendships';
 import fortyEightLive from './routers/48.live';
 import fortyEightLiveList from './routers/48.live.list';
-import apiGeetestInit from './routers/geetestInit';
-import apiGeetesValidate from './routers/geetestValidate';
-import apiGeetesCaptcha from './routers/geetestCaptcha';
+import apiGeetestInit from './routers/geetest.init';
+import apiGeetesValidate from './routers/geetest.validate';
+import apiGeetesCaptcha from './routers/geetest.captcha';
 
 function routers(routers: Object, sweetOptions: Object): void{
   ssoLogin(routers);
