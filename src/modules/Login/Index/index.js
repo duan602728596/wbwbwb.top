@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import classNames from 'classnames';
 import { Layout, Row, Col, Form, Input, Checkbox, Button, message } from 'antd';
 import { USER_INFORMATION, encryption, getQuery } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
@@ -43,11 +42,10 @@ class Index extends Component{
       cookie: encryption.decode(cookie),
       time: new Date().getTime()
     });
-    if(rememberPassword){
-      localStorage.setItem(USER_INFORMATION, storageData);
-    }else{
-      sessionStorage.setItem(USER_INFORMATION, storageData);
-    }
+
+    if(rememberPassword) localStorage.setItem(USER_INFORMATION, storageData);
+    else sessionStorage.setItem(USER_INFORMATION, storageData);
+
     this.props.history.push('/Index');
     message.success('登陆成功！');
   }
@@ -156,7 +154,7 @@ class Index extends Component{
                       message: '请输入密码！'
                     }
                   ]
-                })(<Input type="password" />)
+                })(<Input.Password />)
               }
             </Form.Item>
             <Row type="flex">
