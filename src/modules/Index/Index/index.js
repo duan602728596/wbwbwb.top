@@ -9,12 +9,11 @@ import { Layout, Avatar, Modal, Row, Col, notification } from 'antd';
 import { getUserInformation } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import Footer from '../../../assembly/Footer/index';
-import Ad from '../../../components/Ad/index';
-import AdList from '../../../components/Ad/adList';
+import Ad from '../../../components/Ad/Ad';
 import style from './style.sass';
 import { username, prompted } from '../store/reducer';
-import { encryption, loadWebP } from '../../../utils';
-import CarouselAd from '../../../components/CarouselAd/index';
+import { encryption, loadWebP, loadImgIfNotIsSupportedWebP } from '../../../utils';
+import CarouselAd from '../../../components/Ad/CarouselAd';
 
 /* state */
 const state: Function = createStructuredSelector({
@@ -63,22 +62,7 @@ class Index extends Component{
     }
 
     // 加载图片
-    this.loadImgIfNotIsSupportedWebP();
-  }
-  // 图片加载提示
-  loadImgIfNotIsSupportedWebP(): void{
-    if((typeof isSupportedWebP === 'boolean' && isSupportedWebP === true) || typeof isSupportedWebP !== 'boolean'){
-      return void 0;
-    }
-
-    const img: HTMLImageElement[] = document.getElementsByTagName('img');
-
-    for(const item: HTMLImageElement of img){
-      if(/\.webp$/.test(item.src) || item.src.includes('image/webp')){
-        const src: string = item.parentNode.getAttribute('data-src');
-        item.src = src;
-      }
-    }
+    loadImgIfNotIsSupportedWebP();
   }
   // 提示信息
   prompt(): void{
@@ -210,7 +194,7 @@ class Index extends Component{
           </Row>
           {/* 广告 */}
           <div className={ classNames(style.mt10, style.indexAdBox) }>
-            <Ad className={ style.indexAd } src={ AdList } />
+            <Ad className={ style.indexAd } />
           </div>
         </Layout.Content>
         <Footer />

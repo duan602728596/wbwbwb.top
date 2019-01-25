@@ -55,3 +55,21 @@ export function getQuery(url: string): Object{
 
   return result;
 }
+
+/* 当不支持webp时，加载jpg */
+// 图片加载提示
+export function loadImgIfNotIsSupportedWebP(): void{
+  if((typeof isSupportedWebP === 'boolean' && isSupportedWebP === true) || typeof isSupportedWebP !== 'boolean'){
+    return void 0;
+  }
+
+  const img: HTMLImageElement[] = document.getElementsByTagName('img');
+
+  for(const item: HTMLImageElement of img){
+    if(/\.webp$/.test(item.src) || item.src.includes('image/webp')){
+      const src: string = item.parentNode.getAttribute('data-src');
+
+      if(src && src !== '') item.src = src;
+    }
+  }
+}

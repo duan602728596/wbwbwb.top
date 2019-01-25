@@ -6,8 +6,7 @@ import { Layout, Row, Col, Form, Input, Checkbox, Button, message } from 'antd';
 import { USER_INFORMATION, encryption, getQuery } from '../../../utils';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
-import Ad from '../../../components/Ad/index';
-import adList from '../../../components/Ad/adList';
+import Ad from '../../../components/Ad/Ad';
 import Footer from '../../../assembly/Footer/index';
 import { login, geetest, geetestValidate, geetestCaptcha } from '../request';
 
@@ -131,7 +130,7 @@ class Index extends Component{
         <Layout.Content className={ style.content }>
           {/* 登陆表单 */}
           <Form className={ style.form } id="login-form" onSubmit={ this.handleFormSubmit }>
-            <Ad className={ style.loginAd } src={ adList } />
+            <Ad className={ style.loginAd } />
             <Form.Item className={ style.group } label="微博用户名：" colon={ false }>
               {
                 getFieldDecorator('username', {
@@ -169,7 +168,7 @@ class Index extends Component{
               </Col>
             </Row>
             <Button className={ style.loginBtn } type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>
-            <Ad className={ style.loginAd } src={ adList } />
+            <Ad className={ style.loginAd } />
           </Form>
         </Layout.Content>
         <Footer />
