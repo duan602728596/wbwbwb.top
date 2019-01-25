@@ -28,7 +28,7 @@ class CarouselAd extends Component{
     return lists.map((item: Object, index: number): React.Element=>{
       return (
         <div key={ index } className={ style.carouselItem }>
-          <a className={ style.carouselItemImage } href={ item.url } title={ item.title } target="_blank" rel="noopener noreferrer">
+          <a className={ style.carouselItemImage } href={ item.weibo } title={ item.title } target="_blank" rel="noopener noreferrer">
             <img src={ item.image } alt={ item.alt } />
           </a>
         </div>
