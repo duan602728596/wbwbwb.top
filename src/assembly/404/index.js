@@ -4,8 +4,8 @@ import { Button } from 'antd';
 import publicStyle from '../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 
-class Page404 extends Component{
-  render(): React.Element{
+class Page404 extends Component {
+  render() {
     return (
       <div className={ publicStyle.main }>
         <img className={ style.nvpu } src={ require('./nvpu.jpg') } />

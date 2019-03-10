@@ -4,13 +4,13 @@ import asyncModule from './asyncModule';
 import Index from '../modules/Index/Layout';
 import Page404 from '../assembly/404/index';
 
-const LoginBundle: Function = asyncModule((): Promise => import('../modules/Login/Layout'));
-const SuperTopicSignInBundle: Function = asyncModule((): Promise => import('../modules/SuperTopicSignIn/Layout'));
-const FriendShipBundle: Function = asyncModule((): Promise => import('../modules/FriendShip/Layout'));
-const FortyEightLiveBundle: Function = asyncModule((): Promise => import('../modules/48Live/Layout'));
+const LoginBundle = asyncModule(() => import('../modules/Login/Layout'));
+const SuperTopicSignInBundle = asyncModule(() => import('../modules/SuperTopicSignIn/Layout'));
+const FriendShipBundle = asyncModule(() => import('../modules/FriendShip/Layout'));
+const FortyEightLiveBundle = asyncModule(() => import('../modules/48Live/Layout'));
 
-class Routers extends Component{
-  render(): React.Element{
+class Routers extends Component {
+  render() {
     return (
       <Switch>
         <Route path="/" component={ Index } exact={ true } />

@@ -1,25 +1,29 @@
-/* 全局的store */
+/**
+ * 全局的store
+ */
 import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { fromJS, Map } from 'immutable';
 import { createReducer } from './reducers';
 
 /* reducer列表 */
-const reducer: Function = createReducer({});
+const reducer = createReducer({});
 
 /* 中间件 */
-const middlewares: Function = applyMiddleware(thunk);
+const middleware = applyMiddleware(thunk);
 
-const store: Object = {
+/* store */
+const store = {
   asyncReducers: {}
 };
 
-export function storeFactory(initialState: ?Object): Object{
+export function storeFactory(initialState = {}) {
   /* initialState */
-  const $$initialState: Immutable.Map = Map(fromJS(initialState));
+  const state = fromJS(initialState);
+  const $$initialState = Map(state);
 
   /* store */
-  Object.assign(store, createStore(reducer, $$initialState, compose(middlewares)));
+  Object.assign(store, createStore(reducer, $$initialState, compose(middleware)));
 
   return store;
 }
@@ -27,12 +31,12 @@ export function storeFactory(initialState: ?Object): Object{
 export default store;
 
 /* 注入store */
-export function injectReducers(asyncReducer: Object): void{
-  for(const key: string in asyncReducer){
-    const item: Object = asyncReducer[key];
+export function injectReducers(asyncReducer) {
+  for (const key in asyncReducer) {
+    const item = asyncReducer[key];
 
     // 获取reducer的key值，并将reducer保存起来
-    if(!(key in store.asyncReducers)){
+    if (!(key in store.asyncReducers)) {
       store.asyncReducers[key] = item;
     }
   }

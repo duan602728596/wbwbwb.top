@@ -1,6 +1,6 @@
 import { loadWebP } from '../../utils';
 
-const adConfig: Object[] = [
+const adConfig = [
   {
     image: loadWebP(require('./image/chenyayu1.webp'), require('./image/chenyayu1.jpg')),
     weibo: 'https://weibo.com/u/6017289512?refer_flag=1001030102_',

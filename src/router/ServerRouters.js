@@ -8,8 +8,8 @@ import FriendShip from '../modules/FriendShip/Layout';
 import FortyEightLive from '../modules/48Live/Layout';
 import Page404 from '../assembly/404/index';
 
-class ServerRouters extends Component{
-  render(): React.Element{
+class ServerRouters extends Component {
+  render() {
     return (
       <Switch>
         <Route path="/" component={ Index } exact={ true } />

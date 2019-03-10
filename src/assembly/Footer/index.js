@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import style from './style.sass';
 
-class Footer extends Component{
-  render(): React.Element{
+class Footer extends Component {
+  render() {
     return (
       <Layout.Footer className={ style.footer }>
         <nav className={ style.footerNav }>

@@ -2,13 +2,13 @@
 import { getUserInformation } from '../../utils';
 import store from '../../store/store';
 
-const T: number = 30 * 24 * 60 * 60 * 1000; // 三十天内免登陆
+const T = 30 * 24 * 60 * 60 * 1000; // 三十天内免登陆
 
-function isGoToLogin(): void{
-  const infor: ?Object = getUserInformation();
-  const time: number = store.getState().get('time');
+function isGoToLogin() {
+  const infor = getUserInformation();
+  const time = store.getState().get('time');
 
-  if(infor === null || time - infor.time > T){
+  if (infor === null || time - infor.time > T) {
     this.props.history.push('/Login');
   }
 }

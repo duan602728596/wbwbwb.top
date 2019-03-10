@@ -7,25 +7,25 @@ import style from './style.sass';
 import adConfig from './adConfig';
 import { loadImgIfNotIsSupportedWebP } from '../../utils';
 
-class Ad extends Component{
-  static propTypes: Object = {
+class Ad extends Component {
+  static propTypes = {
     className: PropTypes.string
   };
 
-  componentDidMount(): void{
+  componentDidMount() {
     loadImgIfNotIsSupportedWebP();
   }
-  shouldComponentUpdate(): boolean{
+  shouldComponentUpdate() {
     return false;
   }
-  render(): ?React.Element{
-    const props: Object = this.props;
-    const item: Object = adConfig[Math.floor(Math.random() * adConfig.length)];
+  render() {
+    const props = this.props;
+    const item = adConfig[Math.floor(Math.random() * adConfig.length)];
 
     return (
       <div className={ classNames(style.ad, props.className) }>
         <a className={ style.adBox } href={ item.weibo } title={ item.title } target="_blank" rel="noopener noreferrer">
-          <img src={ item.image } alt={ item.alt }  />
+          <img src={ item.image } alt={ item.alt } />
         </a>
         <Tag className={ style.text }>广告</Tag>
       </div>
