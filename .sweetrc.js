@@ -1,10 +1,10 @@
-import path from 'path';
-import process from 'process';
-import PreloadWebpackPlugin from 'preload-webpack-plugin';
+const path = require('path');
+const process = require('process');
+const PreloadWebpackPlugin = require('preload-webpack-plugin');
 
-const isDevelopment: boolean = process.env.NODE_ENV === 'development';
+const isDevelopment = process.env.NODE_ENV === 'development';
 
-export default {
+module.exports = {
   frame: 'react',
   dll: [
     'react',
