@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { renderToNodeStream } from 'react-dom/server';
 import { StaticRouter, Switch } from 'react-router';
 import { Provider } from 'react-redux';
@@ -9,8 +9,8 @@ import { storeFactory } from './store/store';
 import './common.sass';
 import ServerRouters from './router/ServerRouters';
 
-function server(url: string, context: Object = {}, initialState: Object): Stream{
-  const stream: Stream = renderToNodeStream(
+function server(url, context = {}, initialState = {}) {
+  const stream = renderToNodeStream(
     <Provider store={ storeFactory(initialState) }>
       <LocaleProvider locale={ zhCN }>
         <StaticRouter location={ url } context={ context }>
@@ -21,7 +21,8 @@ function server(url: string, context: Object = {}, initialState: Object): Stream
       </LocaleProvider>
     </Provider>
   );
-  const helmet: any = Helmet.renderStatic();
+  const helmet = Helmet.renderStatic();
+
   return stream;
 }
 

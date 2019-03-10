@@ -21,12 +21,11 @@ module.exports = {
     'react-helmet'
   ],
   entry: {
-    app: [path.join(__dirname, 'src/app.js')]
+    app: [path.join(__dirname, 'src/index.js')]
   },
-  output: { publicPath: '/' },
   serverRender: true,
   serverEntry: {
-    server: [path.join(__dirname, 'src/AppServer.js')]
+    server: [path.join(__dirname, 'src/server.js')]
   },
   loaders: {
     svg: {

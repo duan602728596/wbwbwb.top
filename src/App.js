@@ -10,8 +10,8 @@ import Routers from './router/Routers';
 
 /* 热替换 */
 @hot(module)
-class App extends Component{
-  render(): React.Element{
+class App extends Component {
+  render() {
     return (
       <Provider store={ storeFactory(window.__INITIAL_STATE__ || {}) }>
         <LocaleProvider locale={ zhCN }>
