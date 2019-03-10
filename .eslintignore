@@ -1,12 +1,13 @@
-server
+# node
 node_modules
-config
-config-server
-bin
-.dll
+
+# project
+runServer.js
+
+# build
 build
 buildServer
-runServer.js
-.sweetrc.js
-src/weibo-pattlock.js
-src/gt.min.js
+bin/scripts
+
+# cache
+.dll
