@@ -8,9 +8,11 @@ class CarouselAd extends Component {
   componentDidMount() {
     loadImgIfNotIsSupportedWebP();
   }
+
   shouldComponentUpdate() {
     return false;
   }
+
   // 数组随机打乱顺序
   randomList(lists) {
     const newList = [];
@@ -24,6 +26,7 @@ class CarouselAd extends Component {
 
     return newList;
   }
+
   // 渲染轮播图
   carouselItemView(lists) {
     return lists.map((item, index) => {
@@ -36,6 +39,7 @@ class CarouselAd extends Component {
       );
     });
   }
+
   render() {
     return (
       <div className={ style.carouselBox }>

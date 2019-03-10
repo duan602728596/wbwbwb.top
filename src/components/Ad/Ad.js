@@ -15,9 +15,11 @@ class Ad extends Component {
   componentDidMount() {
     loadImgIfNotIsSupportedWebP();
   }
+
   shouldComponentUpdate() {
     return false;
   }
+
   render() {
     const props = this.props;
     const item = adConfig[Math.floor(Math.random() * adConfig.length)];
