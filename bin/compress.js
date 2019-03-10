@@ -3,35 +3,35 @@ const path = require('path');
 const fs = require('fs');
 const terser = require('terser');
 
-function readFile(file){
-  return new Promise((resolve, reject)=>{
-    fs.readFile(file, (err, data)=>{
-      if(err){
+function readFile(file) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(file, (err, data) => {
+      if (err) {
         reject(err);
-      }else{
+      } else {
         resolve(data.toString());
       }
-    })
-  }).catch((err)=>{
+    });
+  }).catch((err) => {
     console.error(err);
   });
 }
 
-function writeFile(file, data){
-  return new Promise((resolve, reject)=>{
-    fs.writeFile(file, data, (err)=>{
-      if(err){
+function writeFile(file, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(file, data, (err) => {
+      if (err) {
         reject(err);
-      }else{
+      } else {
         resolve();
       }
-    })
-  }).catch((err)=>{
+    });
+  }).catch((err) => {
     console.error(err);
   });
 }
 
-(async function(){
+(async function() {
   const code = await Promise.all([
     readFile(path.join(__dirname, 'scripts/ie.js')),
     readFile(path.join(__dirname, 'scripts/webp.js')),

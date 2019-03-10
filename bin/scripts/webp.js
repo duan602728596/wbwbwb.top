@@ -1,6 +1,6 @@
 var isSupportedWebP = isSupportedWebP || false;
 
-(function(){
+(function() {
   var canvas = document.createElement('canvas');
   var image = canvas.toDataURL('image/webp');
 

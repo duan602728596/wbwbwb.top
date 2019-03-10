@@ -1,4 +1,4 @@
-(function () {
+(function() {
   var userAgent = window.navigator.userAgent;
 
   if (/MSIE\s[0-9]{1,2}\.0;/i.test(userAgent)) {
