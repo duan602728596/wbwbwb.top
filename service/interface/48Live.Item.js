@@ -1,6 +1,6 @@
-export default async function(ctx: Object, sweetOptions: Object): Promise<void>{
-  const { query }: { query: Object } = ctx.request;
-  const query2: Object = query || {};
+module.exports = function(ctx, sweetOptions) {
+  const { query } = ctx.request;
+  const query2 = query || {};
 
   return {
     title: `${ query2.subTitle } - ${ query2.title }`,
@@ -16,4 +16,4 @@ export default async function(ctx: Object, sweetOptions: Object): Promise<void>{
       }
     }
   };
-}
+};

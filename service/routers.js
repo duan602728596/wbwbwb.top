@@ -1,17 +1,17 @@
 /* 路由配置 */
-import ssoLogin from './routers/sso.login';
-import apiContainerGetIndex from './routers/api.container.getIndex';
-import pAjGeneralButton from './routers/p.aj.general.button';
-import apiContainerFriendShip from './routers/api.container.friendShip';
-import apiConfig from './routers/api.config';
-import apiFriendShips from './routers/api.friendships';
-import fortyEightLive from './routers/48.live';
-import fortyEightLiveList from './routers/48.live.list';
-import apiGeetestInit from './routers/geetest.init';
-import apiGeetesValidate from './routers/geetest.validate';
-import apiGeetesCaptcha from './routers/geetest.captcha';
+const ssoLogin = require('./routers/sso.login');
+const apiContainerGetIndex = require('./routers/api.container.getIndex');
+const pAjGeneralButton = require('./routers/p.aj.general.button');
+const apiContainerFriendShip = require('./routers/api.container.friendShip');
+const apiConfig = require('./routers/api.config');
+const apiFriendShips = require('./routers/api.friendships');
+const fortyEightLive = require('./routers/48.live');
+const fortyEightLiveList = require('./routers/48.live.list');
+const apiGeetestInit = require('./routers/geetest.init');
+const apiGeetesValidate = require('./routers/geetest.validate');
+const apiGeetesCaptcha = require('./routers/geetest.captcha');
 
-function routers(routers: Object, sweetOptions: Object): void{
+function routers(routers, sweetOptions) {
   ssoLogin(routers);
   apiContainerGetIndex(routers);
   pAjGeneralButton(routers);
@@ -25,4 +25,4 @@ function routers(routers: Object, sweetOptions: Object): void{
   apiGeetesCaptcha(routers);
 }
 
-export default routers;
+module.exports = routers;
