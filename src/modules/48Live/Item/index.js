@@ -73,7 +73,7 @@ class Item extends Component {
   };
   // flv.js
   async initVideo() {
-    const Module = await import('flv.js');
+    const Module = await import(/* webpackChunkName: 'flvjs' */'flv.js');
     const flvjs = Module.default;
     const sp = this.props.streamPath.split(/\./g);
 

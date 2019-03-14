@@ -4,10 +4,10 @@ import asyncModule from './asyncModule';
 import Index from '../modules/Index/Layout';
 import Page404 from '../assembly/404/index';
 
-const LoginBundle = asyncModule(() => import('../modules/Login/Layout'));
-const SuperTopicSignInBundle = asyncModule(() => import('../modules/SuperTopicSignIn/Layout'));
-const FriendShipBundle = asyncModule(() => import('../modules/FriendShip/Layout'));
-const FortyEightLiveBundle = asyncModule(() => import('../modules/48Live/Layout'));
+const LoginBundle = asyncModule(() => import(/* webpackChunkName: 'login' */'../modules/Login/Layout'));
+const SuperTopicSignInBundle = asyncModule(() => import(/* webpackChunkName: 'superTopicSignIn' */'../modules/SuperTopicSignIn/Layout'));
+const FriendShipBundle = asyncModule(() => import(/* webpackChunkName: 'friendShip' */'../modules/FriendShip/Layout'));
+const FortyEightLiveBundle = asyncModule(() => import(/* webpackChunkName: '48Live' */'../modules/48Live/Layout'));
 
 class Routers extends Component {
   render() {
