@@ -2,10 +2,13 @@
  * 加密和解密
  * 为了兼容而使用es5语法
  */
-const CryptoJS = require('crypto-js');
-const { Base64 } = require('js-base64');
 
-const key = 'key';
+/* eslint-disable no-var */
+var CryptoJS = require('crypto-js');
+var { Base64 } = require('js-base64');
+
+var key = 'key';
+/* eslint-disable no var */
 
 exports.encode = function(str) {
   return Base64.encode(CryptoJS.AES.encrypt(str, key).toString());

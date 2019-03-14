@@ -10,6 +10,7 @@ module.exports = {
     'react',
     'react-dom',
     'prop-types',
+    'react-router',
     'react-router-dom',
     'redux',
     'react-redux',
@@ -53,7 +54,7 @@ module.exports = {
   ],
   js: {
     plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
-    exclude: /(dll\.js|gt\.min\.js|node_modules)/
+    exclude: /(dll\.js|gt\.min\.js|node_modules|service[\\/]encryption[\\/]encryption\.js)/
   },
   sass: { include: /src/ },
   css: {
