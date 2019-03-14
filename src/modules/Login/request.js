@@ -2,7 +2,7 @@ import axios from 'axios';
 import { jsonp } from '../../utils';
 
 // 登陆
-export function login(data: Object): Promise{
+export function login(data) {
   return axios({
     url: '/sso/login',
     method: 'POST',
@@ -11,7 +11,7 @@ export function login(data: Object): Promise{
 }
 
 // 初始化验证
-export function geetest(key: string, cookie: string): Promise{
+export function geetest(key, cookie) {
   return axios({
     url: `/api/geetest?&key=${ key }&_=${ cookie }`,
     method: 'GET'
@@ -19,7 +19,7 @@ export function geetest(key: string, cookie: string): Promise{
 }
 
 // 验证ing
-export function geetestValidate(key: string, data: Object, cookie: string): Promise{
+export function geetestValidate(key, data, cookie) {
   return axios({
     url: `/api/geetest/validate?&key=${ key }&_=${ cookie }`,
     method: 'POST',
@@ -28,7 +28,7 @@ export function geetestValidate(key: string, data: Object, cookie: string): Prom
 }
 
 // 验证后的一系列操作
-export function geetestCaptcha(key: string, cookie: string): Promise{
+export function geetestCaptcha(key, cookie) {
   return axios({
     url: `/api/geetest/captcha?key=${ key }&_=${ cookie }`,
     method: 'GET'

@@ -8,10 +8,11 @@ import encryption from '../encryption/encryption';
 import { getHeadersCookie } from '../utils';
 
 // 格式化数据
-function formatData(data: []): []{
-  for(let i: number = data.length - 1; i >= 0; i--){
+function formatData(data: []): [] {
+  for (let i: number = data.length - 1; i >= 0; i--) {
     const item: Object = data[i];
-    if(item.card_type === 10){
+
+    if (item.card_type === 10) {
       const { user }: {
         user: string
       } = item;
@@ -25,20 +26,21 @@ function formatData(data: []): []{
         screen_name: user.screen_name,
         profile_image_url: user.profile_image_url
       };
-    }else{
+    } else {
       data.splice(i, 1);
     }
   }
+
   return data;
 }
 
-async function getFriendList(ctx: Object, next: Function): Promise<void>{
+async function getFriendList(ctx: Object, next: Function): Promise<void> {
   const { query }: {
     query: Object
   } = ctx.request;
   let uri: string = 'https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed';
 
-  if('page' in query){
+  if ('page' in query) {
     uri += `&page=${ query.page }`;
   }
 
@@ -58,9 +60,9 @@ async function getFriendList(ctx: Object, next: Function): Promise<void>{
   const { cards }: { cards: Object } = data.data;
   let newCards: [] = [];
 
-  if(data.ok === 1 && cards.length === 2){
+  if (data.ok === 1 && cards.length === 2) {
     newCards = formatData(cards[1].card_group);
-  }else if(data.ok === 1 && cards.length === 1){
+  } else if (data.ok === 1 && cards.length === 1) {
     newCards = formatData(cards[0].card_group);
   }
 

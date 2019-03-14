@@ -6,8 +6,8 @@ import Index from './Index/index';
 import Description from './Description/index';
 
 @hot(module)
-class ModuleLayout extends Component{
-  render(): React.Element{
+class ModuleLayout extends Component {
+  render() {
     return (
       <Switch>
         <Route path="/Login" component={ Index } exact={ true } />

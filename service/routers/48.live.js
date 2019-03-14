@@ -1,10 +1,10 @@
 import axios from 'axios';
 import mime from 'mime-types';
 
-async function live(ctx: Object, next: Function): Promise<void>{
+async function live(ctx: Object, next: Function): Promise<void> {
   const { query }: { query: Object } = ctx.request;
 
-  if('url' in query){
+  if ('url' in query) {
     const { data, status }: {
       data: Object,
       status: number
@@ -17,7 +17,7 @@ async function live(ctx: Object, next: Function): Promise<void>{
     ctx.type = mime.lookup(query.url);
     ctx.status = status;
     ctx.body = data;
-  }else{
+  } else {
     ctx.status = 404;
   }
 }

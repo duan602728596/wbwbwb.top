@@ -8,17 +8,17 @@ import Page404 from '../../assembly/404/index';
 import Index from './Index/index';
 
 @withRouter
-class ModuleLayout extends Component{
-  static propTypes: Object = {
+class ModuleLayout extends Component {
+  static propTypes = {
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
   };
 
-  componentDidMount(): void{
+  componentDidMount() {
     isGoToLogin.call(this);
   }
-  render(): React.childrenArray<React.Element>{
+  render() {
     return [
       <Helmet key="helmet">
         <title>微博签到系统</title>

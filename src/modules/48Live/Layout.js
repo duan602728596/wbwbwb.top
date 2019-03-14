@@ -7,8 +7,8 @@ import Index from './Index/index';
 import Item from './Item/index';
 
 @loadReducer(reducer)
-class ModuleLayout extends Component{
-  render(): React.ChildrenArray<React.Element>{
+class ModuleLayout extends Component {
+  render() {
     return (
       <Switch key="route">
         <Route path="/48Live" component={ Index } exact={ true } />

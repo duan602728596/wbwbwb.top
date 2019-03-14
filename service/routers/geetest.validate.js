@@ -4,10 +4,10 @@ import encryption from '../encryption/encryption';
 import { getHeadersCookie } from '../utils';
 
 /* 验证验证码 */
-async function geetestValidate(ctx: Object, next: Function): Promise<void>{
+async function geetestValidate(ctx: Object, next: Function): Promise<void> {
   const { query }: { query: Object } = ctx.request;
 
-  if('key' in query){
+  if ('key' in query) {
     const { body }: { body: Object } = ctx.request;
     const queryData: string = queryString.stringify(body);
     const { data, status, headers }: {
@@ -32,7 +32,7 @@ async function geetestValidate(ctx: Object, next: Function): Promise<void>{
       ...data,
       cookie: getHeadersCookie(headers)
     };
-  }else{
+  } else {
     ctx.status = 500;
   }
 }

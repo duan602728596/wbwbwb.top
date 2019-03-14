@@ -12,89 +12,88 @@ import { login, geetest, geetestValidate, geetestCaptcha } from '../request';
 
 @withRouter
 @Form.create()
-class Index extends Component{
-  static propTypes: Object = {
+class Index extends Component {
+  static propTypes = {
     form: PropTypes.object,
     history: PropTypes.object,
     location: PropTypes.object,
     match: PropTypes.object
   };
 
-  state: {
-    isEmbedCaptchaDisplay: boolean
-  } = {
+  state = {
     isEmbedCaptchaDisplay: false // 验证码
   };
 
-  componentDidMount(): void{
+  componentDidMount() {
     localStorage.removeItem(USER_INFORMATION);
     sessionStorage.removeItem(USER_INFORMATION);
   }
   // 关闭
-  handleCloseEmbedCaptchaClick: Function = (event: Event): void=>{
+  handleCloseEmbedCaptchaClick = (event) => {
     this.setState({ isEmbedCaptchaDisplay: false });
   };
   // 登陆成功的回调函数
-  loginSuccessCallback(username: string, cookie: string, rememberPassword: boolean): void{
-    const storageData: string = JSON.stringify({
+  loginSuccessCallback(username, cookie, rememberPassword) {
+    const storageData = JSON.stringify({
       username,
       cookie: encryption.decode(cookie),
       time: new Date().getTime()
     });
 
-    if(rememberPassword) localStorage.setItem(USER_INFORMATION, storageData);
+    if (rememberPassword) localStorage.setItem(USER_INFORMATION, storageData);
     else sessionStorage.setItem(USER_INFORMATION, storageData);
 
     this.props.history.push('/Index');
     message.success('登陆成功！');
   }
   // 验证的回调函数
-  handleEmbed(id: string, cookie: string, formValue: Object, captchaObj: Object): void{
-    const _this: this = this;
+  handleEmbed(id, cookie, formValue, captchaObj) {
+    const _this = this;
 
     this.setState({
       isEmbedCaptchaDisplay: true
-    }, (): void=>{
+    }, () => {
       captchaObj.appendTo('#embed-captcha');
-      captchaObj.onSuccess(async function(): Promise<void>{
-        const result: Object = captchaObj.getValidate();
-        const step1: Object = await geetestValidate(id, {
+      captchaObj.onSuccess(async function() {
+        const result = captchaObj.getValidate();
+        const step1 = await geetestValidate(id, {
           geetest_challenge: result.geetest_challenge,
           geetest_validate: result.geetest_validate,
           geetest_seccode: result.geetest_seccode
         }, cookie);
 
-        const step1Data: Object = step1.data;
+        const step1Data = step1.data;
 
-        if(step1Data.retcode === 100000){
-          const step2: Object = await geetestCaptcha(id, cookie);
+        if (step1Data.retcode === 100000) {
+          const step2 = await geetestCaptcha(id, cookie);
 
           _this.setState({ isEmbedCaptchaDisplay: false });
           _this.loginSuccessCallback(formValue.username, step2.data._, formValue['remember-password']);
-        }else{
+        } else {
           message.error(`（${ step1Data.retcode }）${ step1Data.msg }`);
         }
       });
     });
   }
   // 登陆
-  async login(formValue: Object, id: ?string): Promise<void>{
-    try{
-      const data: Object = {
+  async login(formValue, id) {
+    try {
+      const data = {
         username: formValue.username,
         password: formValue.password
       };
-      if(id) data.vid = id;
-      const step0: Object = await login(data);
-      const step0Data: Object = step0.data;
 
-      if(step0Data.retcode === 20000000){
+      if (id) data.vid = id;
+      const step0 = await login(data);
+      const step0Data = step0.data;
+
+      if (step0Data.retcode === 20000000) {
         this.loginSuccessCallback(formValue.username, step0Data._, formValue['remember-password']);
-      }else if(step0Data.retcode === 50060000){
+      } else if (step0Data.retcode === 50060000) {
         // 需要验证码
-        const errUrl: string = step0Data.data.errurl;
-        const q: Object = getQuery(errUrl);
-        const { data }: { data: Object } = await geetest(q.id, step0Data._);
+        const errUrl = step0Data.data.errurl;
+        const q = getQuery(errUrl);
+        const { data } = await geetest(q.id, step0Data._);
 
         window.initGeetest({
           gt: data.gt,
@@ -103,24 +102,24 @@ class Index extends Component{
           product: 'embed',
           offline: !data.success
         }, this.handleEmbed.bind(this, q.id, step0Data._, formValue));
-      }else{
+      } else {
         message.error(`（${ step0Data.retcode }）${ step0Data.msg }`);
       }
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('登陆失败！');
     }
   }
   // 提交方法
-  handleFormSubmit: Function = (event: Event): void=>{
+  handleFormSubmit = (event) => {
     event.preventDefault();
-    this.props.form.validateFields((err: any, value: Object): void=>{
-      if(err) return void 0;
+    this.props.form.validateFields((err, value) => {
+      if (err) return void 0;
       this.login(value);
     });
   };
-  render(): React.ChildrenArray<React.Element>{
-    const { getFieldDecorator }: { getFieldDecorator: Function } = this.props.form;
+  render() {
+    const { getFieldDecorator } = this.props.form;
 
     return [
       <Helmet key="helmet">

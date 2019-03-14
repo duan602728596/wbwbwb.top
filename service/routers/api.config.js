@@ -7,7 +7,7 @@ import axios from 'axios';
 import encryption from '../encryption/encryption';
 import { getHeadersCookie } from '../utils';
 
-async function getSt(ctx: Object, next: Function): Promise<void>{
+async function getSt(ctx: Object, next: Function): Promise<void> {
   const { status, data, headers }: {
     status: number,
     data: Object,

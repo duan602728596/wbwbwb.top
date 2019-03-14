@@ -6,28 +6,30 @@ import axios from 'axios';
 import encryption from '../encryption/encryption';
 
 // 格式化数据
-function formatData(data: []): []{
-  for(let i: number = data.length - 1; i >= 0; i--){
+function formatData(data: []): [] {
+  for (let i: number = data.length - 1; i >= 0; i--) {
     const item: Object = data[i];
-    if(item.card_type === 8){
+
+    if (item.card_type === 8) {
       delete item.card_type_name;
       delete item.title;
       delete item.itemid;
       delete item.display_arrow;
       delete item.buttons;
       delete item.title_flag_pic;
-    }else{
+    } else {
       data.splice(i, 1);
     }
   }
+
   return data;
 }
 
-async function getChaohuaList(ctx: Object, next: Function): Promise<void>{
+async function getChaohuaList(ctx: Object, next: Function): Promise<void> {
   const { query }: { query: Object } = ctx.request;
   let uri: string = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
 
-  if('since_id' in query){
+  if ('since_id' in query) {
     uri += `&since_id=${ query.since_id }`;
   }
 

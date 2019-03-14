@@ -5,7 +5,7 @@
 import axios from 'axios';
 import encryption from '../encryption/encryption';
 
-async function qiandao(ctx: Object, next: Function): Promise<void>{
+async function qiandao(ctx: Object, next: Function): Promise<void> {
   const { body }: { body: Object } = ctx.request;
   const uri: string = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
 

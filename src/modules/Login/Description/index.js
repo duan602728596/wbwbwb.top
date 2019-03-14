@@ -5,8 +5,8 @@ import { Layout, Button } from 'antd';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 
-class Description extends Component{
-  render(): React.ChildrenArray<React.Element>{
+class Description extends Component {
+  render() {
     return [
       <Helmet key="helmet">
         <title>网站说明</title>

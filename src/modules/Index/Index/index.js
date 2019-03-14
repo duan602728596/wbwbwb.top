@@ -16,23 +16,23 @@ import { encryption, loadWebP, loadImgIfNotIsSupportedWebP } from '../../../util
 import CarouselAd from '../../../components/Ad/CarouselAd';
 
 /* state */
-const state: Function = createStructuredSelector({
-  username: createSelector(   // 用户名
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
-    ($$data: ?Immutable.Map): string => $$data ? $$data.get('username') : ''
+const state = createStructuredSelector({
+  username: createSelector( // 用户名
+    ($$state) => $$state.has('index') ? $$state.get('index') : null,
+    ($$data) => $$data ? $$data.get('username') : ''
   ),
-  cookie: createSelector(     // cookie
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
-    ($$data: ?Immutable.Map): string => $$data ? $$data.get('cookie') : ''
+  cookie: createSelector( // cookie
+    ($$state) => $$state.has('index') ? $$state.get('index') : null,
+    ($$data) => $$data ? $$data.get('cookie') : ''
   ),
   isPrompted: createSelector( // 提示信息
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('index') ? $$state.get('index') : null,
-    ($$data: ?Immutable.Map): boolean => $$data ? $$data.get('isPrompted') : false
+    ($$state) => $$state.has('index') ? $$state.get('index') : null,
+    ($$data) => $$data ? $$data.get('isPrompted') : false
   )
 });
 
 /* dispatch */
-const dispatch: Function = (dispatch: Function): Object=>({
+const dispatch = (dispatch) => ({
   action: bindActionCreators({
     username,
     prompted
@@ -41,8 +41,8 @@ const dispatch: Function = (dispatch: Function): Object=>({
 
 @withRouter
 @connect(state, dispatch)
-class Index extends Component{
-  static propTypes: Object = {
+class Index extends Component {
+  static propTypes = {
     username: PropTypes.string,
     action: PropTypes.objectOf(PropTypes.func),
     history: PropTypes.object,
@@ -50,10 +50,11 @@ class Index extends Component{
     match: PropTypes.object
   };
 
-  componentDidMount(): void{
+  componentDidMount() {
     // 获取用户名
-    const infor: ?Object = getUserInformation();
-    if(infor !== null){
+    const infor = getUserInformation();
+
+    if (infor !== null) {
       this.props.action.username({
         username: infor.username,
         cookie: infor.cookie
@@ -65,8 +66,8 @@ class Index extends Component{
     loadImgIfNotIsSupportedWebP();
   }
   // 提示信息
-  prompt(): void{
-    if(this.props.isPrompted === true) return void 0;
+  prompt() {
+    if (this.props.isPrompted === true) return void 0;
     notification.info({
       duration: 5,
       placement: 'bottomRight',
@@ -78,23 +79,20 @@ class Index extends Component{
     });
   }
   // 退出
-  handleExitClick: Function = (event: Event): void=>{
-    const ref: Object = Modal.confirm({
+  handleExitClick = (event) => {
+    const ref = Modal.confirm({
       content: '是否退出当前账号？',
-      onOk: (): void => this.props.history.push('/Login'),
-      onCancel: (): void => ref.destroy()
+      onOk: () => this.props.history.push('/Login'),
+      onCancel: () => ref.destroy()
     });
   };
-  render(): React.Element{
-    const { username, cookie }: {
-      username: string,
-      cookie: string
-    } = this.props;
-    const grid: Object = {
+  render() {
+    const { username, cookie } = this.props;
+    const grid = {
       xs: 12,
       sm: 8
     };
-    const ec: string = encryption.encode(cookie);
+    const ec = encryption.encode(cookie);
 
     return (
       <Layout className={ publicStyle.main }>

@@ -10,7 +10,7 @@ import axios from 'axios';
 import encryption from '../encryption/encryption';
 import { getHeadersCookie } from '../utils';
 
-async function login(ctx: Object, next: Function): Promise<void>{
+async function login(ctx: Object, next: Function): Promise<void> {
   const { body }: { body: Object } = ctx.request;
   const queryData: string = queryString.stringify(body);
 

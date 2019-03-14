@@ -15,23 +15,23 @@ import { friendShip, apiFriendShip } from '../store/reducer';
 import { getFriendShip, apiFriendships } from '../request';
 
 /* state */
-const state: Function = createStructuredSelector({
-  cards: createSelector(         // 关注列表
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('friendShip') : null,
-    ($$data: ?Immutable.Map): [] => $$data ? $$data.get('cards').toJS() : []
+const state = createStructuredSelector({
+  cards: createSelector( // 关注列表
+    ($$state) => $$state.has('friendShip') ? $$state.get('friendShip') : null,
+    ($$data) => $$data ? $$data.get('cards').toJS() : []
   ),
-  page: createSelector(         // page
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('friendShip') : null,
-    ($$data: ?Immutable.Map): ?(number | string) => $$data ? $$data.get('page') : null
+  page: createSelector( // page
+    ($$state) => $$state.has('friendShip') ? $$state.get('friendShip') : null,
+    ($$data) => $$data ? $$data.get('page') : null
   ),
-  cookie: createSelector(       // cookie
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('friendShip') ? $$state.get('friendShip') : null,
-    ($$data: ?Immutable.Map): ?string => $$data ? $$data.get('cookie') : null
+  cookie: createSelector( // cookie
+    ($$state) => $$state.has('friendShip') ? $$state.get('friendShip') : null,
+    ($$data) => $$data ? $$data.get('cookie') : null
   )
 });
 
 /* dispatch */
-const dispatch: Function = (dispatch: Function): Object=>({
+const dispatch = (dispatch) => ({
   action: bindActionCreators({
     friendShip,
     apiFriendShip
@@ -39,8 +39,8 @@ const dispatch: Function = (dispatch: Function): Object=>({
 });
 
 @connect(state, dispatch)
-class FriendShips extends Component{
-  static propTypes: Object = {
+class FriendShips extends Component {
+  static propTypes = {
     cards: PropTypes.array,
     page: PropTypes.oneOfType([
       PropTypes.number,
@@ -50,44 +50,40 @@ class FriendShips extends Component{
     action: PropTypes.objectOf(PropTypes.func)
   };
 
-  state: {
-    loading: boolean,
-    quguanList: number[]
-  } = {
+  state = {
     loading: false, // 是否加载
-    quguanList: []  // 取关列表
+    quguanList: [] // 取关列表
   };
 
-  componentDidMount(): void{
-    if(this.props.page === null){
-      getFriendShip().then((res: Object): void=>{
-        const { data }: { data: Object } = res;
-        const len: number = data.cards.length;
-        const page: number | string = len === 0 ? 'END' : 2;
-        const cards: [] = len === 0 ? [] : data.cards;
-        const cookie: string = encryption.decode(data._);
+  componentDidMount() {
+    if (this.props.page === null) {
+      getFriendShip().then((res) => {
+        const { data } = res;
+        const len = data.cards.length;
+        const page = len === 0 ? 'END' : 2;
+        const cards = len === 0 ? [] : data.cards;
+        const cookie = encryption.decode(data._);
+
         this.props.action.friendShip({ page, cards, cookie });
       });
     }
   }
   // 加载更多
-  handleLoadFriendShip: Function = async(event: Event): Promise<void>=>{
-    try{
+  handleLoadFriendShip = async (event) => {
+    try {
       this.setState({
         loading: true
       });
-      const { cards, page }: {
-        cards: [],
-        page: ?(number | string)
-      } = this.props;
-      const { data }: { data: Object } = await getFriendShip(page);
-      const cards2: [] = data.cards;
+      const { cards, page } = this.props;
+      const { data } = await getFriendShip(page);
+      const cards2 = data.cards;
+
       this.props.action.friendShip({
         page: cards2.length === 0 ? 'END' : (page + 1),
         cards: cards.concat(cards2)
       });
       message.success('数据加载成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('数据加载失败！');
     }
@@ -96,24 +92,25 @@ class FriendShips extends Component{
     });
   };
   // 关注
-  async handleGuanzhuClick(item: Object, event: Event): Promise<void>{
+  async handleGuanzhuClick(item, event) {
     this.setState({
       loading: true
     });
-    try{
-      const { cookie }: { cookie: string } = this.props;
-      const st: Object = await getSt();
-      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
-      const { data }: Object = await apiFriendships('create', item.id, st.data.st, cookie2);
-      if(data.ok === 1){
+    try {
+      const { cookie } = this.props;
+      const st = await getSt();
+      const cookie2 = `${ encryption.decode(st.data._) }; ${ cookie }`;
+      const { data } = await apiFriendships('create', item.id, st.data.st, cookie2);
+
+      if (data.ok === 1) {
         delete item.isQuguan;
-      }else{
+      } else {
         message.error(`${ item.screen_name }：${ data.msg }`);
       }
       this.props.action.apiFriendShip({
         cards: this.props.cards
       });
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('关注失败！');
     }
@@ -122,35 +119,38 @@ class FriendShips extends Component{
     });
   }
   // 批量取关
-  handleQuguanAllClick: Function = async(event: Event): void=>{
-    const quguanList: [] = this.state.quguanList;
-    if(quguanList.length === 0) return void 0;
+  handleQuguanAllClick = async (event) => {
+    const quguanList = this.state.quguanList;
+
+    if (quguanList.length === 0) return void 0;
 
     this.setState({
       loading: true
     });
-    try{
-      const { cookie }: { cookie: string } = this.props;
-      const st: Object = await getSt();
-      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
-      const cards: [] = this.props.cards;
+    try {
+      const { cookie } = this.props;
+      const st = await getSt();
+      const cookie2 = `${ encryption.decode(st.data._) }; ${ cookie }`;
+      const cards = this.props.cards;
 
-      for(let i: number = cards.length - 1; i >= 0; i--){
-        const item: Object = cards[i];
-        if(!quguanList.includes(item.id)) continue;
+      for (let i = cards.length - 1; i >= 0; i--) {
+        const item = cards[i];
 
-        const { data }: Object = await apiFriendships('destory', item.id, st.data.st, cookie2);
-        if(data.ok === 1){
+        if (!quguanList.includes(item.id)) continue;
+
+        const { data } = await apiFriendships('destory', item.id, st.data.st, cookie2);
+
+        if (data.ok === 1) {
           item.isQuguan = true;
           quguanList.splice(quguanList.indexOf(item.id), 1);
-        }else{
+        } else {
           message.error(`${ item.screen_name }：${ data.msg }`);
         }
       }
       this.props.action.apiFriendShip({
         cards
       });
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('取关失败！');
     }
@@ -160,28 +160,30 @@ class FriendShips extends Component{
     });
   };
   // 单个取关
-  async handleQuguanOneClick(item: Object, event: Event): Promise<void>{
+  async handleQuguanOneClick(item, event) {
     this.setState({
       loading: true
     });
-    const quguanList: [] = this.state.quguanList;
-    try{
-      const { cookie }: { cookie: string } = this.props;
-      const st: Object = await getSt();
-      const cookie2: string = `${ encryption.decode(st.data._) }; ${ cookie }`;
-      const { data }: Object = await apiFriendships('destory', item.id, st.data.st, cookie2);
+    const quguanList = this.state.quguanList;
 
-      if(data.ok === 1){
+    try {
+      const { cookie } = this.props;
+      const st = await getSt();
+      const cookie2 = `${ encryption.decode(st.data._) }; ${ cookie }`;
+      const { data } = await apiFriendships('destory', item.id, st.data.st, cookie2);
+
+      if (data.ok === 1) {
         item.isQuguan = true;
-        const index: number = quguanList.indexOf(item.id);
-        if(index >= 0) quguanList.splice(index, 1);
-      }else{
+        const index = quguanList.indexOf(item.id);
+
+        if (index >= 0) quguanList.splice(index, 1);
+      } else {
         message.error(`${ item.screen_name }：${ data.msg }`);
       }
       this.props.action.apiFriendShip({
         cards: this.props.cards
       });
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('取关失败！');
     }
@@ -191,11 +193,12 @@ class FriendShips extends Component{
     });
   }
   // 取关checkbox
-  handleQuguanOneChange(item: Object, event: Event): void{
-    const quguanList: [] = this.state.quguanList;
-    if(quguanList.includes(item.id)){
+  handleQuguanOneChange(item, event) {
+    const quguanList = this.state.quguanList;
+
+    if (quguanList.includes(item.id)) {
       quguanList.splice(quguanList.indexOf(item.id), 1);
-    }else{
+    } else {
       quguanList.push(item.id);
     }
     this.setState({
@@ -203,11 +206,12 @@ class FriendShips extends Component{
     });
   }
   // 渲染关注列表
-  friendShipItemView(item: Object, index: number): React.Element{
-    if(!item || item.card_type !== 10) return null;
+  friendShipItemView(item, index) {
+    if (!item || item.card_type !== 10) return null;
+
     return (
       <List.Item key={ item.id }
-        actions={[
+        actions={ [
           <div key="handle">
             {
               item.isQuguan === true ? (
@@ -224,35 +228,38 @@ class FriendShips extends Component{
               onChange={ this.handleQuguanOneChange.bind(this, item) }
             />
           </div>
-        ]}
+        ] }
       >
         <List.Item.Meta description={ item.desc2 }
-          title={[
+          title={ [
             <a key="title" href={ item.scheme } target="_blank" rel="noopener noreferrer">{ item.screen_name }</a>,
             <br key="br" />,
             <Tag key="tag" className={ style.tag } color="purple">{ item.desc1 }</Tag>
-          ]}
+          ] }
           avatar={
             <a href={ item.scheme } target="_blank" rel="noopener noreferrer">
-              <Avatar src={ item.profile_image_url } shape="square" size="large"  />
+              <Avatar src={ item.profile_image_url } shape="square" size="large" />
             </a>
           }
         />
       </List.Item>
     );
   }
-  friendShipListView(list: Array): React.ChildrenArray<React.Element>{
-    const dom: [] = [];
-    list.forEach((value: Object, index: number, array: []): void=>{
-      const element: ?React.Element = this.friendShipItemView(value, index);
-      if(element){
+  friendShipListView(list) {
+    const dom = [];
+
+    list.forEach((value, index, array) => {
+      const element = this.friendShipItemView(value, index);
+
+      if (element) {
         dom.push(element);
       }
     });
+
     return dom;
   }
-  render(): React.ChildrenArray<React.Element>{
-    const { loading }: { loading: boolean } = this.state;
+  render() {
+    const { loading } = this.state;
 
     return [
       <Layout key="main" className={ publicStyle.main }>
@@ -269,7 +276,7 @@ class FriendShips extends Component{
         <Layout.Content className={ publicStyle.content } id="friend-ship-content">
           {
             do{
-              if(this.props.cards.length > 0){
+              if (this.props.cards.length > 0) {
                 <Popconfirm title="确定要取关这批好友吗？" onConfirm={ this.handleQuguanAllClick }>
                   <Button className={ style.quguanAll }
                     type="danger"
@@ -305,7 +312,7 @@ class FriendShips extends Component{
         </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(
-        <BackTop target={ (): Element => document.getElementById('friend-ship-content') } visibilityHeight={ 200 } />,
+        <BackTop target={ () => document.getElementById('friend-ship-content') } visibilityHeight={ 200 } />,
         document.body
       ) : null
     ];

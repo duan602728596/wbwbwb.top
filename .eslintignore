@@ -2,7 +2,7 @@
 node_modules
 
 # project
-runServer.js
+gt.min.js
 
 # build
 build

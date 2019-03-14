@@ -3,7 +3,7 @@ import queryString from 'querystring';
 import axios from 'axios';
 import encryption from '../encryption/encryption';
 
-async function friendships(ctx: Object, next: Function): Promise<void>{
+async function friendships(ctx: Object, next: Function): Promise<void> {
   const { body }: { body: Object } = ctx.request;
   const data: string = queryString.stringify({
     uid: body.id,

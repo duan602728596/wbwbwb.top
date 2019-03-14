@@ -1,37 +1,30 @@
 import { createAction, handleActions } from 'redux-actions';
 import { fromJS, List } from 'immutable';
 
-const initData: {
-  cards: Immutable.Map,
-  sinceId: ?string
-} = {
+const initData = {
   cards: List([]),
   sinceId: null
 };
 
 /* Action */
-export const superTopic: Function = createAction('超级话题列表');
-export const qiandao: Function = createAction('签到的情况');
+export const superTopic = createAction('超级话题列表');
+export const qiandao = createAction('签到的情况');
 
 /* reducer */
-const reducer: Function = handleActions({
-  [superTopic]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    const { cards, sinceId }: {
-      cards: [],
-      sinceId: ?string
-    } = action.payload;
+const reducer = handleActions({
+  [superTopic]: ($$state, action) => {
+    const { cards, sinceId } = action.payload;
+
     return $$state.set('cards', List(cards))
       .set('sinceId', sinceId);
   },
-  [qiandao]: ($$state: Immutable.Map, action: Object): Immutable.Map=>{
-    const { index, code, msg }: {
-      index: number,
-      code: number | string,
-      msg: string
-    } = action.payload;
-    const cards: [] = $$state.get('cards').toJS();
+  [qiandao]: ($$state, action) => {
+    const { index, code, msg } = action.payload;
+    const cards = $$state.get('cards').toJS();
+
     cards[index].code = code;
     cards[index].msg = msg;
+
     return $$state.set('cards', List(cards));
   }
 }, fromJS(initData));

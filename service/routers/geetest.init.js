@@ -3,10 +3,10 @@ import encryption from '../encryption/encryption';
 import { getHeadersCookie } from '../utils';
 
 /* 初始化验证 */
-async function geetestInit(ctx: Object, next: Function): Promise<void>{
+async function geetestInit(ctx: Object, next: Function): Promise<void> {
   const { query }: { query: Object } = ctx.request;
 
-  if('key' in query){
+  if ('key' in query) {
     const loginCookie: string = encryption.decode(query._);
 
     // 先访问302重定向地址
@@ -40,7 +40,7 @@ async function geetestInit(ctx: Object, next: Function): Promise<void>{
       ...data.data,
       _: encryption.encode(getHeadersCookie(headers))
     };
-  }else{
+  } else {
     ctx.status = 500;
   }
 }

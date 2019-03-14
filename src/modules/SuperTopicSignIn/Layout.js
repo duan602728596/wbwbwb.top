@@ -10,11 +10,11 @@ import Index from './Index/index';
 
 @loadReducer(reducer)
 @withRouter
-class ModuleLayout extends Component{
-  componentDidMount(): void{
+class ModuleLayout extends Component {
+  componentDidMount() {
     isGoToLogin.call(this);
   }
-  render(): React.childrenArray<React.Element>{
+  render() {
     return [
       <Helmet key="helmet">
         <title>超级话题签到</title>

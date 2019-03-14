@@ -8,33 +8,33 @@ import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 
 /* state */
-const state: Function = createStructuredSelector({
-  title: createSelector(      // title
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data: ?Immutable.Map): string => $$data !== null ? $$data.get('title') : ''
+const state = createStructuredSelector({
+  title: createSelector( // title
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
+    ($$data) => $$data !== null ? $$data.get('title') : ''
   ),
-  subTitle: createSelector(   // subTitle
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data: ?Immutable.Map): string => $$data !== null ? $$data.get('subTitle') : ''
+  subTitle: createSelector( // subTitle
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
+    ($$data) => $$data !== null ? $$data.get('subTitle') : ''
   ),
   streamPath: createSelector( // streamPath
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data: ?Immutable.Map): string => $$data !== null ? $$data.get('streamPath') : ''
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
+    ($$data) => $$data !== null ? $$data.get('streamPath') : ''
   ),
-  picPath: createSelector(    // picPath
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data: ?Immutable.Map): string => $$data !== null ? $$data.get('picPath') : ''
+  picPath: createSelector( // picPath
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
+    ($$data) => $$data !== null ? $$data.get('picPath') : ''
   )
 });
 
 /* dispatch */
-const dispatch: Function = (dispatch: Function): Object=>({
+const dispatch = (dispatch): Object => ({
   action: bindActionCreators({}, dispatch)
 });
 
 @connect(state, dispatch)
-class Item extends Component{
-  static propTypes: Object = {
+class Item extends Component {
+  static propTypes = {
     title: PropTypes.string,
     subTitle: PropTypes.string,
     streamPath: PropTypes.string,
@@ -42,53 +42,55 @@ class Item extends Component{
     action: PropTypes.objectOf(PropTypes.func)
   };
 
-  videoRef: Object = createRef();
-  flvPlayer: ?Object = null;
+  videoRef = createRef();
+  flvPlayer = null;
 
-  componentDidMount(): void{
-    if(this.props.streamPath){
+  componentDidMount() {
+    if (this.props.streamPath) {
       this.initVideo();
     }
   }
   // 全屏
-  handleFullscreenClick: Function = (event: Event): void=>{
-    const element: Element = this.videoRef.current;
-    if(element.webkitRequestFullScreen) element.webkitRequestFullScreen();
-    else if(element.requestFullscreen) element.requestFullscreen();
-    else if(element.mozRequestFullScreen) element.mozRequestFullScreen();
+  handleFullscreenClick = (event) => {
+    const element = this.videoRef.current;
+
+    if (element.webkitRequestFullScreen) element.webkitRequestFullScreen();
+    else if (element.requestFullscreen) element.requestFullscreen();
+    else if (element.mozRequestFullScreen) element.mozRequestFullScreen();
   };
   // 播放
-  handleVideoPlayClick: Function = (event: Event): void=>{
+  handleVideoPlayClick = (event) => {
     this.flvPlayer.play();
   };
   // 暂停
-  handleVideoPauseClick: Function = (event: Event): void=>{
+  handleVideoPauseClick = (event) => {
     this.flvPlayer.pause();
   };
 
   // 静音
-  handleMutedClick: Function = (event: Event): void=>{
+  handleMutedClick = (event) => {
     this.flvPlayer.muted = !this.flvPlayer.muted;
   };
   // flv.js
-  async initVideo(): Promise<void>{
-    const Module: Object = await import('flv.js');
-    const flvjs: Object = Module.default;
-    const sp: string[] = this.props.streamPath.split(/\./g);
-    if(flvjs.isSupported()){
+  async initVideo() {
+    const Module = await import('flv.js');
+    const flvjs = Module.default;
+    const sp = this.props.streamPath.split(/\./g);
+
+    if (flvjs.isSupported()) {
       this.flvPlayer = flvjs.createPlayer({
         type: sp[sp.length - 1],
         url: `/48/live?url=${ this.props.streamPath }`
       });
       this.flvPlayer.attachMediaElement(this.videoRef.current);
       this.flvPlayer.load();
-    }else{
+    } else {
       Modal.error({
         content: 'The Media Source Extensions API is not supported.'
       });
     }
   }
-  render(): React.Element{
+  render() {
     return (
       <Layout className={ publicStyle.main }>
         <div className={ style.videoBox }>

@@ -14,19 +14,19 @@ import style from './style.sass';
 import { signin, getSuperTopicList } from '../request';
 
 /* state */
-const state: Function = createStructuredSelector({
-  cards: createSelector(         // 超话列表
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
-    ($$data: ?Immutable.Map): [] => $$data ? $$data.get('cards').toJS() : []
+const state = createStructuredSelector({
+  cards: createSelector( // 超话列表
+    ($$state) => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
+    ($$data) => $$data ? $$data.get('cards').toJS() : []
   ),
-  sinceId: createSelector(       // sign_id
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
-    ($$data: ?Immutable.Map): ?string => $$data ? $$data.get('sinceId') : null
+  sinceId: createSelector( // sign_id
+    ($$state) => $$state.has('superTopicSignIn') ? $$state.get('superTopicSignIn') : null,
+    ($$data) => $$data ? $$data.get('sinceId') : null
   )
 });
 
 /* dispatch */
-const dispatch: Function = (dispatch: Function): Object=>({
+const dispatch = (dispatch) => ({
   action: bindActionCreators({
     superTopic,
     qiandao
@@ -34,47 +34,48 @@ const dispatch: Function = (dispatch: Function): Object=>({
 });
 
 @connect(state, dispatch)
-class SuperTopicSignIn extends Component{
-  static propTypes: Object = {
+class SuperTopicSignIn extends Component {
+  static propTypes = {
     cards: PropTypes.array,
     sinceId: PropTypes.string,
     action: PropTypes.objectOf(PropTypes.func)
   };
 
-  state: {
-    loading: boolean
-  } = {
+  state = {
     loading: false // 是否加载
   };
 
-  componentDidMount(): void{
-    if(this.props.sinceId === null){
-      getSuperTopicList().then((res: Object): void=>{
-        const { data }: { data: Object } = res;
-        const sinceId: string = data.since_id || 'END';
-        const cards: [] = data.cards;
+  componentDidMount() {
+    if (this.props.sinceId === null) {
+      getSuperTopicList().then((res) => {
+        const { data } = res;
+        const sinceId = data.since_id || 'END';
+        const cards = data.cards;
+
         this.props.action.superTopic({ sinceId, cards });
       });
     }
   }
   // 重新加载所有的超话列表
-  handleGetAllSuperTopicList: Function = async(event: Event): Promise<void>=>{
+  handleGetAllSuperTopicList = async (eventt) => {
     this.setState({
       loading: true
     });
     message.info('正在加载所有数据。');
-    try{
-      const cards: [] = [];
-      let isBreak: boolean = false;
-      let sinceId: ?string = null;
-      while(isBreak === false){
-        const res: Object = await getSuperTopicList(sinceId);
-        const { data }: { data: Object } = res;
-        const cards2: [] = data.cards;
+    try {
+      const cards = [];
+      let isBreak = false;
+      let sinceId = null;
+
+      while (isBreak === false) {
+        const res = await getSuperTopicList(sinceId);
+        const { data } = res;
+        const cards2 = data.cards;
+
         cards.push(...cards2);
-        if('since_id' in data && data.since_id){
+        if ('since_id' in data && data.since_id) {
           sinceId = data.since_id;
-        }else{
+        } else {
           sinceId = 'END';
           isBreak = true;
         }
@@ -84,7 +85,7 @@ class SuperTopicSignIn extends Component{
         cards
       });
       message.success('数据加载成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('数据加载失败！');
     }
@@ -93,23 +94,26 @@ class SuperTopicSignIn extends Component{
     });
   };
   // 签到所有
-  handleQiandaoAllClick: Function = async(event: Event): Promise<void>=>{
+  handleQiandaoAllClick = async (event) => {
     this.setState({
       loading: true
     });
-    try{
-      const { cards }: { cards: [] } = this.props;
-      for(let i: number = 0, j: number = cards.length; i < j; i++){
-        const item: Object = cards[i];
-        if(item.card_type === 8){
-          const containerid: string = this.sheme(item.scheme);
-          if(item.code !== '100000'){
+    try {
+      const { cards } = this.props;
+
+      for (let i = 0, j = cards.length; i < j; i++) {
+        const item = cards[i];
+
+        if (item.card_type === 8) {
+          const containerid = this.sheme(item.scheme);
+
+          if (item.code !== '100000') {
             await this.handleQiandaoClick(containerid, item, i);
           }
         }
       }
       message.success('一键签到成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
     }
     this.setState({
@@ -117,21 +121,22 @@ class SuperTopicSignIn extends Component{
     });
   };
   // 签到
-  async handleQiandaoClick(containerid: string, item: Object, index: number, event: ?Event): void{
-    try{
-      const { data }: { data: Object } = await signin(containerid);
-      let code: ?(number | string) = null;
-      let msg: ?string = null;
-      if(data.code === '100000'){
+  async handleQiandaoClick(containerid, item, index, event) {
+    try {
+      const { data } = await signin(containerid);
+      let code = null;
+      let msg = null;
+
+      if (data.code === '100000') {
         // 签到成功
-        if('error_code' in data.data){
+        if ('error_code' in data.data) {
           code = data.data.error_code;
           msg = data.data.error_msg;
-        }else{
+        } else {
           code = data.code;
           msg = `${ data.data?.alert_title }，${ data.data?.alert_subtitle }`;
         }
-      }else{
+      } else {
         // 其他情况
         code = data.code;
         msg = data.msg;
@@ -141,30 +146,29 @@ class SuperTopicSignIn extends Component{
         code,
         msg
       });
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error(`${ item.title_sub }：签到失败！`);
     }
   }
   // 加载数据
-  handleLoadSuperTopicList: Function = async(event: Event): Promise<void>=>{
+  handleLoadSuperTopicList = async (event) => {
     this.setState({
       loading: true
     });
-    const { cards, sinceId }: {
-      cards: [],
-      sinceId: ?string
-    } = this.props;
-    try{
-      const { data }: { data: Object } = await getSuperTopicList(encodeURI(sinceId));
-      const sinceId2: string = data?.since_id || 'END';
-      const cards2: [] = data.cards;
+    const { cards, sinceId } = this.props;
+
+    try {
+      const { data } = await getSuperTopicList(encodeURI(sinceId));
+      const sinceId2 = data?.since_id || 'END';
+      const cards2 = data.cards;
+
       this.props.action.superTopic({
         sinceId: sinceId2,
         cards: cards.concat(cards2)
       });
       message.success('数据加载成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('数据加载失败！');
     }
@@ -173,56 +177,64 @@ class SuperTopicSignIn extends Component{
     });
   };
   // sheme
-  sheme: Function = (scheme: string): string => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
+  sheme = (scheme) => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
   // 渲染超话列表
-  superTopicListItemView(item: Object, index: number): React.Element{
-    if(!item || item.card_type !== 8) return null;
-    const containerid: string = this.sheme(item.scheme);
-    const isQiandao: boolean = item.code === '100000' || item.code === 382004;
+  superTopicListItemView(item, index) {
+    if (!item || item.card_type !== 8) return null;
+    const containerid = this.sheme(item.scheme);
+    const isQiandao = item.code === '100000' || item.code === 382004;
+
     return (
       <List.Item key={ containerid }
-        actions={[
-          isQiandao ? null : (
-            <Button key="qiandao"
-              size="small"
-              disabled={ this.state.loading }
-              onClick={ this.handleQiandaoClick.bind(this, containerid, item, index)}
-            >
-              签到
-            </Button>
-          )
-        ]}
+        actions={
+          [
+            isQiandao ? null : (
+              <Button key="qiandao"
+                size="small"
+                disabled={ this.state.loading }
+                onClick={ this.handleQiandaoClick.bind(this, containerid, item, index) }
+              >
+                签到
+              </Button>
+            )
+          ]
+        }
       >
         <List.Item.Meta description={ item.desc2 }
-          title={[
-            <a key="title" href={ item.scheme } target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>,
-            <Tag key="lv" className={ style.tag } color="#2db7f5">{ item.desc1 }</Tag>,
-            item.code !== undefined ? [
-              <br key="br" />,
-              <Tag key="msg" className={ style.msg } color={ item.code === '100000' ? 'green' : 'red' }>{ item.msg }</Tag>
-            ] : null
-          ]}
+          title={
+            [
+              <a key="title" href={ item.scheme } target="_blank" rel="noopener noreferrer">{ item.title_sub }</a>,
+              <Tag key="lv" className={ style.tag } color="#2db7f5">{ item.desc1 }</Tag>,
+              item.code !== undefined ? [
+                <br key="br" />,
+                <Tag key="msg" className={ style.msg } color={ item.code === '100000' ? 'green' : 'red' }>{ item.msg }</Tag>
+              ] : null
+            ]
+          }
           avatar={
             <a href={ item.scheme } target="_blank" rel="noopener noreferrer">
-              <Avatar src={ item.pic } shape="square" size="large"  />
+              <Avatar src={ item.pic } shape="square" size="large" />
             </a>
           }
         />
       </List.Item>
     );
   }
-  superTopicListView(list: Array): React.ChildrenArray<React.Element>{
-    const dom: [] = [];
-    list.forEach((value: Object, index: number, array: []): void=>{
-      const element: ?React.Element = this.superTopicListItemView(value, index);
-      if(element){
+  superTopicListView(list) {
+    const dom = [];
+
+    list.forEach((value, index, array) => {
+      const element = this.superTopicListItemView(value, index);
+
+      if (element) {
         dom.push(element);
       }
     });
+
     return dom;
   }
-  render(): React.ChildrenArray<React.Element>{
-    const { loading }: { loading: boolean } = this.state;
+  render() {
+    const { loading } = this.state;
 
     return [
       <Layout key="main" className={ publicStyle.main }>
@@ -253,7 +265,7 @@ class SuperTopicSignIn extends Component{
         <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
           {
             do{
-              if(this.props.cards.length > 0){
+              if (this.props.cards.length > 0) {
                 <Button className={ style.qiandaoAll }
                   type="primary"
                   icon="edit"

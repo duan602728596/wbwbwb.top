@@ -1,9 +1,11 @@
 import axios from 'axios';
 
-function formatData(list: []): []{
+function formatData(list: []): [] {
   const result: [] = [];
-  for(const item: Object of list){
+
+  for (const item: Object of list) {
     const picPath: [] = item.picPath.split(/,\s*/g);
+
     result.push({
       liveId: item.liveId,
       title: item.title,
@@ -13,10 +15,11 @@ function formatData(list: []): []{
       startTime: item.startTime
     });
   }
+
   return result;
 }
 
-async function liveList(ctx: Object, next: Function): Promise<void>{
+async function liveList(ctx: Object, next: Function): Promise<void> {
   const { query }: { query: Object } = ctx.request;
   const lastTime: number = 'lastTime' in query ? query.lastTime : 0;
   const { data, status }: {
@@ -43,9 +46,9 @@ async function liveList(ctx: Object, next: Function): Promise<void>{
 
   const body: Object = {};
 
-  if(query.type){
+  if (query.type) {
     body[query.type] = formatData(data.content[query.type]);
-  }else{
+  } else {
     body.liveList = formatData(data.content.liveList);
     body.reviewList = formatData(data.content.reviewList);
   }

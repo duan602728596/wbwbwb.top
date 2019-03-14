@@ -13,19 +13,19 @@ import { dataList, reviewList } from '../store/lists';
 import { getNewData, getReviewListData } from '../request';
 
 /* state */
-const state: Function = createStructuredSelector({
-  liveList: createSelector(   // 口袋48直播列表
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
-    ($$data: ?Immutable.Map): [] => $$data !== null && $$data.has('liveList') ? $$data.get('liveList').toJS() : []
+const state = createStructuredSelector({
+  liveList: createSelector( // 口袋48直播列表
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
+    ($$data) => $$data !== null && $$data.has('liveList') ? $$data.get('liveList').toJS() : []
   ),
   reviewList: createSelector( // 口袋48回放列表
-    ($$state: Immutable.Map): ?Immutable.Map => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
-    ($$data: ?Immutable.Map): [] => $$data !== null && $$data.has('reviewList') ? $$data.get('reviewList').toJS() : []
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('lists') : null,
+    ($$data) => $$data !== null && $$data.has('reviewList') ? $$data.get('reviewList').toJS() : []
   )
 });
 
 /* dispatch */
-const dispatch: Function = (dispatch: Function): Object=>({
+const dispatch = (dispatch) => ({
   action: bindActionCreators({
     dataList,
     reviewList
@@ -33,22 +33,20 @@ const dispatch: Function = (dispatch: Function): Object=>({
 });
 
 @connect(state, dispatch)
-class FortyEightLive extends Component{
-  static propTypes: Object = {
+class FortyEightLive extends Component {
+  static propTypes = {
     liveList: PropTypes.array,
     reviewList: PropTypes.array,
     action: PropTypes.objectOf(PropTypes.func)
   };
 
-  state: {
-    loading: boolean
-  } = {
+  state = {
     loading: false // 是否加载
   };
 
-  componentDidMount(): void{
-    if(this.props.liveList.length === 0 && this.props.reviewList.length === 0){
-      getNewData().then((res: Object): void=>{
+  componentDidMount() {
+    if (this.props.liveList.length === 0 && this.props.reviewList.length === 0) {
+      getNewData().then((res) => {
         this.props.action.dataList({
           ...res.data
         });
@@ -56,18 +54,19 @@ class FortyEightLive extends Component{
     }
   }
   // 加载更多
-  handleMoreReviewListClick: Function = async(event: Event): Promise<void>=>{
+  handleMoreReviewListClick = async (event) => {
     this.setState({
       loading: true
     });
-    try{
-      const { reviewList }: { reviewList: [] } = this.props;
-      const { data }: { data: [] } = await getReviewListData(reviewList[reviewList.length - 1].startTime);
+    try {
+      const { reviewList } = this.props;
+      const { data } = await getReviewListData(reviewList[reviewList.length - 1].startTime);
+
       this.props.action.reviewList({
         data: reviewList.concat(data.reviewList)
       });
       message.success('数据加载成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('数据加载失败！');
     }
@@ -76,17 +75,18 @@ class FortyEightLive extends Component{
     });
   };
   // 刷新
-  handleShuaxinClick: Function = async(event: Event): Promise<void>=>{
+  handleShuaxinClick = async (event) => {
     this.setState({
       loading: true
     });
-    try{
-      const { data }: { data: [] } = await getNewData();
+    try {
+      const { data } = await getNewData();
+
       this.props.action.dataList({
         ...data
       });
       message.success('数据加载成功！');
-    }catch(err){
+    } catch (err) {
       console.error(err);
       message.error('数据加载失败！');
     }
@@ -95,10 +95,11 @@ class FortyEightLive extends Component{
     });
   };
   // 渲染cards
-  cardsItemView(list: []): React.ChildrenArray<React.Element>{
-    return list.map((item: Object, index: number): React.Element=>{
-      const url: string = '/48Live/Item'
+  cardsItemView(list) {
+    return list.map((item, index) => {
+      const url = '/48Live/Item'
         + `?title=${ item.title }&subTitle=${ item.subTitle }&streamPath=${ item.streamPath }&picPath=${ item.picPath }`;
+
       return (
         <Col key={ item.liveId } xs={ 12 } sm={ 8 }>
           <Card className={ style.cards }
@@ -119,8 +120,8 @@ class FortyEightLive extends Component{
       );
     });
   }
-  render(): React.ChildrenArray<React.Element>{
-    const { loading }: { loading: boolean } = this.state;
+  render() {
+    const { loading } = this.state;
 
     return [
       <Layout key="main" className={ publicStyle.main }>
@@ -168,7 +169,7 @@ class FortyEightLive extends Component{
         </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(
-        <BackTop target={ (): Element => document.getElementById('48live-list') } visibilityHeight={ 200 } />,
+        <BackTop target={ () => document.getElementById('48live-list') } visibilityHeight={ 200 } />,
         document.body
       ) : null
     ];
