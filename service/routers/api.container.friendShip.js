@@ -69,4 +69,4 @@ function apiContainerFriendShip(router) {
   router.get('/api/container/friendShip', getFriendList);
 }
 
-export default apiContainerFriendShip;
+module.exports = apiContainerFriendShip;

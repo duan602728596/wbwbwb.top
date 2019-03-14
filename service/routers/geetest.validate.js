@@ -37,4 +37,4 @@ function apiGeetesValidate(router) {
   router.post('/api/geetest/validate', geetestValidate);
 }
 
-export default apiGeetesValidate;
+module.exports = apiGeetesValidate;

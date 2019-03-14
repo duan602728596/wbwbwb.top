@@ -70,4 +70,4 @@ function apiGeetesCaptcha(router) {
   router.get('/api/geetest/captcha', geetestCaptcha);
 }
 
-export default apiGeetesCaptcha;
+module.exports = apiGeetesCaptcha;

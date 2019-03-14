@@ -45,4 +45,4 @@ function ssoLogin(router) {
   router.post('/sso/login', login);
 }
 
-export default ssoLogin;
+module.exports = ssoLogin;

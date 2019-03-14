@@ -299,7 +299,7 @@ class SuperTopicSignIn extends Component {
         </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(
-        <BackTop target={ (): Element => document.getElementById('super-topic-sign-in-content') } visibilityHeight={ 200 } />,
+        <BackTop target={ () => document.getElementById('super-topic-sign-in-content') } visibilityHeight={ 200 } />,
         document.body
       ) : null
     ];

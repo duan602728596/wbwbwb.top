@@ -26,4 +26,4 @@ function apiConfig(router) {
   router.get('/api/config', getSt);
 }
 
-export default apiConfig;
+module.exports = apiConfig;

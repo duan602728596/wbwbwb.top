@@ -55,4 +55,4 @@ function apiContainerGetIndex(router) {
   router.get('/api/container/getIndex', getChaohuaList);
 }
 
-export default apiContainerGetIndex;
+module.exports = apiContainerGetIndex;

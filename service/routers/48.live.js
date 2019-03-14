@@ -23,4 +23,4 @@ function fortyEightLive(router) {
   router.get('/48/live', live);
 }
 
-export default fortyEightLive;
+module.exports = fortyEightLive;

@@ -58,4 +58,4 @@ function fortyEightLiveList(router) {
   router.get('/48/live/list', liveList);
 }
 
-export default fortyEightLiveList;
+module.exports = fortyEightLiveList;

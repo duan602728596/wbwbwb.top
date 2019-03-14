@@ -26,4 +26,4 @@ function pAjGeneralButton(router) {
   router.post('/p/aj/general/button', qiandao);
 }
 
-export default pAjGeneralButton;
+module.exports = pAjGeneralButton;

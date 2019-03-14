@@ -33,4 +33,4 @@ function apiFriendships(router) {
   router.post('/api/friendships', friendships);
 }
 
-export default apiFriendships;
+module.exports = apiFriendships;

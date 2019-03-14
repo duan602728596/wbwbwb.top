@@ -46,4 +46,4 @@ function apiGeetestInit(router) {
   router.get('/api/geetest', geetestInit);
 }
 
-export default apiGeetestInit;
+module.exports = apiGeetestInit;

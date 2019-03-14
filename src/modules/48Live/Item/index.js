@@ -28,7 +28,7 @@ const state = createStructuredSelector({
 });
 
 /* dispatch */
-const dispatch = (dispatch): Object => ({
+const dispatch = (dispatch) => ({
   action: bindActionCreators({}, dispatch)
 });
 
