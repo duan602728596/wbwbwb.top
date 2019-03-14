@@ -1,16 +1,16 @@
-/* 关注和取关 */
-import queryString from 'querystring';
-import axios from 'axios';
-import encryption from '../encryption/encryption';
+const queryString = require('querystring');
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
 
-async function friendships(ctx: Object, next: Function): Promise<void> {
-  const { body }: { body: Object } = ctx.request;
-  const data: string = queryString.stringify({
+/* 关注和取关 */
+async function friendships(ctx, next) {
+  const { body } = ctx.request;
+  const data = queryString.stringify({
     uid: body.id,
     st: body.st
   });
 
-  const res: Object = await axios({
+  const res = await axios({
     url: `https://m.weibo.cn/api/friendships/${ body.action }`,
     method: 'POST',
     headers: {
@@ -29,7 +29,7 @@ async function friendships(ctx: Object, next: Function): Promise<void> {
   };
 }
 
-function apiFriendships(router: Object): void{
+function apiFriendships(router) {
   router.post('/api/friendships', friendships);
 }
 

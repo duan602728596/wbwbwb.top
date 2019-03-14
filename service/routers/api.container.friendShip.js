@@ -1,21 +1,14 @@
-/**
- * 获取关注列表
- * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed&page=
- */
-
-import axios from 'axios';
-import encryption from '../encryption/encryption';
-import { getHeadersCookie } from '../utils';
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 // 格式化数据
-function formatData(data: []): [] {
-  for (let i: number = data.length - 1; i >= 0; i--) {
-    const item: Object = data[i];
+function formatData(data) {
+  for (let i = data.length - 1; i >= 0; i--) {
+    const item = data[i];
 
     if (item.card_type === 10) {
-      const { user }: {
-        user: string
-      } = item;
+      const { user } = item;
 
       data[i] = {
         card_type: item.card_type,
@@ -34,21 +27,20 @@ function formatData(data: []): [] {
   return data;
 }
 
-async function getFriendList(ctx: Object, next: Function): Promise<void> {
-  const { query }: {
-    query: Object
-  } = ctx.request;
-  let uri: string = 'https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed';
+/**
+ * 获取关注列表
+ * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed&page=
+ */
+
+async function getFriendList(ctx, next) {
+  const { query } = ctx.request;
+  let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed';
 
   if ('page' in query) {
     uri += `&page=${ query.page }`;
   }
 
-  const { status, data, headers }: {
-    status: number,
-    data: Object,
-    headers: Object
-  } = await axios({
+  const { status, data, headers } = await axios({
     url: uri,
     method: 'GET',
     headers: {
@@ -57,8 +49,8 @@ async function getFriendList(ctx: Object, next: Function): Promise<void> {
   });
 
   // 格式化数据
-  const { cards }: { cards: Object } = data.data;
-  let newCards: [] = [];
+  const { cards } = data.data;
+  let newCards = [];
 
   if (data.ok === 1 && cards.length === 2) {
     newCards = formatData(cards[1].card_group);
@@ -73,7 +65,7 @@ async function getFriendList(ctx: Object, next: Function): Promise<void> {
   };
 }
 
-function apiContainerFriendShip(router: Object): void{
+function apiContainerFriendShip(router) {
   router.get('/api/container/friendShip', getFriendList);
 }
 

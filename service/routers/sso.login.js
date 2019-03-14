@@ -1,3 +1,8 @@
+const queryString = require('querystring');
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
+
 /**
  * 微博登陆
  * 【POST】 https://passport.weibo.cn/sso/login
@@ -5,25 +10,16 @@
  * password
  * vid
  */
-import queryString from 'querystring';
-import axios from 'axios';
-import encryption from '../encryption/encryption';
-import { getHeadersCookie } from '../utils';
+async function login(ctx, next) {
+  const { body } = ctx.request;
+  const queryData = queryString.stringify(body);
 
-async function login(ctx: Object, next: Function): Promise<void> {
-  const { body }: { body: Object } = ctx.request;
-  const queryData: string = queryString.stringify(body);
-
-  const step0: Object = await axios({
+  const step0 = await axios({
     url: 'https://m.weibo.cn/'
   });
-  const cookie0: string = getHeadersCookie(step0.headers);
+  const cookie0 = getHeadersCookie(step0.headers);
 
-  const { data, headers, status }: {
-    data: Object,
-    headers: Object,
-    status: number
-  } = await axios({
+  const { data, headers, status } = await axios({
     url: 'https://passport.weibo.cn/sso/login',
     method: 'POST',
     headers: {
@@ -45,7 +41,7 @@ async function login(ctx: Object, next: Function): Promise<void> {
   };
 }
 
-function ssoLogin(router: Object): void{
+function ssoLogin(router) {
   router.post('/sso/login', login);
 }
 

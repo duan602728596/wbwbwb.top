@@ -1,15 +1,15 @@
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
+
 /**
  * 签到
  * 【GET】https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=
  */
-import axios from 'axios';
-import encryption from '../encryption/encryption';
+async function qiandao(ctx, next) {
+  const { body } = ctx.request;
+  const uri = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
 
-async function qiandao(ctx: Object, next: Function): Promise<void> {
-  const { body }: { body: Object } = ctx.request;
-  const uri: string = `https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=${ body.containerid }`;
-
-  const res: Object = await axios({
+  const res = await axios({
     url: uri,
     method: 'GET',
     headers: {
@@ -22,7 +22,7 @@ async function qiandao(ctx: Object, next: Function): Promise<void> {
   ctx.body = res.data;
 }
 
-function pAjGeneralButton(router: Object): void{
+function pAjGeneralButton(router) {
   router.post('/p/aj/general/button', qiandao);
 }
 

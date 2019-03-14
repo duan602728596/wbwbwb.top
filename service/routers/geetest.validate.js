@@ -1,20 +1,16 @@
-import queryString from 'querystring';
-import axios from 'axios';
-import encryption from '../encryption/encryption';
-import { getHeadersCookie } from '../utils';
+const queryString = require('querystring');
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 /* 验证验证码 */
-async function geetestValidate(ctx: Object, next: Function): Promise<void> {
-  const { query }: { query: Object } = ctx.request;
+async function geetestValidate(ctx, next) {
+  const { query } = ctx.request;
 
   if ('key' in query) {
-    const { body }: { body: Object } = ctx.request;
-    const queryData: string = queryString.stringify(body);
-    const { data, status, headers }: {
-      data: Object,
-      status: number,
-      headers: Object
-    } = await axios({
+    const { body } = ctx.request;
+    const queryData = queryString.stringify(body);
+    const { data, status, headers } = await axios({
       url: `https://security.weibo.com/captcha/ajgeetest?action=validate&key=${ query.key }`,
       method: 'POST',
       headers: {
@@ -37,7 +33,7 @@ async function geetestValidate(ctx: Object, next: Function): Promise<void> {
   }
 }
 
-function apiGeetesValidate(router: Object): void{
+function apiGeetesValidate(router) {
   router.post('/api/geetest/validate', geetestValidate);
 }
 

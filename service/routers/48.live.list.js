@@ -1,10 +1,10 @@
-import axios from 'axios';
+const axios = require('axios');
 
-function formatData(list: []): [] {
-  const result: [] = [];
+function formatData(list) {
+  const result = [];
 
-  for (const item: Object of list) {
-    const picPath: [] = item.picPath.split(/,\s*/g);
+  for (const item of list) {
+    const picPath = item.picPath.split(/,\s*/g);
 
     result.push({
       liveId: item.liveId,
@@ -19,13 +19,10 @@ function formatData(list: []): [] {
   return result;
 }
 
-async function liveList(ctx: Object, next: Function): Promise<void> {
-  const { query }: { query: Object } = ctx.request;
-  const lastTime: number = 'lastTime' in query ? query.lastTime : 0;
-  const { data, status }: {
-    data: Object,
-    status: number
-  } = await axios({
+async function liveList(ctx, next) {
+  const { query } = ctx.request;
+  const lastTime = 'lastTime' in query ? query.lastTime : 0;
+  const { data, status } = await axios({
     url: 'https://plive.48.cn/livesystem/api/live/v1/memberLivePage',
     method: 'POST',
     headers: {
@@ -44,7 +41,7 @@ async function liveList(ctx: Object, next: Function): Promise<void> {
     }
   });
 
-  const body: Object = {};
+  const body = {};
 
   if (query.type) {
     body[query.type] = formatData(data.content[query.type]);
@@ -57,7 +54,7 @@ async function liveList(ctx: Object, next: Function): Promise<void> {
   ctx.body = body;
 }
 
-function fortyEightLiveList(router: Object): void{
+function fortyEightLiveList(router) {
   router.get('/48/live/list', liveList);
 }
 

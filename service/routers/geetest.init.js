@@ -1,16 +1,16 @@
-import axios from 'axios';
-import encryption from '../encryption/encryption';
-import { getHeadersCookie } from '../utils';
+const axios = require('axios');
+const encryption = require('../encryption/encryption');
+const { getHeadersCookie } = require('../utils');
 
 /* 初始化验证 */
-async function geetestInit(ctx: Object, next: Function): Promise<void> {
-  const { query }: { query: Object } = ctx.request;
+async function geetestInit(ctx, next) {
+  const { query } = ctx.request;
 
   if ('key' in query) {
-    const loginCookie: string = encryption.decode(query._);
+    const loginCookie = encryption.decode(query._);
 
     // 先访问302重定向地址
-    const step0: Object = await axios({
+    const step0 = await axios({
       url: `https://passport.weibo.cn/verify/index?id=${ query.key }&showmenu=0`,
       headers: {
         Connection: 'keep-alive',
@@ -26,10 +26,7 @@ async function geetestInit(ctx: Object, next: Function): Promise<void> {
     });
 
     // 访问正常地址
-    const { data, headers }: {
-      status: number,
-      data: Object
-    } = await axios({
+    const { data, headers } = await axios({
       url: `https://security.weibo.com/captcha/ajgeetest?action=init&key=${ query.key }`,
       method: 'GET',
       cookie: `${ loginCookie }; ${ getHeadersCookie(step0.headers) }`
@@ -45,7 +42,7 @@ async function geetestInit(ctx: Object, next: Function): Promise<void> {
   }
 }
 
-function apiGeetestInit(router: Object): void{
+function apiGeetestInit(router) {
   router.get('/api/geetest', geetestInit);
 }
 
