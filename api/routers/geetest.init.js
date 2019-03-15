@@ -1,8 +1,8 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
-/* 初始化验证 */
+/* 初始化微博的验证 */
 async function geetestInit(ctx, next) {
   const { query } = ctx.request;
 

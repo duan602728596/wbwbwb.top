@@ -19,6 +19,7 @@ function formatData(list) {
   return result;
 }
 
+/* 获取直播列表 */
 async function liveList(ctx, next) {
   const { query } = ctx.request;
   const lastTime = 'lastTime' in query ? query.lastTime : 0;

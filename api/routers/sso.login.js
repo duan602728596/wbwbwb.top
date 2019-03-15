@@ -1,10 +1,10 @@
 const queryString = require('querystring');
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
 /**
- * 微博登陆
+ * 微博的登陆接口
  * 【POST】 https://passport.weibo.cn/sso/login
  * username
  * password

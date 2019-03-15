@@ -54,7 +54,7 @@ module.exports = {
   ],
   js: {
     plugins: [['import', { libraryName: 'antd', libraryDirectory: 'es', style: true }]],
-    exclude: /(dll\.js|gt\.min\.js|node_modules|service[\\/]encryption[\\/]encryption\.js)/
+    exclude: /(dll\.js|gt\.min\.js|node_modules|utils[\\/]encryption\.js)/
   },
   sass: { include: /src/ },
   css: {

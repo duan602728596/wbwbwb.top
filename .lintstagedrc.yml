@@ -6,3 +6,4 @@ ignore:
   - .dll
   - build
   - buildServer
+  - scripts

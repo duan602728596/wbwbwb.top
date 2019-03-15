@@ -1,36 +1,31 @@
 const axios = require('axios');
-const config = require('../config');
+const config = require('../utils/config');
 
 module.exports = async function(ctx, sweetOptions) {
   const { query } = ctx.request;
   let cards = [];
-  let page = null;
-  let cookie = null;
+  let sinceId = null;
 
   if (query && '_' in query) {
     const { data } = await axios({
-      url: `${ config.apiUri(sweetOptions.httpPort) }/api/container/friendShip`,
+      url: `${ config.apiUri(sweetOptions.httpPort) }/api/container/getIndex`,
       method: 'GET',
       headers: {
         _: query._
       }
     });
 
-    const len = data.cards.length;
-
-    page = len === 0 ? 'END' : 2;
-    cards = len === 0 ? [] : data.cards;
-    cookie = data._;
+    sinceId = 'since_id' in data && data.since_id ? data.since_id : 'END';
+    cards = data.cards;
   }
 
   return {
-    title: '用户关注',
+    title: '超级话题签到',
     initialState: {
       time: new Date().getTime(),
-      friendShip: {
+      superTopicSignIn: {
         cards,
-        page,
-        cookie
+        sinceId
       }
     }
   };

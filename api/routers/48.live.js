@@ -1,6 +1,7 @@
 const axios = require('axios');
 const mime = require('mime-types');
 
+/* 获取直播视频 */
 async function live(ctx, next) {
   const { query } = ctx.request;
 

@@ -1,5 +1,5 @@
 const axios = require('axios');
-const config = require('../config');
+const config = require('../utils/config');
 
 module.exports = async function(ctx, sweetOptions) {
   const { data } = await axios({

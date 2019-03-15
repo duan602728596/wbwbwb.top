@@ -1,6 +1,6 @@
 /* 公共函数 */
 import axios from 'axios';
-import _encryption from '../service/encryption/encryption';
+import _encryption from '../utils/encryption';
 
 /* 加密解密 */
 export const encryption = _encryption;

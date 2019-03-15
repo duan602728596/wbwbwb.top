@@ -1,9 +1,9 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
 /**
- * 获取st
+ * 获取微博的st参数
  * 【GET】https://m.weibo.cn/api/config
  */
 async function getSt(ctx, next) {

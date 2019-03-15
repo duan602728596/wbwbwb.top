@@ -11,7 +11,7 @@ const apiGeetestInit = require('./routers/geetest.init');
 const apiGeetesValidate = require('./routers/geetest.validate');
 const apiGeetesCaptcha = require('./routers/geetest.captcha');
 
-function routers(routers, sweetOptions) {
+function api(routers, sweetOptions) {
   ssoLogin(routers);
   apiContainerGetIndex(routers);
   pAjGeneralButton(routers);
@@ -25,4 +25,4 @@ function routers(routers, sweetOptions) {
   apiGeetesCaptcha(routers);
 }
 
-module.exports = routers;
+module.exports = api;

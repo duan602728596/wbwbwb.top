@@ -1,6 +1,6 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
 // 获取重定向的url
 function getUrl(str) {
@@ -21,7 +21,7 @@ function getUrlList(str) {
   });
 }
 
-/* 验证后的一系列登陆 */
+/* 微博验证后的一系列操作 */
 async function geetestCaptcha(ctx, next) {
   const { query } = ctx.request;
   const loginCookie = encryption.decode(query._);

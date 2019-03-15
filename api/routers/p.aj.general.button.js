@@ -1,8 +1,8 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
+const encryption = require('../../utils/encryption');
 
 /**
- * 签到
+ * 微博的超话签到接口
  * 【GET】https://weibo.com/p/aj/general/button?api=http://i.huati.weibo.com/aj/super/checkin&id=
  */
 async function qiandao(ctx, next) {

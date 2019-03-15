@@ -1,5 +1,5 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
+const encryption = require('../../utils/encryption');
 
 // 格式化数据
 function formatData(data) {
@@ -22,7 +22,7 @@ function formatData(data) {
 }
 
 /**
- * 获取超话列表
+ * 获取微博的超话列表
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super&since_id=
  */
 async function getChaohuaList(ctx, next) {

@@ -1,8 +1,8 @@
 const queryString = require('querystring');
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
+const encryption = require('../../utils/encryption');
 
-/* 关注和取关 */
+/* 微博的关注和取关功能 */
 async function friendships(ctx, next) {
   const { body } = ctx.request;
   const data = queryString.stringify({

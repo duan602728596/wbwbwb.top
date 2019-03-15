@@ -7,7 +7,7 @@ gt.min.js
 # build
 build
 buildServer
-bin/scripts
+scripts/scripts
 
 # cache
 .dll

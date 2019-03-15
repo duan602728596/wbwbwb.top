@@ -1,6 +1,6 @@
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
 // 格式化数据
 function formatData(data) {
@@ -28,7 +28,7 @@ function formatData(data) {
 }
 
 /**
- * 获取关注列表
+ * 获取微博的关注列表
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed&page=
  */
 

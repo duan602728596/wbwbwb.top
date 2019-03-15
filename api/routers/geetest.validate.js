@@ -1,9 +1,9 @@
 const queryString = require('querystring');
 const axios = require('axios');
-const encryption = require('../encryption/encryption');
-const { getHeadersCookie } = require('../utils');
+const encryption = require('../../utils/encryption');
+const { getHeadersCookie } = require('../../utils/utils');
 
-/* 验证验证码 */
+/* 微博验证验证码是否正确 */
 async function geetestValidate(ctx, next) {
   const { query } = ctx.request;
 
