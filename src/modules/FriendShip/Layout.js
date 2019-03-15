@@ -14,6 +14,7 @@ class ModuleLayout extends Component {
   componentDidMount() {
     isGoToLogin.call(this);
   }
+
   render() {
     return [
       <Helmet key="helmet">
