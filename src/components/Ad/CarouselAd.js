@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NoSSR from 'react-no-ssr';
 import { Carousel } from 'antd';
 import style from './style.sass';
 import adConfig from './adConfig';
@@ -48,9 +49,11 @@ class CarouselAd extends Component {
     const { list } = this.state;
 
     return (
-      <div className={ style.carouselBox }>
-        <Carousel autoplay={ true }>{ this.carouselItemView(list) }</Carousel>
-      </div>
+      <NoSSR onSSR={ <div className={ style.carouselBox } /> }>
+        <div className={ style.carouselBox }>
+          <Carousel autoplay={ true }>{ this.carouselItemView(list) }</Carousel>
+        </div>
+      </NoSSR>
     );
   }
 }
