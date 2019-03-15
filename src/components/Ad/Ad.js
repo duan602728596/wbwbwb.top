@@ -12,17 +12,21 @@ class Ad extends Component {
     className: PropTypes.string
   };
 
+  constructor() {
+    super(...arguments);
+
+    this.state = {
+      item: adConfig[Math.floor(Math.random() * adConfig.length)]
+    };
+  }
+
   componentDidMount() {
     loadImgIfNotIsSupportedWebP();
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
-    const props = this.props;
-    const item = adConfig[Math.floor(Math.random() * adConfig.length)];
+    const { props } = this;
+    const { item } = this.state;
 
     return (
       <div className={ classNames(style.ad, props.className) }>

@@ -5,12 +5,16 @@ import adConfig from './adConfig';
 import { loadImgIfNotIsSupportedWebP } from '../../utils';
 
 class CarouselAd extends Component {
-  componentDidMount() {
-    loadImgIfNotIsSupportedWebP();
+  constructor() {
+    super(...arguments);
+
+    this.state = {
+      list: this.randomList([...adConfig])
+    };
   }
 
-  shouldComponentUpdate() {
-    return false;
+  componentDidMount() {
+    loadImgIfNotIsSupportedWebP();
   }
 
   // 数组随机打乱顺序
@@ -41,9 +45,11 @@ class CarouselAd extends Component {
   }
 
   render() {
+    const { list } = this.state;
+
     return (
       <div className={ style.carouselBox }>
-        <Carousel autoplay={ true }>{ this.carouselItemView(this.randomList([...adConfig])) }</Carousel>
+        <Carousel autoplay={ true }>{ this.carouselItemView(list) }</Carousel>
       </div>
     );
   }
