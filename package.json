@@ -7,7 +7,7 @@
     "clean": "rimraf ./build",
     "clean:server": "rimraf ./buildServer",
     "server": "milktea server --serverRender --httpPort=80 --httpsPort=443",
-    "pm2:server": "pm2 start pm2.config.js --env production",
+    "pm2:server": "pm2 start runServer.js",
     "compress": "node ./bin/compress.js",
     "eslint": "eslint ./ --fix",
     "update": "milktea update"
@@ -17,7 +17,8 @@
     "@sweet/server": "github:duan602728596/sweet#build-server",
     "axios": "^0.18.0",
     "crypto-js": "^3.1.9-1",
-    "js-base64": "^2.5.1"
+    "js-base64": "^2.5.1",
+    "node-cmd": "^3.0.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^4.1.0",
