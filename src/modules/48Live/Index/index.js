@@ -53,6 +53,7 @@ class FortyEightLive extends Component {
       });
     }
   }
+
   // 加载更多
   handleMoreReviewListClick = async (event) => {
     this.setState({
@@ -74,6 +75,7 @@ class FortyEightLive extends Component {
       loading: false
     });
   };
+
   // 刷新
   handleShuaxinClick = async (event) => {
     this.setState({
@@ -94,6 +96,7 @@ class FortyEightLive extends Component {
       loading: false
     });
   };
+
   // 渲染cards
   cardsItemView(list) {
     return list.map((item, index) => {
@@ -120,6 +123,7 @@ class FortyEightLive extends Component {
       );
     });
   }
+
   render() {
     const { loading } = this.state;
 

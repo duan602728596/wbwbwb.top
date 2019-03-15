@@ -68,6 +68,7 @@ class FriendShips extends Component {
       });
     }
   }
+
   // 加载更多
   handleLoadFriendShip = async (event) => {
     try {
@@ -91,6 +92,7 @@ class FriendShips extends Component {
       loading: false
     });
   };
+
   // 关注
   async handleGuanzhuClick(item, event) {
     this.setState({
@@ -118,6 +120,7 @@ class FriendShips extends Component {
       loading: false
     });
   }
+
   // 批量取关
   handleQuguanAllClick = async (event) => {
     const quguanList = this.state.quguanList;
@@ -159,6 +162,7 @@ class FriendShips extends Component {
       quguanList
     });
   };
+
   // 单个取关
   async handleQuguanOneClick(item, event) {
     this.setState({
@@ -192,6 +196,7 @@ class FriendShips extends Component {
       quguanList
     });
   }
+
   // 取关checkbox
   handleQuguanOneChange(item, event) {
     const quguanList = this.state.quguanList;
@@ -205,6 +210,7 @@ class FriendShips extends Component {
       quguanList
     });
   }
+
   // 渲染关注列表
   friendShipItemView(item, index) {
     if (!item || item.card_type !== 10) return null;
@@ -245,6 +251,7 @@ class FriendShips extends Component {
       </List.Item>
     );
   }
+
   friendShipListView(list) {
     const dom = [];
 
@@ -258,6 +265,7 @@ class FriendShips extends Component {
 
     return dom;
   }
+
   render() {
     const { loading } = this.state;
 

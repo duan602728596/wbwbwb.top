@@ -56,6 +56,7 @@ class SuperTopicSignIn extends Component {
       });
     }
   }
+
   // 重新加载所有的超话列表
   handleGetAllSuperTopicList = async (eventt) => {
     this.setState({
@@ -93,6 +94,7 @@ class SuperTopicSignIn extends Component {
       loading: false
     });
   };
+
   // 签到所有
   handleQiandaoAllClick = async (event) => {
     this.setState({
@@ -120,6 +122,7 @@ class SuperTopicSignIn extends Component {
       loading: false
     });
   };
+
   // 签到
   async handleQiandaoClick(containerid, item, index, event) {
     try {
@@ -151,6 +154,7 @@ class SuperTopicSignIn extends Component {
       message.error(`${ item.title_sub }：签到失败！`);
     }
   }
+
   // 加载数据
   handleLoadSuperTopicList = async (event) => {
     this.setState({
@@ -176,8 +180,10 @@ class SuperTopicSignIn extends Component {
       loading: false
     });
   };
+
   // sheme
   sheme = (scheme) => scheme.match(/containerid=[a-zA-Z0-9]+/)[0].split('=')[1];
+
   // 渲染超话列表
   superTopicListItemView(item, index) {
     if (!item || item.card_type !== 8) return null;
@@ -220,6 +226,7 @@ class SuperTopicSignIn extends Component {
       </List.Item>
     );
   }
+
   superTopicListView(list) {
     const dom = [];
 
@@ -233,6 +240,7 @@ class SuperTopicSignIn extends Component {
 
     return dom;
   }
+
   render() {
     const { loading } = this.state;
 

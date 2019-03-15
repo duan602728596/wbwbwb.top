@@ -50,6 +50,7 @@ class Item extends Component {
       this.initVideo();
     }
   }
+
   // 全屏
   handleFullscreenClick = (event) => {
     const element = this.videoRef.current;
@@ -58,10 +59,12 @@ class Item extends Component {
     else if (element.requestFullscreen) element.requestFullscreen();
     else if (element.mozRequestFullScreen) element.mozRequestFullScreen();
   };
+
   // 播放
   handleVideoPlayClick = (event) => {
     this.flvPlayer.play();
   };
+
   // 暂停
   handleVideoPauseClick = (event) => {
     this.flvPlayer.pause();
@@ -71,6 +74,7 @@ class Item extends Component {
   handleMutedClick = (event) => {
     this.flvPlayer.muted = !this.flvPlayer.muted;
   };
+
   // flv.js
   async initVideo() {
     const Module = await import(/* webpackChunkName: 'flvjs' */'flv.js');
@@ -90,6 +94,7 @@ class Item extends Component {
       });
     }
   }
+
   render() {
     return (
       <Layout className={ publicStyle.main }>

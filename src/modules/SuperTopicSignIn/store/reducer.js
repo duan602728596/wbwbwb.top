@@ -7,8 +7,8 @@ const initData = {
 };
 
 /* Action */
-export const superTopic = createAction('超级话题列表');
-export const qiandao = createAction('签到的情况');
+export const superTopic = createAction('superTopicSignIn-超级话题列表');
+export const qiandao = createAction('superTopicSignIn-签到的情况');
 
 /* reducer */
 const reducer = handleActions({

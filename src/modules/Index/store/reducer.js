@@ -8,8 +8,8 @@ const initData = {
 };
 
 /* Action */
-export const username = createAction('获取用户名和cookie');
-export const prompted = createAction('notification提示信息');
+export const username = createAction('index-获取用户名和cookie');
+export const prompted = createAction('index-notification提示信息');
 
 /* reducer */
 const reducer = handleActions({

@@ -65,6 +65,7 @@ class Index extends Component {
     // 加载图片
     loadImgIfNotIsSupportedWebP();
   }
+
   // 提示信息
   prompt() {
     if (this.props.isPrompted === true) return void 0;
@@ -78,6 +79,7 @@ class Index extends Component {
       })
     });
   }
+
   // 退出
   handleExitClick = (event) => {
     const ref = Modal.confirm({
@@ -86,12 +88,10 @@ class Index extends Component {
       onCancel: () => ref.destroy()
     });
   };
+
   render() {
     const { username, cookie } = this.props;
-    const grid = {
-      xs: 12,
-      sm: 8
-    };
+    const grid = { xs: 12, sm: 8 };
     const ec = encryption.encode(cookie);
 
     return (

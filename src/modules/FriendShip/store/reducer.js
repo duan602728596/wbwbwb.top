@@ -8,8 +8,8 @@ const initData = {
 };
 
 /* Action */
-export const friendShip = createAction('关注列表');
-export const apiFriendShip = createAction('取关后的列表刷新');
+export const friendShip = createAction('friendShip-关注列表');
+export const apiFriendShip = createAction('friendShip-取关后的列表刷新');
 
 /* reducer */
 const reducer = handleActions({
