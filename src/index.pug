@@ -15,12 +15,12 @@ html
     link(rel='apple-touch-icon-precomposed' href=require('./precomposed.jpg'))
     link(rel='apple-touch-icon' href=require('./precomposed.jpg'))
     link(rel='shortcut icon' href=require('./favicon.ico'))
-    title <%= title %>
+    title <%- title %>
     include ./scripts.pug
   body
-    div.app#app <%= render %>
+    div.app#app <%- render %>
     script
-      | window.__INITIAL_STATE__ = <%= initialState %>;
+      | window.__INITIAL_STATE__ = <%- initialState %>;
     script(src=require('./gt.min'))
     if htmlWebpackPlugin.options.mode === 'development'
       script(src=imports.dll)
