@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Row, Col, Form, Input, Checkbox, Button, message } from 'antd';
 import { USER_INFORMATION, encryption, getQuery } from '../../../utils';
 import style from './style.sass';
@@ -145,7 +145,7 @@ class LoginForm extends Component {
             </Form.Item>
           </Col>
           <Col className={ style.linkDescription } span={ 12 }>
-            <Link to="/Login/Description">网站说明</Link>
+            <a href="description.html">网站说明</a>
           </Col>
         </Row>
         <Button className={ style.loginBtn } type="primary" htmlType="submit" size="large" block={ true }>登陆</Button>

@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    base(href='/')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible' content='IE=Edge')
+    meta(name='renderer' content='webkit')
+    meta(name='viewport' content='width=device-width, initial-scale=1, user-scalable=no')
+    link(rel='shortcut icon' href=require('../../../favicon.ico'))
+    title 网站说明
+    style.
+      .description-main { margin: 0 auto; max-width: 600px; overflow: auto; background-color: #fff; }
+      .description-title { margin-bottom: 10px; padding: 10px 0; font-size: 18px; text-align: center; }
+      .description-article { margin: 20px 10px; }
+      .description-article p { text-indent: 2em; }
+      .description-go-to { padding: 30px 0; text-align: center; }
+      .description-link { text-decoration: none; color: #007bff; -webkit-transition: color .5s; transition: color .5s; }
+      .description-link:hover { color: #faad14; }
+  body
+    div.description-main
+      h1.description-title 网站说明
+      article.description-article
+        p 1、本网站内容仅用于学习交流，非商用、非盈利。
+        p 2、本网站不会储存任何账号密码，接口仅作为中间服务。如有账号相关问题，本网站概不负责。
+    div.description-go-to
+      a.description-link(href='Login' title='返回登陆') 返回登陆

@@ -22,7 +22,7 @@ module.exports = {
     'react-helmet'
   ],
   entry: {
-    app: [path.join(__dirname, 'src/index.js')]
+    index: [path.join(__dirname, 'src/index.js')]
   },
   serverRender: true,
   serverEntry: {
@@ -65,7 +65,10 @@ module.exports = {
     },
     include: /node_modules[\\/]antd/
   },
-  html: [{ template: path.join(__dirname, 'src/index.pug') }],
+  html: [
+    { template: path.join(__dirname, 'src/index.pug') },
+    { template: path.join(__dirname, 'src/modules/Login/Description/description.pug'), excludeChunks: ['index'] }
+  ],
   plugins: isDevelopment ? undefined : [
     new PreloadWebpackPlugin({
       rel: 'prefetch',
