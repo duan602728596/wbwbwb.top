@@ -283,7 +283,7 @@ class FriendShips extends Component {
         </Layout.Header>
         <Layout.Content className={ publicStyle.content } id="friend-ship-content">
           {
-            do{
+            do {
               if (this.props.cards.length > 0) {
                 <Popconfirm title="确定要取关这批好友吗？" onConfirm={ this.handleQuguanAllClick }>
                   <Button className={ style.quguanAll }

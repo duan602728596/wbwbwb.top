@@ -275,7 +275,7 @@ class SuperTopicSignIn extends Component {
         </Layout.Header>
         <Layout.Content className={ publicStyle.content } id="super-topic-sign-in-content">
           {
-            do{
+            do {
               if (this.props.cards.length > 0) {
                 <Button className={ style.qiandaoAll }
                   type="primary"
