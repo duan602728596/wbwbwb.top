@@ -12,6 +12,7 @@ import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import { superTopic, qiandao } from '../store/reducer';
 import style from './style.sass';
 import { signin, getSuperTopicList } from '../request';
+import sleep from './sleep';
 
 /* state */
 const state = createStructuredSelector({
@@ -112,6 +113,8 @@ class SuperTopicSignIn extends Component {
           if (item.code !== '100000') {
             await this.handleQiandaoClick(containerid, item, i);
           }
+
+          await sleep(3000);
         }
       }
       message.success('一键签到成功！');
