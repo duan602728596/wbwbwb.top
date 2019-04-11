@@ -112,9 +112,8 @@ class SuperTopicSignIn extends Component {
 
           if (item.code !== '100000') {
             await this.handleQiandaoClick(containerid, item, i);
+            await sleep(3000);
           }
-
-          await sleep(3000);
         }
       }
       message.success('一键签到成功！');
