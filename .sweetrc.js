@@ -28,25 +28,13 @@ module.exports = {
   serverEntry: {
     server: [path.join(__dirname, 'src/server.js')]
   },
-  loaders: {
-    svg: {
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      use: [
-        { loader: 'babel-loader' },
-        {
-          loader: '@svgr/webpack',
-          options: { babel: false, icon: true }
-        }
-      ]
-    }
-  },
   rules: [
     {
-      test: /(dll\.js|gt\.min\.js)/,
+      test: /gt\.min\.js/,
       use: [{
         loader: 'file-loader',
         options: {
-          name: isDevelopment ? '[name].[ext]' : '[hash:5].[ext]',
+          name: isDevelopment ? '[name].[hash:5].[ext]' : '[hash:5].[ext]',
           outputPath: 'script/'
         }
       }]
