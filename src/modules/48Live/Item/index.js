@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { Layout, Button, Modal } from 'antd';
+import axios from 'axios';
 import publicStyle from '../../../components/publicStyle/publicStyle.sass';
 import style from './style.sass';
 
@@ -13,17 +14,17 @@ const state = createStructuredSelector({
     ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
     ($$data) => $$data !== null ? $$data.get('title') : ''
   ),
-  subTitle: createSelector( // subTitle
+  nickname: createSelector( // nickname
     ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data) => $$data !== null ? $$data.get('subTitle') : ''
-  ),
-  streamPath: createSelector( // streamPath
-    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
-    ($$data) => $$data !== null ? $$data.get('streamPath') : ''
+    ($$data) => $$data !== null ? $$data.get('nickname') : ''
   ),
   picPath: createSelector( // picPath
     ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
     ($$data) => $$data !== null ? $$data.get('picPath') : ''
+  ),
+  liveId: createSelector( // liveId
+    ($$state) => $$state.has('48live') ? $$state.get('48live').get('item') : null,
+    ($$data) => $$data !== null ? $$data.get('liveId') : ''
   )
 });
 
@@ -45,10 +46,12 @@ class Item extends Component {
   videoRef = createRef();
   flvPlayer = null;
 
+  state = {
+    streamPath: undefined
+  };
+
   componentDidMount() {
-    if (this.props.streamPath) {
-      this.initVideo();
-    }
+    this.initVideo();
   }
 
   // 全屏
@@ -79,12 +82,13 @@ class Item extends Component {
   async initVideo() {
     const Module = await import(/* webpackChunkName: 'flvjs' */'flv.js');
     const flvjs = Module.default;
-    const sp = this.props.streamPath.split(/\./g);
+    const res = await axios.get(`/48/live/streamPath?liveId=${ this.props.liveId }`);
+    const { streamPath } = res.data;
 
     if (flvjs.isSupported()) {
       this.flvPlayer = flvjs.createPlayer({
-        type: sp[sp.length - 1],
-        url: `/48/live?url=${ this.props.streamPath }`
+        type: 'flv',
+        url: `/48/live?url=${ streamPath }`
       });
       this.flvPlayer.attachMediaElement(this.videoRef.current);
       this.flvPlayer.load();
@@ -93,9 +97,15 @@ class Item extends Component {
         content: 'The Media Source Extensions API is not supported.'
       });
     }
+
+    this.setState({
+      streamPath
+    });
   }
 
   render() {
+    const { streamPath } = this.state;
+
     return (
       <Layout className={ publicStyle.main }>
         <div className={ style.videoBox }>
@@ -105,7 +115,8 @@ class Item extends Component {
         </div>
         <div className={ style.infor }>
           <h2 className={ style.title }>{ this.props.title }</h2>
-          <h3>{ this.props.subTitle }</h3>
+          <h3>{ this.props.nickname }</h3>
+          <p>{ streamPath }</p>
         </div>
         <div className={ style.tools }>
           <Button className={ style.mr10 } icon="tablet" onClick={ this.handleFullscreenClick }>全屏</Button>

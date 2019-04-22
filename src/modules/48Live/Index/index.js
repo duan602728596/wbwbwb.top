@@ -54,28 +54,6 @@ class FortyEightLive extends Component {
     }
   }
 
-  // 加载更多
-  handleMoreReviewListClick = async (event) => {
-    this.setState({
-      loading: true
-    });
-    try {
-      const { reviewList } = this.props;
-      const { data } = await getReviewListData(reviewList[reviewList.length - 1].startTime);
-
-      this.props.action.reviewList({
-        data: reviewList.concat(data.reviewList)
-      });
-      message.success('数据加载成功！');
-    } catch (err) {
-      console.error(err);
-      message.error('数据加载失败！');
-    }
-    this.setState({
-      loading: false
-    });
-  };
-
   // 刷新
   handleShuaxinClick = async (event) => {
     this.setState({
@@ -100,20 +78,20 @@ class FortyEightLive extends Component {
   // 渲染cards
   cardsItemView(list) {
     return list.map((item, index) => {
-      const url = '/48Live/Item'
-        + `?title=${ item.title }&subTitle=${ item.subTitle }&streamPath=${ item.streamPath }&picPath=${ item.picPath }`;
+      const url = `/48Live/Item?title=${ item.title }&nickname=${ item.nickname }&picPath=${ item.picPath }&liveId=${ item.liveId }`;
 
       return (
         <Col key={ item.liveId } xs={ 12 } sm={ 8 }>
           <Card className={ style.cards }
             hoverable={ true }
+            actions={ [item.type === 1 ? '直播' : '电台'] }
             cover={
               <Link className={ style.cover } to={ url } target="_blank" rel="noopener noreferrer">
                 <img src={ item.picPath } />
               </Link>
             }
           >
-            <Card.Meta description={ item.subTitle }
+            <Card.Meta description={ item.nickname }
               title={
                 <Link to={ url } target="_blank" rel="noopener noreferrer">{ item.title }</Link>
               }
@@ -160,16 +138,6 @@ class FortyEightLive extends Component {
               <Row key="row" type="flex">{ this.cardsItemView(this.props.liveList) }</Row>
             ] : null
           }
-          <Divider orientation="left">回放</Divider>
-          <Row type="flex">{ this.cardsItemView(this.props.reviewList) }</Row>
-          <div className={ classNames(style.loading, { [style.inLoading]: loading }) }>
-            {
-              loading ? [
-                <Spin key="spin" />,
-                <span key="text">加载中...</span>
-              ] : <Button onClick={ this.handleMoreReviewListClick }>加载更多数据</Button>
-            }
-          </div>
         </Layout.Content>
       </Layout>,
       typeof document === 'object' ? ReactDOM.createPortal(

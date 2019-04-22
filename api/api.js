@@ -7,22 +7,24 @@ const apiConfig = require('./routers/api.config');
 const apiFriendShips = require('./routers/api.friendships');
 const fortyEightLive = require('./routers/48.live');
 const fortyEightLiveList = require('./routers/48.live.list');
+const fortyEightStreamPath = require('./routers/48.live.streamPath');
 const apiGeetestInit = require('./routers/geetest.init');
 const apiGeetesValidate = require('./routers/geetest.validate');
 const apiGeetesCaptcha = require('./routers/geetest.captcha');
 
-function api(routers, sweetOptions) {
-  ssoLogin(routers);
-  apiContainerGetIndex(routers);
-  pAjGeneralButton(routers);
-  apiContainerFriendShip(routers);
-  apiConfig(routers);
-  apiFriendShips(routers);
-  fortyEightLive(routers);
-  fortyEightLiveList(routers);
-  apiGeetestInit(routers);
-  apiGeetesValidate(routers);
-  apiGeetesCaptcha(routers);
+function api(router, sweetOptions) {
+  ssoLogin(router);
+  apiContainerGetIndex(router);
+  pAjGeneralButton(router);
+  apiContainerFriendShip(router);
+  apiConfig(router);
+  apiFriendShips(router);
+  fortyEightLive(router);
+  fortyEightLiveList(router);
+  fortyEightStreamPath(router);
+  apiGeetestInit(router);
+  apiGeetesValidate(router);
+  apiGeetesCaptcha(router);
 }
 
 module.exports = api;

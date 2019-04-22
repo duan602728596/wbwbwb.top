@@ -4,15 +4,15 @@ function formatData(list) {
   const result = [];
 
   for (const item of list) {
-    const picPath = item.picPath.split(/,\s*/g);
+    const picPath = item.coverPath.split(/,\s*/g);
 
     result.push({
       liveId: item.liveId,
       title: item.title,
-      subTitle: item.subTitle,
-      picPath: `https://source3.48.cn${ picPath[0] }`,
-      streamPath: item.streamPath,
-      startTime: item.startTime
+      nickname: item.userInfo.nickname,
+      picPath: `https://source.48.cn${ picPath[0] }`,
+      startTime: item.ctime,
+      type: item.liveType
     });
   }
 
@@ -25,21 +25,26 @@ async function liveList(ctx, next) {
     const { query } = ctx.request;
     const lastTime = 'lastTime' in query ? query.lastTime : 0;
     const { data, status } = await axios({
-      url: 'https://plive.48.cn/livesystem/api/live/v1/memberLivePage',
+      url: 'https://pocketapi.48.cn/live/api/v1/live/getLiveList',
       method: 'POST',
       headers: {
-        os: 'android',
-        IMEI: '123456789',
-        version: '4.0.4',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        appInfo: JSON.stringify({
+          vendor: 'apple',
+          deviceId: '',
+          appVersion: '6.0.0',
+          appBuild: '190409',
+          osVersion: '11.4.1',
+          osType: 'ios',
+          deviceName: 'iPhone 6s',
+          os: 'ios'
+        })
       },
       data: {
-        lastTime: Number(lastTime),
-        limit: 20,
         groupId: 0,
-        memberId: 0,
-        type: 0,
-        giftUpdTime: 1490857731000
+        debug: true,
+        next: Number(lastTime),
+        record: false
       }
     });
 
@@ -49,7 +54,7 @@ async function liveList(ctx, next) {
       body[query.type] = formatData(data.content[query.type]);
     } else {
       body.liveList = formatData(data.content.liveList);
-      body.reviewList = formatData(data.content.reviewList);
+      body.reviewList = [];
     }
 
     ctx.status = status;
