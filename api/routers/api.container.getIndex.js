@@ -26,29 +26,34 @@ function formatData(data) {
  * 【GET】https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super&since_id=
  */
 async function getChaohuaList(ctx, next) {
-  const { query } = ctx.request;
-  let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
+  try {
+    const { query } = ctx.request;
+    let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=100803_-_page_my_follow_super';
 
-  if ('since_id' in query) {
-    uri += `&since_id=${ query.since_id }`;
-  }
-
-  const { status, data } = await axios({
-    url: uri,
-    method: 'GET',
-    headers: {
-      Cookie: encryption.decode(ctx.get('_'))
+    if ('since_id' in query) {
+      uri += `&since_id=${ query.since_id }`;
     }
-  });
 
-  // 格式化数据
-  const cards = data.ok === 1 ? formatData(data.data.cards[0].card_group) : [];
+    const { status, data } = await axios({
+      url: uri,
+      method: 'GET',
+      headers: {
+        Cookie: encryption.decode(ctx.get('_'))
+      }
+    });
 
-  ctx.status = status;
-  ctx.body = {
-    since_id: data.ok === 1 ? data.data.cardlistInfo.since_id : [],
-    cards
-  };
+    // 格式化数据
+    const cards = data.ok === 1 ? formatData(data.data.cards[0].card_group) : [];
+
+    ctx.status = status;
+    ctx.body = {
+      since_id: data.ok === 1 ? data.data.cardlistInfo.since_id : [],
+      cards
+    };
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
+  }
 }
 
 function apiContainerGetIndex(router) {

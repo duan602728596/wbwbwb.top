@@ -33,36 +33,41 @@ function formatData(data) {
  */
 
 async function getFriendList(ctx, next) {
-  const { query } = ctx.request;
-  let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed';
+  try {
+    const { query } = ctx.request;
+    let uri = 'https://m.weibo.cn/api/container/getIndex?containerid=231093_-_selffollowed';
 
-  if ('page' in query) {
-    uri += `&page=${ query.page }`;
-  }
-
-  const { status, data, headers } = await axios({
-    url: uri,
-    method: 'GET',
-    headers: {
-      Cookie: encryption.decode(ctx.get('_'))
+    if ('page' in query) {
+      uri += `&page=${ query.page }`;
     }
-  });
 
-  // 格式化数据
-  const { cards } = data.data;
-  let newCards = [];
+    const { status, data, headers } = await axios({
+      url: uri,
+      method: 'GET',
+      headers: {
+        Cookie: encryption.decode(ctx.get('_'))
+      }
+    });
 
-  if (data.ok === 1 && cards.length === 2) {
-    newCards = formatData(cards[1].card_group);
-  } else if (data.ok === 1 && cards.length === 1) {
-    newCards = formatData(cards[0].card_group);
+    // 格式化数据
+    const { cards } = data.data;
+    let newCards = [];
+
+    if (data.ok === 1 && cards.length === 2) {
+      newCards = formatData(cards[1].card_group);
+    } else if (data.ok === 1 && cards.length === 1) {
+      newCards = formatData(cards[0].card_group);
+    }
+
+    ctx.status = status;
+    ctx.body = {
+      cards: newCards,
+      _: data.ok === 1 ? encryption.encode(getHeadersCookie(headers)) : null
+    };
+  } catch (err) {
+    ctx.status = 500;
+    ctx.body = err;
   }
-
-  ctx.status = status;
-  ctx.body = {
-    cards: newCards,
-    _: data.ok === 1 ? encryption.encode(getHeadersCookie(headers)) : null
-  };
 }
 
 function apiContainerFriendShip(router) {
