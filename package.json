@@ -6,7 +6,7 @@
     "build": "npm run clean && npm run clean:server && cross-env NODE_ENV=production milktea build --serverRender",
     "clean": "rimraf ./dist",
     "clean:server": "rimraf ./dist-server",
-    "server": "milktea server --serverRender",
+    "server": "milktea server --serverRender --httpPort=80 --httpsPort=443",
     "server:pm2": "pm2 start runServer.js",
     "eslint": "eslint ./ --fix",
     "update": "milktea update"
