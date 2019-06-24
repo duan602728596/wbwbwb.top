@@ -1,13 +1,11 @@
 # node
 node_modules
 
-# project
-gt.min.js
-
 # build
 build
 buildServer
-scripts/scripts
+dist
+dist-server
 
 # cache
-.dll
+.sweet/*
