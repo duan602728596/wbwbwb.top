@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { hot } from '@sweet/milktea/react-hot-loader';
+import { hot } from '@sweet-milktea/milktea/react-hot-loader';
 import { LocaleProvider } from 'antd';
 import zhCN from 'antd/lib/locale-provider/zh_CN';
 import { storeFactory } from './store/store';
